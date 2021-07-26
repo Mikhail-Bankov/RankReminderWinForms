@@ -23,9 +23,7 @@ namespace RankReminderWinForms
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
-        }
-
-        
+        }        
     }
 
 
@@ -61,12 +59,7 @@ namespace RankReminderWinForms
             : base()
         {
             this.Style.Format = "dd.MM.yyyy"; // После выбора даты выводим в ячейку текст в нужном формате
-
-
         }
-
-
-
 
         public override void InitializeEditingControl(int rowIndex, object
             initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)

@@ -212,6 +212,50 @@
         BB2uwYxNUAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="VyslugaCalc_button.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflAhQK
+        NiCQA4dSAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTAyLTIwVDEwOjUzOjU4KzAwOjAwx1wiMAAAACV0
+        RVh0ZGF0ZTptb2RpZnkAMjAyMS0wMi0yMFQxMDo1Mzo1OCswMDowMLYBmowAAAM+SURBVFhHzdfHi1RB
+        EIDxNeecc9aDiigIZsy6igEV0ZuKCRSMixlBjJgQMeeccxbDRa/+BwqCN88iGNDvg2544OhOD7Pggx/D
+        1Drv1XRXVY8lOa6qaFRBauGfV3ccxqsKcgk9kPOqg1v4gU/4WGSf8QvrkfPqhPd4h/7oUiRdw+s8fIUr
+        XBl/XJ1hAm/QMLwfgsEZvk/VE15j8AVHUW4C7XAej+G23AuvFxL4+dt4ghZISqAjvMk6eJP72I+WsFbq
+        5qE2euEO/ELJCZzDVZzAIHizKki5vM9NFJzALsxEoZeFXXACFzEaDo/qBagGe94tTE6gPS7DD9s2Rwrg
+        5xw8z2Ht5J3AWzRBb0wKJmNqeM3GppQT83UAKmEc8l6BphiOBcFYeEYMzcTGh5jzIcYmhNjATMxEjHmP
+        vBPoAIvHXrYLnAfWhV1hbRzDM1hktusVuOwv4H3O4BoO4TVaI6kGTMAbnMVxPAgx99SkfFhMym4x7sNi
+        UidhUgdhUskJWAN2wHKswERY2SMzMZfWmFsVY9ZJDbhVMTYNyVtg1a6CS3kaG+H5sCzETmEzPOOXZmJb
+        0BiL4eoZ24Z6SErApXWEbsUGPIV/v4EdWAvby1POpd6NMrxEN7hN+7AS1kDyHGgD99S9vwu/oatyAI9g
+        chafsT2wHpwZzg73eyc8hDzArsOuSpoDLmM/zA7sZc+BvpmY54OxPpgVYh6/7rczJMaGIXkOtEWsflfA
+        1vObOd0ewm9rSxpzVeKx7Rb52b2wI1wpNUPSFsQa2I5NcDljDXhAWRexBlx2H2hd2HLWgG3oIebq+Fsi
+        uQb8AbEEroJWoz6sbgeTg2hNiM3PxPy957f1vVXvahR0Glo0pfDBsr9rwn2Msekh5o1jbAZsVxPw3/rg
+        ghKIo9jq9wPZUezksxbi1LM+FKee2+Kq+QW8j7WRnIDHsaPYVnOYWIzGHLnueTwffIADx8Sy54N/9wsY
+        M6lWSErAUewpNzcYAceurRdjo0LMFo0xH+Io9md9jLkVtmvSJGxgoMhXuSvg0pnAB3iILMSiIvF3gfPi
+        OzxJcybgT2mL6Rt+VhD/21eGv172sK3kIRJbq5jmoDn+l6uk5DfZVmf/FYUdVwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="Archive_button.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflAhQK
+        OR1P89eMAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTAyLTIwVDEwOjU3OjIwKzAwOjAw953FNAAAACV0
+        RVh0ZGF0ZTptb2RpZnkAMjAyMS0wMi0yMFQxMDo1NzoyMCswMDowMIbAfYgAAAMSSURBVFhH7dZ5iE1h
+        GMfxa19CZE+RnbJFZN+SP6yj7FvImmQnKVvWUPbsibJElhLKlkIpUqRQdrLLvm/f7zQzNXPH3HPuHUrN
+        rz5Nc2fuOe95zvs+7xvJyf+Y4miCvhiHSRiOTqiO/PgrqYypOIeX+JXBF9zFbvRAEWRLCmAwrsAbPcEh
+        zMVo+PSTsQ6X4EA+YS8aIqEUxSJ8xDMsRjt0xkQsxQrMwgA0Rx8ch4O9gS6IKwWxBN9xEd7Ui1tin242
+        hmIQxmMDDsPPG2EOPuABOiJ0RuAzLqAtFmA/fCIrkzF5UAtW6SDawAnqNS6jBgLHC1m+x/DJl8EnLI9Y
+        cSADcQQtsBK+jgkInHnwS5ZxFHaiFMJkJLbDh3G5NkCg+JTO+HuojW6og7ApjA4pP8thOfojF7KME8ZZ
+        vwOWM9E4mdfCij5Ea0TFUVaFzSa1/AtRBWURc9RZxMmcuoy/4gwqIF1m4DZu4TUcgF/ws1OohHjSDHZH
+        r9UP2+C1V8EGl5Zp8A9yyZzGi5Tfz8IqhE1pnIDXsBdswTH8gBWxf6SlJFy7/vNqdMUjPIUTKZ647q/h
+        DWxIXvsbrPBb2FfSpT6uwy/YA3xfUxDv+8+LerAh2artqHvQHk7EMoiKW6yjc7Su/WLIjjgRveb05N+y
+        iHv5TBxATT9IIC5hV1UhbILl74mYcRAuS2PPdw54kbBxZ9yKxriJO6iGQLEDDoN9wIbknh8mvl93TUtv
+        RS3/RjgvAsVdzOViU2qKo3C/z41YsclshruiXdXuZx9oicCxAlfxDkPglz0FeThxc8msRTthu8Pl7MBt
+        Qufh089H6LZuL/D49Qpj4aDcHT10uDV7CLGZ+Ko8nu3DLnge9NTk2dGbe3gJu5Mmx/XfG/fhOc+5YCXq
+        ohdc2+71Hsvcbr2pW65d1c7nzR1URSQUm8ZJ/ISnYZeoh9AkeFLyPXs0WwMbmTd+Dsse15NnFmf1GLgv
+        OC+8iVV5D/u6g5NnCHt+K2THVh6VErAizgkPGM729XBueGC1eeXDP4lzxGUZZGnm5A+JRH4DhunBXRnN
+        9E0AAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="RemoveImage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
@@ -312,6 +356,9 @@
   <metadata name="Married_GodRegistracii.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="label17.Text" xml:space="preserve">
+    <value>* Р - работа, У - учеба, ВС - служба в Вооруженных Силах РФ, СЗ - служба в ОВД или иная служба, где предусмотрены специальные звания, ГС - работа на должностях государственной гражданской службы, УВ - учеба в военных училищах или в высших учебных заведениях МВД России</value>
+  </data>
   <metadata name="TrudDeyat_DataNaznach.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

@@ -37,7 +37,7 @@ namespace RankReminderWinForms
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {        
-                File.Copy(Memo.A, saveFileDialog1.FileName);
+                File.Copy(XMLDB.Path, saveFileDialog1.FileName);
                 MessageBox.Show("Резервная копия базы данных создана по пути: " + saveFileDialog1.FileName);
             }
         }
@@ -56,8 +56,8 @@ namespace RankReminderWinForms
                                  MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    File.Copy(openFileDialog1.FileName, Memo.A, true);
-                    MessageBox.Show("База данных восстановлена по пути: " + Memo.A);
+                    File.Copy(openFileDialog1.FileName, XMLDB.Path, true);
+                    MessageBox.Show("База данных восстановлена по пути: " + XMLDB.Path);
                 }
 
             }
