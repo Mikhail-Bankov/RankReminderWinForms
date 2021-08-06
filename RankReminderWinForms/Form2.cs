@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Xml;
 using System.Text;
 using System.Collections.Generic;
 using System.Data;
@@ -125,7 +126,7 @@ namespace RankReminderWinForms
 
         string CellValueToCompare; // переменная для проверки изменения в редактируемой ячейке
 
-        
+
 
         string CurrentDataTableName = "Kadry";
         string OtherDataTableName = "Archive";
@@ -233,7 +234,28 @@ namespace RankReminderWinForms
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            dataSet1.ReadXml(XMLDB.Path); // считываем в dataSet1 нашу базу в формате XML
+            if (!File.Exists(XMLDB.Path)) // Если база данных в формате XML не существует...
+            {
+                MessageBox.Show("Похоже, что Вы запустили программу впервые, либо переместили файл базы данных. База будет создана заново.", "Внимание!",
+                                 MessageBoxButtons.OK,
+                                 MessageBoxIcon.Information);
+                File.WriteAllBytes(XMLDB.Path, Convert.FromBase64String(XMLDB.DefaultXMLDBBase64)); //Декодируем строку с шаблоном базы данных из Base64 и создаем файл
+
+                if (File.Exists(XMLDB.Path)) // Еще раз проверяем, создалась ли база данных
+                {
+                    MessageBox.Show("База данных успешно создана по пути:\n" + XMLDB.Path, "Внимание!",
+                                 MessageBoxButtons.OK,
+                                 MessageBoxIcon.Information);
+                }
+                else 
+                {
+                    MessageBox.Show("Произошла неизвестная ошибка при создании базы данных. Попробуйте запустить программу от имени администратора.", "Ошибка!",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+                }
+            }
+
+            dataSet1.ReadXml(XMLDB.Path); // считываем XML базу данных в dataSet1
 
             if (dataSet1.Tables["Kadry"] == null) // Если DataTable "Kadry" отсутствует
             {
@@ -270,20 +292,27 @@ namespace RankReminderWinForms
             radioButton1.Checked = true; // изначально показывать все колонки
             Cards_groupBox.Visible = false; // изначально не показывать кнопки карточек
 
-            // ###############  РАЗНЫЕ ОБРАБОТЧИКИ СОБЫТИЙ  ###############
+            // ###############  ОБРАБОТЧИКИ СОБЫТИЙ УДАЛЕНИЯ СТРОК В ТАБЛИЦАХ  ###############
             dataSet1.Tables["Kadry"].RowDeleting += new System.Data.DataRowChangeEventHandler(RowDeleting); // обработчик события попытки удаления строки
             dataSet1.Tables["Kadry"].RowDeleted += new System.Data.DataRowChangeEventHandler(RowDeleted); // обработчик события удаления строки                                                                                         
             dataSet1.Tables["Archive"].RowDeleting += new System.Data.DataRowChangeEventHandler(RowDeleting); // обработчик события попытки удаления строки
             dataSet1.Tables["Archive"].RowDeleted += new System.Data.DataRowChangeEventHandler(RowDeleted); // обработчик события удаления строки     
+            //dataGridView_Family.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(WhichRowDeleted); // обработчик события удаления строки
+            
+
+
+            // ###############  РАЗНЫЕ ОБРАБОТЧИКИ СОБЫТИЙ  ###############
             dataGridView1.Sorted += new System.EventHandler(dataGridView1_Sorted); // обработчик события сортировки колонки
+            tabControl1.Selecting += tabControl1_Selecting; // обработчик события перед сменой активной вкладки
             tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged; // обработчик события смены активной вкладки
+
 
             // ###############  ОБРАБОТЧИК ComboBox'ов ДЛЯ ЦЕНТРОВКИ В РЕЖИМЕ РЕДАКТИРОВАНИЯ  ###############
             Gender_comboBox.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Пол
             Klassnost_comboBox.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Текущее квалификационное звание
             Rank_comboBox.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Текущее звание
             RankLimit_comboBox.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Потолок по званию
-                                                                                                 // Test_comboBox.DrawItem += new DrawItemEventHandler(OnDrawItem); // Потолок по званию
+                                                                                                                  // Test_comboBox.DrawItem += new DrawItemEventHandler(OnDrawItem); // Потолок по званию
 
             // ###############  ОБРАБОТЧИК ComboBox'ов В dataGridView ДЛЯ ЦЕНТРОВКИ В РЕЖИМЕ РЕДАКТИРОВАНИЯ  ###############
             dataGridView_Prodlenie.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Продление службы
@@ -646,8 +675,8 @@ namespace RankReminderWinForms
         }
 
 
-        // ###############  ОСНОВНОЙ МЕТОД СЧИТЫВАНИЯ ИНДЕКСОВ У НЕОБХОДИМЫХ КОЛОНОК  ###############
-        private void CheckColumnsIndex()
+    // ###############  ОСНОВНОЙ МЕТОД СЧИТЫВАНИЯ ИНДЕКСОВ У НЕОБХОДИМЫХ КОЛОНОК  ###############
+    private void CheckColumnsIndex()
         {
             foreach (DataGridViewColumn currColumn in dataGridView1.Columns) //пробегаем по всем колонкам в dataGridView1
             {
@@ -1270,7 +1299,7 @@ namespace RankReminderWinForms
         // #################################################
         // ##  КНОПКА "ЗАКРЫТЬ" НА ВКЛАДКЕ "ОБЩИЙ СПИСОК" ##
         // #################################################
-        private void button1_Click(object sender, EventArgs e)
+        private void Close1_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -1278,7 +1307,7 @@ namespace RankReminderWinForms
         // ####################################
         // ##  КНОПКА "ДОБАВИТЬ СОТРУДНИКА"  ##
         // ####################################
-        private void button3_Click(object sender, EventArgs e)
+        private void AddPerson_Click(object sender, EventArgs e)
         {
             int id;
 
@@ -1316,11 +1345,11 @@ namespace RankReminderWinForms
         // ###########################################################
         // ##  КНОПКА "АРХИВНЫЕ СОТРУДНИКИ/ДЕЙСТВУЮЩИЕ СОТРУДНИКИ"  ##
         // ###########################################################
-        private void Archive_button_Click(object sender, EventArgs e)
+        private void Archive_Click(object sender, EventArgs e)
         {
             if (CurrentDataTableName == "Kadry")
             {
-                Archive_button.Text = "Действующие сотрудники";
+                Archive.Text = "Действующие сотрудники";
                 CurrentDataTableName = "Archive";
                 OtherDataTableName = "Kadry";
                 CurrentBase_label.Text = "Текущая БД: Архивные сотрудники";
@@ -1328,7 +1357,7 @@ namespace RankReminderWinForms
             }
             else if (CurrentDataTableName == "Archive")
             {
-                Archive_button.Text = "Архивные сотрудники";
+                Archive.Text = "Архивные сотрудники";
                 CurrentDataTableName = "Kadry";
                 OtherDataTableName = "Archive";
                 CurrentBase_label.Text = "Текущая БД: Действующие сотрудники";
@@ -1354,7 +1383,7 @@ namespace RankReminderWinForms
         // ##################################
         // ##  КНОПКА "ВЫГРУЗИТЬ В EXCEL"  ##
         // ##################################
-        private void button4_Click(object sender, EventArgs e)
+        private void ExportToExcel_Click(object sender, EventArgs e)
         {
             this.ExportDataGridToExcel();
         }
@@ -1506,6 +1535,14 @@ namespace RankReminderWinForms
         }
 
 
+        // #########################################################
+        // ##  КНОПКА "ПОДСЧЕТ ВЫСЛУГИ" НА ВКЛАДКЕ "ОБЩИЙ СПИСОК" ##
+        // #########################################################
+        private void VyslugaCalc_Click(object sender, EventArgs e)
+        {
+
+        }
+
         // ###############  ДЕЙСТВИЯ ПРИ СРАБАТЫВАНИИ СОБЫТИЯ СОРТИРОВКИ  ###############
         private void dataGridView1_Sorted(object sender, EventArgs e) //отработка события изменения сортировки
         {
@@ -1515,9 +1552,9 @@ namespace RankReminderWinForms
         // ###############  ДЕЙСТВИЯ, ЕСЛИ БЫЛИ КАКИЕ-ЛИБО ИЗМЕНЕНИЯ В dataGridView1  ###############
         public void DataGridWasChanged()
         {
-            MessageBox.Show("grid изменен");
-            this.PereschetZvanie();
-            this.PereschetKlassnost();
+            // MessageBox.Show("grid изменен");  // позже будет закомментировано 
+            this.PereschetZvanie(); // пересчитываем звание
+            this.PereschetKlassnost(); // пересчитываем классность
             this.AcceptAndWriteChanges(); // сохраняем изменения в XML
             this.RefreshDataGridView1(); // обновляем DataGridView1
         }
@@ -1527,14 +1564,14 @@ namespace RankReminderWinForms
         {
             dataSet1.Clear(); // очищаем dataSet1
             dataGridView1.DataSource = null; // очищаем DataSource
-            dataSet1.ReadXml(XMLDB.Path); //  считываем XML
+            dataSet1.ReadXml(XMLDB.Path); // считываем XML
             dataGridView1.DataSource = dataSet1.Tables[CurrentDataTableName]; // присваиваем DataSource
         }
 
         // ###############  ПРИМЕНИТЬ ВСЕ ИЗМЕНЕНИЯ И СОХРАНИТЬ XML  ###############
         public void AcceptAndWriteChanges()
         {
-            MessageBox.Show("Произошло сохранение базы данных"); // позже будет закомментировано 
+            // MessageBox.Show("Произошло сохранение базы данных"); // позже будет закомментировано 
             dataSet1.AcceptChanges(); // применяем изменения в dataSet1
             dataSet1.WriteXml(XMLDB.Path); // сохраняем изменения в XML          
         }
@@ -1601,7 +1638,14 @@ namespace RankReminderWinForms
             }
         }
 
-
+        private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (dataGridView1.Rows.Count == 0) // Проверка dataGridView1 на пустоту. Если грид пустой - не даем уйти с вкладки "Общий список"
+            {
+                e.Cancel = true;
+                MessageBox.Show("Сначала добавьте хотя бы одного сотрудника!");
+            }
+        }
         // ###############  СОБЫТИЕ, ПРИ СМЕНЕ АКТИВНОЙ ВКЛАДКИ ###############
         private void tabControl1_SelectedIndexChanged(Object sender, EventArgs e)
         {
@@ -1710,7 +1754,9 @@ namespace RankReminderWinForms
         }
 
 
+        // ##################################################################################
         // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В TextBox'ах НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        // ##################################################################################
 
         // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В Surname_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
         private void Surname_textBox_Leave(object sender, EventArgs e)
@@ -1919,17 +1965,8 @@ namespace RankReminderWinForms
             dataGridView_Study.Rows.Clear();
             dataGridView_Study.AutoGenerateColumns = false;
 
-            string StudyStringFromCurrentCell = dataGridView1[IndexStudy, IndexRowLichnayaKarta].Value.ToString();
-            if (StudyStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] study_array = StudyStringFromCurrentCell.Split('$');
+            this.Draw_dataGridView_All(IndexStudy, dataGridView_Study); // Отрисовываем таблицу dataGridView_Study
 
-                foreach (string s in study_array)
-                {
-                    string[] StudyRow = s.Split(',');
-                    dataGridView_Study.Rows.Add(StudyRow);
-                }
-            }
             Study_FormaObucheniya.MinimumWidth = 120;
 
             //Чтобы не обрезался текст, расчитываем ширину выпадающего списка, когда ComboBox в режиме редактирования
@@ -1944,27 +1981,20 @@ namespace RankReminderWinForms
             Study_Document.MinimumWidth = 140;
 
             /*==============================================================================================================*/
-            /*==============================================================================================================*/
 
             dataGridView_UchStepen.Rows.Clear();
             dataGridView_UchStepen.AutoGenerateColumns = false;
-            string UchStepenStringFromCurrentCell = dataGridView1[IndexUchStepen, IndexRowLichnayaKarta].Value.ToString();
-            if (UchStepenStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] uchstepen_array = UchStepenStringFromCurrentCell.Split(';');
 
-                foreach (string s in uchstepen_array)
-                {
-                    string[] UchStepenRow = s.Split('^');
-                    dataGridView_UchStepen.Rows.Add(UchStepenRow);
-                }
-            }
+            this.Draw_dataGridView_All(IndexUchStepen, dataGridView_UchStepen); // Отрисовываем таблицу dataGridView_UchStepen
         }
+
+        
+
 
         // ###################################################################
         // ##  КНОПКА "ДОБАВИТЬ УЧЕНУЮ СТЕПЕНЬ" НА ВКЛАДКЕ "КАРТОЧКА 10-11" ##
         // ###################################################################
-        private void UchStepenAdd_button_Click(object sender, EventArgs e)
+        private void UchStepenAdd_Click(object sender, EventArgs e)
         {
             dataGridView_UchStepen.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить ученую степень
             this.SaveChangesToDataGridView_UchStepen(sender, e);
@@ -1973,7 +2003,7 @@ namespace RankReminderWinForms
         // ################################################################
         // ##  КНОПКА "ДОБАВИТЬ ОБРАЗОВАНИЕ" НА ВКЛАДКЕ "КАРТОЧКА 10-11" ##
         // ################################################################
-        private void StudyAdd_button_Click(object sender, EventArgs e)
+        private void StudyAdd_Click(object sender, EventArgs e)
         {
             dataGridView_Study.Rows.Add("Высшее (очное)", "---", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", "---"); // добавить образование
             this.SaveChangesToDataGridView_Study(sender, e);
@@ -1997,7 +2027,7 @@ namespace RankReminderWinForms
                     sb.Append("^"); // ставим разделитель ячеек 
                 }
                 sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель ячеек
-                sb.Append(";"); // ставим разделитель строки
+                sb.Append("$"); // ставим разделитель строки
             }
             sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель строки
 
@@ -2020,7 +2050,7 @@ namespace RankReminderWinForms
                         cell.Value = Study_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
                     }
                     sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append(","); // ставим разделитель ячеек 
+                    sb.Append("^"); // ставим разделитель ячеек 
                 }
                 sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель ячеек
                 sb.Append("$"); // ставим разделитель строки 
@@ -2039,23 +2069,16 @@ namespace RankReminderWinForms
         {
             dataGridView_PrisvZvaniy.Rows.Clear();
             dataGridView_PrisvZvaniy.AutoGenerateColumns = false;
-            string PrisvZvaniyStringFromCurrentCell = dataGridView1[IndexPrisvZvaniy, IndexRowLichnayaKarta].Value.ToString();
-            if (PrisvZvaniyStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] prisvzvaniy_array = PrisvZvaniyStringFromCurrentCell.Split('$');
 
-                foreach (string s in prisvzvaniy_array)
-                {
-                    string[] PrisvZvaniyRow = s.Split('^');
-                    dataGridView_PrisvZvaniy.Rows.Add(PrisvZvaniyRow);
-                }
-            }
+            this.Draw_dataGridView_All(IndexPrisvZvaniy, dataGridView_PrisvZvaniy); // Отрисовываем таблицу dataGridView_PrisvZvaniy
         }
+
+        
 
         // ######################################################################
         // ##  КНОПКА "ДОБАВИТЬ ЗВАНИЕ, КЛАССНЫЙ ЧИН" НА ВКЛАДКЕ "КАРТОЧКА 12" ##
         // ######################################################################
-        private void ZvanieAdd_button_Click(object sender, EventArgs e)
+        private void ZvanieAdd_Click(object sender, EventArgs e)
         {
             dataGridView_PrisvZvaniy.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить звание, классный чин
             this.SaveChangesToDataGridView_PrisvZvaniy(sender, e);
@@ -2095,45 +2118,26 @@ namespace RankReminderWinForms
         {
             dataGridView_Married.Rows.Clear();
             dataGridView_Married.AutoGenerateColumns = false;
-            string MarriedStringFromCurrentCell = dataGridView1[IndexMarried, IndexRowLichnayaKarta].Value.ToString();
 
-            if (MarriedStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] married_array = MarriedStringFromCurrentCell.Split('$');
+            this.Draw_dataGridView_All(IndexMarried, dataGridView_Married); // Отрисовываем таблицу dataGridView_Married
 
-                foreach (string s in married_array)
-                {
-                    string[] MarriedRow = s.Split('^');
-                    dataGridView_Married.Rows.Add(MarriedRow);
-                }
-            }
-
-            /*==============================================================================================================*/
             /*==============================================================================================================*/
 
             dataGridView_Family.Rows.Clear();
             dataGridView_Family.AutoGenerateColumns = false;
-            string FamilyStringFromCurrentCell = dataGridView1[IndexFamily, IndexRowLichnayaKarta].Value.ToString();
 
-            if (FamilyStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] family_array = FamilyStringFromCurrentCell.Split('$');
+            this.Draw_dataGridView_All(IndexFamily, dataGridView_Family); // Отрисовываем таблицу dataGridView_Family
 
-                foreach (string s in family_array)
-                {
-                    string[] FamilyRow = s.Split('^');
-                    dataGridView_Family.Rows.Add(FamilyRow);
-                }
-            }
             Family_StepenRodstva.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Выравнивание по центру в колонке "Степень родства"
             Family_DateOfBirth.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Выравнивание по центру в колонке "Дата рождения"
             Family_DateOfBirth.MinimumWidth = 120;
         }
 
+        
         // ############################################################
         // ##  КНОПКА "ДОБАВИТЬ СОБЫТИЕ" НА ВКЛАДКЕ "КАРТОЧКА 13-14" ##
         // ############################################################
-        private void MarriedAdd_button_Click(object sender, EventArgs e)
+        private void MarriedAdd_Click(object sender, EventArgs e)
         {
             dataGridView_Married.Rows.Add("Женат", DateTime.Now.ToString("yyyy")); // добавить событие (свадьба, развод)
             this.SaveChangesToDataGridView_Married(sender, e);
@@ -2142,7 +2146,7 @@ namespace RankReminderWinForms
         // ################################################################
         // ##  КНОПКА "ДОБАВИТЬ ЧЛЕНА СЕМЬИ" НА ВКЛАДКЕ "КАРТОЧКА 13-14" ##
         // ################################################################
-        private void FamilyAddPerson_button_Click(object sender, EventArgs e)
+        private void FamilyAddPerson_Click(object sender, EventArgs e)
         {
             dataGridView_Family.Rows.Add("Мать", DateTime.Now.ToString("dd.MM.yyyy"), "---"); // добавить члена семьи
             this.SaveChangesToDataGridView_Family(sender, e);
@@ -2195,24 +2199,15 @@ namespace RankReminderWinForms
         }
 
 
-
         //               //"""""""""""""""""""""""\\
         // ###############  ВКЛАДКА "КАРТОЧКА 15"  ############################################################
         public void UpdateCard15()
         {
             dataGridView_TrudDeyat.Rows.Clear();
             dataGridView_TrudDeyat.AutoGenerateColumns = false;
-            string TrudDeyatStringFromCurrentCell = dataGridView1[IndexTrudDeyat, IndexRowLichnayaKarta].Value.ToString();
-            if (TrudDeyatStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] truddeyat_array = TrudDeyatStringFromCurrentCell.Split('$');
 
-                foreach (string s in truddeyat_array)
-                {
-                    string[] TrudDeyatRow = s.Split('^');
-                    dataGridView_TrudDeyat.Rows.Add(TrudDeyatRow);
-                }
-            }
+            this.Draw_dataGridView_All(IndexTrudDeyat, dataGridView_TrudDeyat); // Отрисовываем таблицу dataGridView_TrudDeyat
+
             TrudDeyat_DataNaznach.MinimumWidth = 130;
             TrudDeyat_DataNaznach.Width = 130;
             TrudDeyat_DataOsvobozhd.MinimumWidth = 130;
@@ -2223,12 +2218,14 @@ namespace RankReminderWinForms
             TrudDeyat_Sokrash.Width = 120;
         }
 
+
+
         // ##############################################################
         // ##  КНОПКА "ДОБАВИТЬ МЕСТО РАБОТЫ" НА ВКЛАДКЕ "КАРТОЧКА 15" ##
         // ##############################################################
-        private void TrudDeyatAdd_button_Click(object sender, EventArgs e)
+        private void TrudDeyatAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_TrudDeyat.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---", "---"); // добавить место работы
+            dataGridView_TrudDeyat.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---", "У"); // добавить место работы
             this.SaveChangesToDataGridView_TrudDeyat(sender, e);
         }
 
@@ -2293,42 +2290,23 @@ namespace RankReminderWinForms
 
             dataGridView_StazhVysluga.Rows.Clear();
             dataGridView_StazhVysluga.AutoGenerateColumns = false;
-            string StazhVyslugaStringFromCurrentCell = dataGridView1[IndexStazhVysluga, IndexRowLichnayaKarta].Value.ToString();
-            if (StazhVyslugaStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] stazhvysluga_array = StazhVyslugaStringFromCurrentCell.Split('$');
 
-                foreach (string s in stazhvysluga_array)
-                {
-                    string[] StazhVyslugaRow = s.Split('^');
-                    dataGridView_StazhVysluga.Rows.Add(StazhVyslugaRow);
-                }
-            }
+            this.Draw_dataGridView_All(IndexStazhVysluga, dataGridView_StazhVysluga); // Отрисовываем таблицу dataGridView_StazhVysluga
 
             dataGridView_StazhVysluga.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             StazhVysluga_Resize();
 
             /*==============================================================================================================*/
-            /*==============================================================================================================*/
 
             DataPrisyagi_dateTimePicker.Text = dataGridView1[IndexDataPrisyagi, IndexRowLichnayaKarta].Value.ToString();
 
             /*==============================================================================================================*/
-            /*==============================================================================================================*/
 
             dataGridView_RabotaGFS.Rows.Clear();
             dataGridView_RabotaGFS.AutoGenerateColumns = false;
-            string RabotaGFSStringFromCurrentCell = dataGridView1[IndexRabotaGFS, IndexRowLichnayaKarta].Value.ToString();
-            if (RabotaGFSStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] rabotagfs_array = RabotaGFSStringFromCurrentCell.Split('$');
 
-                foreach (string s in rabotagfs_array)
-                {
-                    string[] RabotaGFSRow = s.Split('^');
-                    dataGridView_RabotaGFS.Rows.Add(RabotaGFSRow);
-                }
-            }
+            this.Draw_dataGridView_All(IndexRabotaGFS, dataGridView_RabotaGFS); // Отрисовываем таблицу dataGridView_RabotaGFS
+
             RabotaGFS_DataNaznach.MinimumWidth = 120;
             RabotaGFS_DataNaznach.Width = 120;
             RabotaGFS_DataOsvobozhd.MinimumWidth = 120;
@@ -2344,6 +2322,8 @@ namespace RankReminderWinForms
             Card16to18WasLoaded = 1; // карточка прогрузилась
         }
 
+
+        // ##########  ПОДСТРОЙКА РАЗМЕРА СТРОК В DataGridView_StazhVysluga НА ВКЛАДКЕ "КАРТОЧКА 16-18" ##########
         public void StazhVysluga_Resize()
         {
             dataGridView_StazhVysluga.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells; // Включаем свойство AutoSizeRowsMode, чтобы оно автоматически подстроило высоту строк в таблице
@@ -2371,7 +2351,6 @@ namespace RankReminderWinForms
                     if (row != dataGridView_StazhVysluga[0, 3].OwningRow) // Для всех строк, кроме четвертой
                     {
                         row.Height = (dataGridView_StazhVysluga.Height - Stroka4 - Zagolovok) / (dataGridView_StazhVysluga.Rows.Count - 1); // Вычисляем высоту строк для заполнения всего свободного пространства
-                        //MessageBox.Show("Строка: " + (row.Index + 1).ToString() + " Должно быть: " + ResultHeight.ToString() + " ( " + dataGridView_StazhVysluga.Height.ToString() + " - " + dataGridView_StazhVysluga[0, 3].OwningRow.Height.ToString() + ") / " + (dataGridView_StazhVysluga.Rows.Count).ToString() + " а по факту: " + row.Height.ToString());
                     }
                     else row.Height = Stroka4; // Восстанавливаем высоту строки, присвоенную в самом начале свойством AutoSizeRowsMode
                 }
@@ -2451,42 +2430,21 @@ namespace RankReminderWinForms
         {
             dataGridView_Attestaciya.Rows.Clear();
             dataGridView_Attestaciya.AutoGenerateColumns = false;
-            string AttestaciyaStringFromCurrentCell = dataGridView1[IndexAttestaciya, IndexRowLichnayaKarta].Value.ToString();
 
-            if (AttestaciyaStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
+            this.Draw_dataGridView_All(IndexAttestaciya, dataGridView_Attestaciya); // Отрисовываем таблицу dataGridView_Attestaciya
 
-                string[] attestaciya_array = AttestaciyaStringFromCurrentCell.Split('$');
-
-                foreach (string s in attestaciya_array)
-                {
-                    string[] AttestaciyaRow = s.Split('^');
-                    dataGridView_Attestaciya.Rows.Add(AttestaciyaRow);
-                }
-            }
             Attestaciya_Data.Width = 140;
             Attestaciya_Data.MinimumWidth = 140;
             Attestaciya_Prichina.Width = 180;
             Attestaciya_Prichina.MinimumWidth = 180;
 
             /*==============================================================================================================*/
-            /*==============================================================================================================*/
 
             dataGridView_ProfPodg.Rows.Clear();
             dataGridView_ProfPodg.AutoGenerateColumns = false;
-            string ProfPodgStringFromCurrentCell = dataGridView1[IndexProfPodg, IndexRowLichnayaKarta].Value.ToString();
 
-            if (ProfPodgStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
+            this.Draw_dataGridView_All(IndexProfPodg, dataGridView_ProfPodg); // Отрисовываем таблицу dataGridView_ProfPodg
 
-                string[] profpodg_array = ProfPodgStringFromCurrentCell.Split('$');
-
-                foreach (string s in profpodg_array)
-                {
-                    string[] ProfPodgRow = s.Split('^');
-                    dataGridView_ProfPodg.Rows.Add(ProfPodgRow);
-                }
-            }
             ProfPodg_VidObuch.Width = 270;
             ProfPodg_VidObuch.MinimumWidth = 270;
             ProfPodg_DataNach.Width = 120;
@@ -2495,10 +2453,11 @@ namespace RankReminderWinForms
             ProfPodg_DataOkonch.MinimumWidth = 120;
         }
 
+
         // ###############################################################
         // ##  КНОПКА "ДОБАВИТЬ АТТЕСТАЦИЮ" НА ВКЛАДКЕ "КАРТОЧКА 19-20" ##
         // ###############################################################
-        private void AttestaciyaAdd_button_Click(object sender, EventArgs e)
+        private void AttestaciyaAdd_Click(object sender, EventArgs e)
         {
             dataGridView_Attestaciya.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "Плановая", "Cоответствует замещаемой должности"); // добавить аттестацию
             this.SaveChangesToDataGridView_Attestaciya(sender, e);
@@ -2507,7 +2466,7 @@ namespace RankReminderWinForms
         // ###############################################################
         // ##  КНОПКА "ДОБАВИТЬ ПОДГОТОВКУ" НА ВКЛАДКЕ "КАРТОЧКА 19-20" ##
         // ###############################################################
-        private void ProfPodgAdd_button_Click(object sender, EventArgs e)
+        private void ProfPodgAdd_Click(object sender, EventArgs e)
         {
             dataGridView_ProfPodg.Rows.Add("Первоначальное обучение", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---"); // добавить аттестацию
             this.SaveChangesToDataGridView_ProfPodg(sender, e);
@@ -2544,6 +2503,8 @@ namespace RankReminderWinForms
             dataGridView1[IndexAttestaciya, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку "Аттестация" результирующей строкой
             this.AcceptAndWriteChanges(); // Применить изменения
         }
+
+
         // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_ProfPodg НА ВКЛАДКЕ "КАРТОЧКА 19-20" ##########
         private void SaveChangesToDataGridView_ProfPodg(object sender, EventArgs e)
         {
@@ -2577,54 +2538,33 @@ namespace RankReminderWinForms
         public void UpdateCard21and22()
         {
             Card21and22WasLoaded = 0;
-            //Klassnost_label.Text = Klassnost_HeaderText + ":"; // Квалификационное звание
             Klassnost_comboBox.Text = dataGridView1[IndexKlassnost, IndexRowLichnayaKarta].Value.ToString();
             KlassnostCheyPrikaz_textBox.Text = dataGridView1[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value.ToString();
             KlassnostNomerPrikaza_textBox.Text = dataGridView1[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value.ToString();
             KlassnostDate_textBox.Text = dataGridView1[IndexKlassnostDate, IndexRowLichnayaKarta].Value.ToString();
 
             /*==============================================================================================================*/
-            /*==============================================================================================================*/
 
             dataGridView_KlassnostOld.Rows.Clear();
             dataGridView_KlassnostOld.AutoGenerateColumns = false;
-            string KlassnostOldStringFromCurrentCell = dataGridView1[IndexKlassnostOld, IndexRowLichnayaKarta].Value.ToString();
 
-            if (KlassnostOldStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] klassnostold_array = KlassnostOldStringFromCurrentCell.Split('$');
+            this.Draw_dataGridView_All(IndexKlassnostOld, dataGridView_KlassnostOld); // Отрисовываем таблицу dataGridView_KlassnostOld
 
-                foreach (string s in klassnostold_array)
-                {
-                    string[] KlassnostOldRow = s.Split('^');
-                    dataGridView_KlassnostOld.Rows.Add(KlassnostOldRow);
-                }
-            }
-
-            /*==============================================================================================================*/
             /*==============================================================================================================*/
 
             dataGridView_Nagrady.Rows.Clear();
             dataGridView_Nagrady.AutoGenerateColumns = false;
-            string NagradyStringFromCurrentCell = dataGridView1[IndexNagrady, IndexRowLichnayaKarta].Value.ToString();
 
-            if (NagradyStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] nagrady_array = NagradyStringFromCurrentCell.Split('$');
+            this.Draw_dataGridView_All(IndexNagrady, dataGridView_Nagrady); // Отрисовываем таблицу dataGridView_Nagrady
 
-                foreach (string s in nagrady_array)
-                {
-                    string[] NagradyRow = s.Split('^');
-                    dataGridView_Nagrady.Rows.Add(NagradyRow);
-                }
-            }
             Card21and22WasLoaded = 1; // карточка прогрузилась
         }
+
 
         // ##########################################################################
         // ##  КНОПКА "ДОБАВИТЬ ПРЕДЫДУЩУЮ КЛАССНОСТЬ" НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##
         // ##########################################################################
-        private void KlassnostAdd_button_Click(object sender, EventArgs e)
+        private void KlassnostAdd_Click(object sender, EventArgs e)
         {
             dataGridView_KlassnostOld.Rows.Add("Специалист 3 класса", "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить предыдущую классность
             this.SaveChangesToDataGridView_KlassnostOld(sender, e);
@@ -2633,7 +2573,7 @@ namespace RankReminderWinForms
         // ########################################################################
         // ##  КНОПКА "ДОБАВИТЬ НАГРАДЫ / ПООЩРЕНИЯ" НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##
         // ########################################################################
-        private void NagradyAdd_button_Click(object sender, EventArgs e)
+        private void NagradyAdd_Click(object sender, EventArgs e)
         {
             dataGridView_Nagrady.Rows.Add("---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить награды / поощрения
             this.SaveChangesToDataGridView_Nagrady(sender, e);
@@ -2761,66 +2701,40 @@ namespace RankReminderWinForms
             dataGridView_Prodlenie.Rows.Clear();
             dataGridView_Prodlenie.AutoGenerateColumns = false;
 
-            string ProdlenieStringFromCurrentCell = dataGridView1[IndexProdlenie, IndexRowLichnayaKarta].Value.ToString();
+            this.Draw_dataGridView_All(IndexProdlenie, dataGridView_Prodlenie); // Отрисовываем таблицу dataGridView_Prodlenie
 
-            if (ProdlenieStringFromCurrentCell != "") //проверка на существование данных в таблице
+            if (dataGridView_Prodlenie.Rows.Count != 0) //проверка на существование данных в таблице
             {
                 Prodlenie_checkBox.CheckState = CheckState.Checked;
-                string[] prodlenie_array = ProdlenieStringFromCurrentCell.Split('$');
-
-                foreach (string s in prodlenie_array)
-                {
-                    string[] ProdlenieRow = s.Split('^');
-                    dataGridView_Prodlenie.Rows.Add(ProdlenieRow);
-                }
             }
             else
             {
                 Prodlenie_checkBox.CheckState = CheckState.Unchecked;
             }
-            Card23to25WasLoaded = 1;
 
-            /*==============================================================================================================*/
             /*==============================================================================================================*/
 
             dataGridView_Boevye.Rows.Clear();
             dataGridView_Boevye.AutoGenerateColumns = false;
-            string BoevyeStringFromCurrentCell = dataGridView1[IndexBoevye, IndexRowLichnayaKarta].Value.ToString();
 
-            if (BoevyeStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] boevye_array = BoevyeStringFromCurrentCell.Split('$');
+            this.Draw_dataGridView_All(IndexBoevye, dataGridView_Boevye); // Отрисовываем таблицу dataGridView_Boevye
 
-                foreach (string s in boevye_array)
-                {
-                    string[] BoevyeRow = s.Split('^');
-                    dataGridView_Boevye.Rows.Add(BoevyeRow);
-                }
-            }
-
-            /*==============================================================================================================*/
             /*==============================================================================================================*/
 
             dataGridView_Rezerv.Rows.Clear();
             dataGridView_Rezerv.AutoGenerateColumns = false;
-            string RezervStringFromCurrentCell = dataGridView1[IndexRezerv, IndexRowLichnayaKarta].Value.ToString();
 
-            if (RezervStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] rezerv_array = RezervStringFromCurrentCell.Split('$');
+            this.Draw_dataGridView_All(IndexRezerv, dataGridView_Rezerv); // Отрисовываем таблицу dataGridView_Rezerv
 
-                foreach (string s in rezerv_array)
-                {
-                    string[] RezervRow = s.Split('^');
-                    dataGridView_Rezerv.Rows.Add(RezervRow);
-                }
-            }
+            Card23to25WasLoaded = 1; // карточка прогрузилась
         }
+
+
 
         // ###############################################################################
         // ##  КНОПКА "ДОБАВИТЬ УЧАСТИЕ В БОЕВЫХ ДЕЙСТВИЯХ" НА ВКЛАДКЕ "КАРТОЧКА 23-25" ##
         // ###############################################################################
-        private void BoevyeAdd_button_Click(object sender, EventArgs e)
+        private void BoevyeAdd_Click(object sender, EventArgs e)
         {
             dataGridView_Boevye.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---"); // добавить участие в боевых действиях
             this.SaveChangesToDataGridView_Boevye(sender, e);
@@ -2829,7 +2743,7 @@ namespace RankReminderWinForms
         // ########################################################################
         // ##  КНОПКА "ДОБАВИТЬ СОСТОЯНИЕ В РЕЗЕРВЕ" НА ВКЛАДКЕ "КАРТОЧКА 23-25" ##
         // ########################################################################
-        private void RezervAdd_button_Click(object sender, EventArgs e)
+        private void RezervAdd_Click(object sender, EventArgs e)
         {
             dataGridView_Rezerv.Rows.Add("---", DateTime.Now.ToString("yyyy"), "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить состояние в резерве
             this.SaveChangesToDataGridView_Rezerv(sender, e);
@@ -2945,49 +2859,26 @@ namespace RankReminderWinForms
             Card26to29WasLoaded = 0;
             if (CurrentDataTableName == "Kadry")
             {
-                SendToAnotherDataTable_button.Text = "Переместить в архив";
+                SendToAnotherDataTable.Text = "Переместить в архив";
             }
-            else SendToAnotherDataTable_button.Text = "Восстановить из архива";
+            else SendToAnotherDataTable.Text = "Восстановить из архива";
 
             dataGridView_Vzyskaniya.Rows.Clear();
             dataGridView_Vzyskaniya.AutoGenerateColumns = false;
-            string VzyskaniyaStringFromCurrentCell = dataGridView1[IndexVzyskaniya, IndexRowLichnayaKarta].Value.ToString();
 
-            if (VzyskaniyaStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] vzyskaniya_array = VzyskaniyaStringFromCurrentCell.Split('$');
+            this.Draw_dataGridView_All(IndexVzyskaniya, dataGridView_Vzyskaniya); // Отрисовываем таблицу dataGridView_Vzyskaniya
 
-                foreach (string s in vzyskaniya_array)
-                {
-                    string[] VzyskaniyaRow = s.Split('^');
-                    dataGridView_Vzyskaniya.Rows.Add(VzyskaniyaRow);
-                }
-            }
-
-            /*==============================================================================================================*/
             /*==============================================================================================================*/
 
             dataGridView_Uvolnenie.Rows.Clear();
             dataGridView_Uvolnenie.AutoGenerateColumns = false;
-            string UvolnenieStringFromCurrentCell = dataGridView1[IndexUvolnenie, IndexRowLichnayaKarta].Value.ToString();
 
-            if (UvolnenieStringFromCurrentCell != "") //проверка на существование данных в таблице
-            {
-                string[] uvolnenie_array = UvolnenieStringFromCurrentCell.Split('$');
+            this.Draw_dataGridView_All(IndexUvolnenie, dataGridView_Uvolnenie); // Отрисовываем таблицу dataGridView_Uvolnenie
 
-                foreach (string s in uvolnenie_array)
-                {
-                    string[] UvolnenieRow = s.Split('^');
-                    dataGridView_Uvolnenie.Rows.Add(UvolnenieRow);
-                }
-            }
-
-            /*==============================================================================================================*/
             /*==============================================================================================================*/
 
             Zapolnil_textBox.Text = dataGridView1[IndexZapolnil, IndexRowLichnayaKarta].Value.ToString();
 
-            /*==============================================================================================================*/
             /*==============================================================================================================*/
 
             DataZapolneniya_dateTimePicker.Text = dataGridView1[IndexDataZapolneniya, IndexRowLichnayaKarta].Value.ToString();
@@ -2996,10 +2887,11 @@ namespace RankReminderWinForms
         }
 
 
+
         // ##############################################################
         // ##  КНОПКА "ДОБАВИТЬ ВЗЫСКАНИЕ" НА ВКЛАДКЕ "КАРТОЧКА 26-29" ##
         // ##############################################################
-        private void VzyskaniyaAdd_button_Click(object sender, EventArgs e)
+        private void VzyskaniyaAdd_Click(object sender, EventArgs e)
         {
             dataGridView_Vzyskaniya.Rows.Add("---", "---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить взыскание
             this.SaveChangesToDataGridView_Vzyskaniya(sender, e);
@@ -3008,7 +2900,7 @@ namespace RankReminderWinForms
         // ###############################################################
         // ##  КНОПКА "ДОБАВИТЬ УВОЛЬНЕНИЕ" НА ВКЛАДКЕ "КАРТОЧКА 26-29" ##
         // ###############################################################
-        private void UvolnenieAdd_button_Click(object sender, EventArgs e)
+        private void UvolnenieAdd_Click(object sender, EventArgs e)
         {
             string UvolnenieProverka = dataGridView1[IndexUvolnenie, IndexRowLichnayaKarta].Value.ToString();
             if (UvolnenieProverka == "")
@@ -3096,6 +2988,24 @@ namespace RankReminderWinForms
         }
 
 
+        // ###########################################################################
+        // ##########  ОБЩИЙ МЕТОД ОТРИСОВКИ dataGridView НА ВСЕХ ВКЛАДКАХ  ##########
+        // ###########################################################################
+        private void Draw_dataGridView_All(int Index, DataGridView dataGridView_Name)
+        {
+            string StringDataGrid = dataGridView1[Index, IndexRowLichnayaKarta].Value.ToString();
+            if (StringDataGrid != "") //проверка на существование данных в таблице
+            {
+                string[] string_array = StringDataGrid.Split('$');
+
+                foreach (string s in string_array)
+                {
+                    string[] Row = s.Split('^');
+                    dataGridView_Name.Rows.Add(Row);
+                }
+            }
+        }
+
         // ###################################################
         // ##  КНОПКА "ПРЕДЫДУЩАЯ КАРТОЧКА" (СТРЕЛКА ВЛЕВО) ##
         // ###################################################
@@ -3146,16 +3056,12 @@ namespace RankReminderWinForms
     + dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Прописываем ФИО над стрелками в карточке
         }
 
-        private void VyslugaCalc_button_Click(object sender, EventArgs e)
-        {
-
-        }
 
 
         // ####################################################
         // ##  КНОПКА "ЗАКРЫТЬ" НА ВКЛАДКЕ "ЛИЧНАЯ КАРТОЧКА" ##
         // ####################################################
-        private void button2_Click(object sender, EventArgs e)
+        private void Close2_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -3163,7 +3069,7 @@ namespace RankReminderWinForms
         // #######################################################################################
         // ##  КНОПКА "ПЕРЕМЕСТИТЬ В АРХИВ/ВОССТАНОВИТЬ ИЗ АРХИВА" НА ВКЛАДКЕ "ЛИЧНАЯ КАРТОЧКА" ##
         // #######################################################################################
-        private void SendToAnotherDataTable_button_Click(object sender, EventArgs e)
+        private void SendToAnotherDataTable_Click(object sender, EventArgs e)
         {
             Required_PersonalFileNum = dataGridView1[IndexPersonalFileNum, IndexRowLichnayaKarta].Value.ToString(); // Искомый № личного дела
             Required_PersonalNum = dataGridView1[IndexPersonalNum, IndexRowLichnayaKarta].Value.ToString(); // Искомый личный номер
@@ -3179,7 +3085,6 @@ namespace RankReminderWinForms
                     && (row["Name"].ToString() == Required_Name) && (row["MiddleName"].ToString() == Required_MiddleName) && (row["DateOfBirth"].ToString() == Required_DateOfBirth))
                 {
                     IndexOfRowToExport = dataSet1.Tables[CurrentDataTableName].Rows.IndexOf(row); // Записываем индекс искомой в Datatable строки
-                    //MessageBox.Show(row["Surname"].ToString() + " в строке номер: " + IndexOfRowToExport);
                     NumOfFinds++; // Увеличиваем количество найденных записей на единицу
                 }
             }
@@ -3204,7 +3109,7 @@ namespace RankReminderWinForms
             + dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString() + " "
             + dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Прописываем ФИО над стрелками в карточке
                 }
-                else Archive_button_Click(sender, e); // если грид пустой - переходим в другую базу
+                else Archive_Click(sender, e); // если грид пустой - переходим в другую базу
                 tabControl1.SelectedTab = tabPage1; // Переходим на первую вкладку "Общий список"
             }
             // При необходимости, добавить сюда события при пустом гриде
@@ -3235,7 +3140,6 @@ namespace RankReminderWinForms
                 ComboBox cb = e.Control as ComboBox;
                 if (cb != null)
                 {
-                    //add these 2
                     cb.DrawMode = DrawMode.OwnerDrawFixed;
                     cb.DropDownStyle = ComboBoxStyle.DropDownList;
 
@@ -3244,14 +3148,14 @@ namespace RankReminderWinForms
             }
         }
 
-        // Allow Combo Box to center aligned
+        // Центрируем ComboBox'ы
         public static void ComboBox_DrawItem_Centered(object sender, DrawItemEventArgs e)
         {
             // By using Sender, one method could handle multiple ComboBoxes
             ComboBox cbx = sender as ComboBox;
             if (cbx != null)
             {
-                // Always draw the background
+                // Всегда рисуем задний фон
                 e.DrawBackground();
 
                 // Drawing one of the items?

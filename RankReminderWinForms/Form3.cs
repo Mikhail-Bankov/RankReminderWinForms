@@ -20,12 +20,12 @@ namespace RankReminderWinForms
             InitializeComponent();            
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button_CloseSettings_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button_UnloadDB_Click(object sender, EventArgs e)
         {            
             String date = DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year;
             String fileName = "BaseLichSost_Backup (" + date + ")";
@@ -42,7 +42,7 @@ namespace RankReminderWinForms
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button_LoadDB_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Title = "Выберите резервную копию базы данных";
@@ -60,6 +60,19 @@ namespace RankReminderWinForms
                     MessageBox.Show("База данных восстановлена по пути: " + XMLDB.Path);
                 }
 
+            }
+        }
+
+        private void Button_RecreateDB_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Пересоздать текущую базу данных? Все записи будут навсегда утеряны!", "Внимание!",
+                                 MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                File.WriteAllBytes(XMLDB.Path, Convert.FromBase64String(XMLDB.DefaultXMLDBBase64)); //Декодируем строку с шаблоном базы данных из Base64 и создаем файл
+                dataSet1.ReadXml(XMLDB.Path); // считываем в dataSet1 созданную нами базу в формате XML
+                MessageBox.Show("База данных пересоздана по пути: " + XMLDB.Path);
             }
         }
     }
