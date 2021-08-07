@@ -323,23 +323,24 @@ namespace RankReminderWinForms
             dataGridView_ProfPodg.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Профессиональная подготовка
 
             // ###############  ОБРАБОТЧИКИ СОБЫТИЙ ИЗМЕНЕНИЯ ТАБЛИЦ  ###############
-            dataGridView_Married.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Married);
-            dataGridView_Family.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Family);
-            dataGridView_Study.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Study);
-            dataGridView_UchStepen.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_UchStepen);
-            dataGridView_PrisvZvaniy.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_PrisvZvaniy);
-            dataGridView_TrudDeyat.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_TrudDeyat);
+            dataGridView_Married.CellValueChanged += new DataGridViewCellEventHandler(MarriedAdd_Click);
+            dataGridView_Family.CellValueChanged += new DataGridViewCellEventHandler(FamilyAddPerson_Click);
+            dataGridView_Study.CellValueChanged += new DataGridViewCellEventHandler(StudyAdd_Click);
+            dataGridView_UchStepen.CellValueChanged += new DataGridViewCellEventHandler(UchStepenAdd_Click);
+            dataGridView_PrisvZvaniy.CellValueChanged += new DataGridViewCellEventHandler(ZvanieAdd_Click);
+            dataGridView_TrudDeyat.CellValueChanged += new DataGridViewCellEventHandler(TrudDeyatAdd_Click);
             dataGridView_StazhVysluga.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_StazhVysluga);
-            dataGridView_RabotaGFS.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_RabotaGFS);
+            dataGridView_RabotaGFS.CellValueChanged += new DataGridViewCellEventHandler(RabotaGFSAdd_Click);
+
             dataGridView_Attestaciya.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Attestaciya);
-            dataGridView_ProfPodg.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_ProfPodg);
-            dataGridView_KlassnostOld.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_KlassnostOld);
-            dataGridView_Nagrady.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Nagrady);
-            dataGridView_Prodlenie.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Prodlenie);
-            dataGridView_Boevye.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Boevye);
-            dataGridView_Rezerv.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Rezerv);
-            dataGridView_Vzyskaniya.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Vzyskaniya);
-            dataGridView_Uvolnenie.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Uvolnenie);
+            dataGridView_ProfPodg.CellValueChanged += new DataGridViewCellEventHandler(ProfPodgAdd_Click);
+            dataGridView_KlassnostOld.CellValueChanged += new DataGridViewCellEventHandler(KlassnostAdd_Click);
+            dataGridView_Nagrady.CellValueChanged += new DataGridViewCellEventHandler(NagradyAdd_Click);
+            dataGridView_Prodlenie.CellValueChanged += new DataGridViewCellEventHandler(Prodlenie_checkBox_CheckedChanged);
+            dataGridView_Boevye.CellValueChanged += new DataGridViewCellEventHandler(BoevyeAdd_Click);
+            dataGridView_Rezerv.CellValueChanged += new DataGridViewCellEventHandler(RezervAdd_Click);
+            dataGridView_Vzyskaniya.CellValueChanged += new DataGridViewCellEventHandler(VzyskaniyaAdd_Click);
+            dataGridView_Uvolnenie.CellValueChanged += new DataGridViewCellEventHandler(UvolnenieAdd_Click);
 
             // ###############  ОБРАБОТЧИКИ СОБЫТИЙ ИЗМЕНЕНИЯ РАЗМЕРА ТАБЛИЦ  ###############
             ResizeBegin += this.FormResizeBegin;
@@ -1945,6 +1946,7 @@ namespace RankReminderWinForms
             }
         }
 
+
         // ######################################################
         // ##  КНОПКА "УДАЛИТЬ ФОТО" НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##
         // ######################################################
@@ -1986,9 +1988,7 @@ namespace RankReminderWinForms
             dataGridView_UchStepen.AutoGenerateColumns = false;
 
             this.Draw_dataGridView_All(IndexUchStepen, dataGridView_UchStepen); // Отрисовываем таблицу dataGridView_UchStepen
-        }
-
-        
+        }        
 
 
         // ###################################################################
@@ -1996,69 +1996,32 @@ namespace RankReminderWinForms
         // ###################################################################
         private void UchStepenAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_UchStepen.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить ученую степень
-            this.SaveChangesToDataGridView_UchStepen(sender, e);
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
+            {
+                this.SaveChangesToDataGridView_All(IndexUchStepen, dataGridView_UchStepen);
+            }
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_UchStepen.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить ученую степень
+                this.SaveChangesToDataGridView_All(IndexUchStepen, dataGridView_UchStepen);
+            }
         }
+
 
         // ################################################################
         // ##  КНОПКА "ДОБАВИТЬ ОБРАЗОВАНИЕ" НА ВКЛАДКЕ "КАРТОЧКА 10-11" ##
         // ################################################################
         private void StudyAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_Study.Rows.Add("Высшее (очное)", "---", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", "---"); // добавить образование
-            this.SaveChangesToDataGridView_Study(sender, e);
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_UchStepen НА ВКЛАДКЕ "КАРТОЧКА 10-11" ##########
-        private void SaveChangesToDataGridView_UchStepen(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_UchStepen.Rows)
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if (cell.OwningColumn.Name == UchStepenDataPrisuzhdeniya.Name)
-                    {
-                        DateTime UchStepen_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = UchStepen_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячеек 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель ячеек
-                sb.Append("$"); // ставим разделитель строки
+                this.SaveChangesToDataGridView_All(IndexStudy, dataGridView_Study);
             }
-            sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель строки
-
-            dataGridView1[IndexUchStepen, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
-        }
-
-        // ###########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Study НА ВКЛАДКЕ "КАРТОЧКА 10-11" ###########
-        private void SaveChangesToDataGridView_Study(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Study.Rows)
+            else //Если метод вызван нажатием кнопки
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if ((cell.OwningColumn.Name == Study_DataPost.Name) || (cell.OwningColumn.Name == Study_DataOkonch.Name))
-                    {
-                        DateTime Study_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = Study_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячеек 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель ячеек
-                sb.Append("$"); // ставим разделитель строки 
+                dataGridView_Study.Rows.Add("Высшее (очное)", "---", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", "---"); // добавить образование
+                this.SaveChangesToDataGridView_All(IndexStudy, dataGridView_Study);
             }
-            sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель строки
-
-            dataGridView1[IndexStudy, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
         }
 
 
@@ -2072,7 +2035,6 @@ namespace RankReminderWinForms
 
             this.Draw_dataGridView_All(IndexPrisvZvaniy, dataGridView_PrisvZvaniy); // Отрисовываем таблицу dataGridView_PrisvZvaniy
         }
-
         
 
         // ######################################################################
@@ -2080,34 +2042,15 @@ namespace RankReminderWinForms
         // ######################################################################
         private void ZvanieAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_PrisvZvaniy.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить звание, классный чин
-            this.SaveChangesToDataGridView_PrisvZvaniy(sender, e);
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_PrisvZvaniy НА ВКЛАДКЕ "КАРТОЧКА 12" ##########
-        private void SaveChangesToDataGridView_PrisvZvaniy(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_PrisvZvaniy.Rows)
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if ((cell.OwningColumn.Name == PrisvZvaniy_DataPrisv.Name) || (cell.OwningColumn.Name == PrisvZvaniy_DataPrikaza.Name))
-                    {
-                        DateTime PrisvZvaniy_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = PrisvZvaniy_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячеек
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель ячеек
-                sb.Append("$"); // ставим разделитель строки
+                this.SaveChangesToDataGridView_All(IndexPrisvZvaniy, dataGridView_PrisvZvaniy);
             }
-            sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель строки
-
-            dataGridView1[IndexPrisvZvaniy, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_PrisvZvaniy.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить звание, классный чин
+                this.SaveChangesToDataGridView_All(IndexPrisvZvaniy, dataGridView_PrisvZvaniy);
+            }
         }
 
 
@@ -2139,64 +2082,34 @@ namespace RankReminderWinForms
         // ############################################################
         private void MarriedAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_Married.Rows.Add("Женат", DateTime.Now.ToString("yyyy")); // добавить событие (свадьба, развод)
-            this.SaveChangesToDataGridView_Married(sender, e);
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
+            {
+                this.SaveChangesToDataGridView_All(IndexMarried, dataGridView_Married);
+            }
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_Married.Rows.Add("Женат", DateTime.Now.ToString("yyyy")); // добавить событие (свадьба, развод)
+                this.SaveChangesToDataGridView_All(IndexMarried, dataGridView_Married);
+            }
         }
+
 
         // ################################################################
         // ##  КНОПКА "ДОБАВИТЬ ЧЛЕНА СЕМЬИ" НА ВКЛАДКЕ "КАРТОЧКА 13-14" ##
         // ################################################################
         private void FamilyAddPerson_Click(object sender, EventArgs e)
         {
-            dataGridView_Family.Rows.Add("Мать", DateTime.Now.ToString("dd.MM.yyyy"), "---"); // добавить члена семьи
-            this.SaveChangesToDataGridView_Family(sender, e);
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Married НА ВКЛАДКЕ "КАРТОЧКА 13-14" ##########
-        private void SaveChangesToDataGridView_Married(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Married.Rows)
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим ставим разделитель ячеек
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель ячеек
-                sb.Append("$"); // ставим разделитель строки
+                this.SaveChangesToDataGridView_All(IndexFamily, dataGridView_Family);
             }
-            sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель строки
-
-            dataGridView1[IndexMarried, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Family НА ВКЛАДКЕ "КАРТОЧКА 13-14" ##########
-        private void SaveChangesToDataGridView_Family(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Family.Rows)
+            else //Если метод вызван нажатием кнопки
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if (cell.OwningColumn.Name == Family_DateOfBirth.Name)
-                    {
-                        DateTime Family_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = Family_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячеек
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последнюю запятую
-                sb.Append("$"); // ставим разделитель строки
+                dataGridView_Family.Rows.Add("Мать", DateTime.Now.ToString("dd.MM.yyyy"), "---"); // добавить члена семьи
+                this.SaveChangesToDataGridView_All(IndexFamily, dataGridView_Family);
             }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexFamily, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
         }
+
 
 
         //               //"""""""""""""""""""""""\\
@@ -2225,35 +2138,17 @@ namespace RankReminderWinForms
         // ##############################################################
         private void TrudDeyatAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_TrudDeyat.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---", "У"); // добавить место работы
-            this.SaveChangesToDataGridView_TrudDeyat(sender, e);
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Married НА ВКЛАДКЕ "КАРТОЧКА 13-14" ##########
-        private void SaveChangesToDataGridView_TrudDeyat(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_TrudDeyat.Rows)
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if ((cell.OwningColumn.Name == TrudDeyat_DataNaznach.Name) || (cell.OwningColumn.Name == TrudDeyat_DataOsvobozhd.Name))
-                    {
-                        DateTime TrudDeyat_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = TrudDeyat_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель ячейки
-                sb.Append("$"); // ставим разделитель строки
+                this.SaveChangesToDataGridView_All(IndexTrudDeyat, dataGridView_TrudDeyat);
             }
-            sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель строки
-
-            dataGridView1[IndexTrudDeyat, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_TrudDeyat.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---", "У"); // добавить место работы
+                this.SaveChangesToDataGridView_All(IndexTrudDeyat, dataGridView_TrudDeyat);
+            }
         }
+
 
 
         private void FormResizeBegin(object sender, EventArgs e)
@@ -2280,6 +2175,7 @@ namespace RankReminderWinForms
                 StillResizing = 0;
             }
         }
+
 
 
         //               //""""""""""""""""""""""""""\\
@@ -2356,70 +2252,29 @@ namespace RankReminderWinForms
                 }
         }
 
-        // #################################################################
-        // ##  КНОПКА "ДОБАВИТЬ МЕСТО СЛУЖБЫ" НА ВКЛАДКЕ "КАРТОЧКА 16-18" ##
-        // #################################################################
-        private void RabotaGFSAdd_button_Click(object sender, EventArgs e)
-        {
-            dataGridView_RabotaGFS.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "1", "0"); // добавить место службы
-            this.SaveChangesToDataGridView_RabotaGFS(sender, e);
-        }
-
 
         // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_StazhVysluga НА ВКЛАДКЕ "КАРТОЧКА 16-18" ##########
         private void SaveChangesToDataGridView_StazhVysluga(object sender, EventArgs e)
         {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_StazhVysluga.Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
-            }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexStazhVysluga, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
+            MessageBox.Show("Stazh");
+            this.SaveChangesToDataGridView_All(IndexStazhVysluga, dataGridView_StazhVysluga);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataPrisyagi_dateTimePicker НА ВКЛАДКЕ "КАРТОЧКА 16-18" ##########
-        private void DataPrisyagi_dateTimePicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (Card16to18WasLoaded == 1)
-            {
-                dataGridView1[IndexDataPrisyagi, IndexRowLichnayaKarta].Value = DataPrisyagi_dateTimePicker.Value.ToString("dd.MM.yyyy");
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
-        }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_RabotaGFS НА ВКЛАДКЕ "КАРТОЧКА 16-18" ##########
-        private void SaveChangesToDataGridView_RabotaGFS(object sender, EventArgs e)
+        // #################################################################
+        // ##  КНОПКА "ДОБАВИТЬ МЕСТО СЛУЖБЫ" НА ВКЛАДКЕ "КАРТОЧКА 16-18" ##
+        // #################################################################
+        private void RabotaGFSAdd_Click(object sender, EventArgs e)
         {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_RabotaGFS.Rows)
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if ((cell.OwningColumn.Name == RabotaGFS_DataNaznach.Name) || (cell.OwningColumn.Name == RabotaGFS_DataOsvobozhd.Name) || (cell.OwningColumn.Name == RabotaGFS_DataPrikaza.Name))
-                    {
-                        DateTime RabotaGFS_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = RabotaGFS_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
+                this.SaveChangesToDataGridView_All(IndexRabotaGFS, dataGridView_RabotaGFS);
             }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexRabotaGFS, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_RabotaGFS.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "1", "0"); // добавить место службы
+                this.SaveChangesToDataGridView_All(IndexRabotaGFS, dataGridView_RabotaGFS);
+            }
         }
 
 
@@ -2463,72 +2318,21 @@ namespace RankReminderWinForms
             this.SaveChangesToDataGridView_Attestaciya(sender, e);
         }
 
+
         // ###############################################################
         // ##  КНОПКА "ДОБАВИТЬ ПОДГОТОВКУ" НА ВКЛАДКЕ "КАРТОЧКА 19-20" ##
         // ###############################################################
         private void ProfPodgAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_ProfPodg.Rows.Add("Первоначальное обучение", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---"); // добавить аттестацию
-            this.SaveChangesToDataGridView_ProfPodg(sender, e);
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Attestaciya НА ВКЛАДКЕ "КАРТОЧКА 19-20" ##########
-        private void SaveChangesToDataGridView_Attestaciya(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Attestaciya.Rows)
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if (cell.OwningColumn.Name == Attestaciya_Data.Name)
-                    {
-                        DateTime Attestaciya_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = Attestaciya_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-
-                        if (cell.RowIndex + 1 == dataGridView_Attestaciya.Rows.Count)
-                        {
-                            // Заполняем ячейку "Дата следующей аттестации", прибавив 4 года к последней аттестации
-                            dataGridView1[IndexNextAttestaciyaDate, IndexRowLichnayaKarta].Value = Attestaciya_wrongdatetoconvert.AddYears(4).ToString("dd.MM.yyyy");
-                        }
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
+                this.SaveChangesToDataGridView_All(IndexProfPodg, dataGridView_ProfPodg);
             }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexAttestaciya, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку "Аттестация" результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
-        }
-
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_ProfPodg НА ВКЛАДКЕ "КАРТОЧКА 19-20" ##########
-        private void SaveChangesToDataGridView_ProfPodg(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_ProfPodg.Rows)
+            else //Если метод вызван нажатием кнопки
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if ((cell.OwningColumn.Name == ProfPodg_DataNach.Name) || (cell.OwningColumn.Name == ProfPodg_DataOkonch.Name))
-                    {
-                        DateTime ProfPodg_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = ProfPodg_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
+                dataGridView_ProfPodg.Rows.Add("Первоначальное обучение", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---"); // добавить аттестацию
+                this.SaveChangesToDataGridView_All(IndexProfPodg, dataGridView_ProfPodg);
             }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexProfPodg, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
         }
 
 
@@ -2566,17 +2370,32 @@ namespace RankReminderWinForms
         // ##########################################################################
         private void KlassnostAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_KlassnostOld.Rows.Add("Специалист 3 класса", "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить предыдущую классность
-            this.SaveChangesToDataGridView_KlassnostOld(sender, e);
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
+            {
+                this.SaveChangesToDataGridView_All(IndexKlassnostOld, dataGridView_KlassnostOld);
+            }
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_KlassnostOld.Rows.Add("Специалист 3 класса", "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить предыдущую классность
+                this.SaveChangesToDataGridView_All(IndexKlassnostOld, dataGridView_KlassnostOld);
+            }
         }
+
 
         // ########################################################################
         // ##  КНОПКА "ДОБАВИТЬ НАГРАДЫ / ПООЩРЕНИЯ" НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##
         // ########################################################################
         private void NagradyAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_Nagrady.Rows.Add("---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить награды / поощрения
-            this.SaveChangesToDataGridView_Nagrady(sender, e);
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
+            {
+                this.SaveChangesToDataGridView_All(IndexNagrady, dataGridView_Nagrady);
+            }
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_Nagrady.Rows.Add("---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить награды / поощрения
+                this.SaveChangesToDataGridView_All(IndexNagrady, dataGridView_Nagrady);
+            }
         }
 
 
@@ -2620,77 +2439,6 @@ namespace RankReminderWinForms
             }
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В KlassnostCheyPrikaz_textBox НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
-        private void KlassnostCheyPrikaz_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (Card21and22WasLoaded == 1)
-            {
-                dataGridView1[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value = KlassnostCheyPrikaz_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В KlassnostNomerPrikaza_textBox НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
-        private void KlassnostNomerPrikaza_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (Card21and22WasLoaded == 1)
-            {
-                dataGridView1[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value = KlassnostNomerPrikaza_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_KlassnostOld НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
-        private void SaveChangesToDataGridView_KlassnostOld(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_KlassnostOld.Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if (cell.OwningColumn.Name == KlassnostDataPrikaza_dGV.Name)
-                    {
-                        DateTime KlassnostOld_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = KlassnostOld_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
-            }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexKlassnostOld, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Nagrady НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
-        private void SaveChangesToDataGridView_Nagrady(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Nagrady.Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if (cell.OwningColumn.Name == Nagrady_DataPrikaza.Name)
-                    {
-                        DateTime Nagrady_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = Nagrady_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
-            }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexNagrady, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
-        }
 
 
         //               //""""""""""""""""""""""""""\\
@@ -2730,14 +2478,20 @@ namespace RankReminderWinForms
         }
 
 
-
         // ###############################################################################
         // ##  КНОПКА "ДОБАВИТЬ УЧАСТИЕ В БОЕВЫХ ДЕЙСТВИЯХ" НА ВКЛАДКЕ "КАРТОЧКА 23-25" ##
         // ###############################################################################
         private void BoevyeAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_Boevye.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---"); // добавить участие в боевых действиях
-            this.SaveChangesToDataGridView_Boevye(sender, e);
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
+            {
+                this.SaveChangesToDataGridView_All(IndexBoevye, dataGridView_Boevye);
+            }
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_Boevye.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---"); // добавить участие в боевых действиях
+                this.SaveChangesToDataGridView_All(IndexBoevye, dataGridView_Boevye);
+            }
         }
 
         // ########################################################################
@@ -2745,8 +2499,15 @@ namespace RankReminderWinForms
         // ########################################################################
         private void RezervAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_Rezerv.Rows.Add("---", DateTime.Now.ToString("yyyy"), "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить состояние в резерве
-            this.SaveChangesToDataGridView_Rezerv(sender, e);
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
+            {
+                this.SaveChangesToDataGridView_All(IndexRezerv, dataGridView_Rezerv);
+            }
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_Rezerv.Rows.Add("---", DateTime.Now.ToString("yyyy"), "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить состояние в резерве
+                this.SaveChangesToDataGridView_All(IndexRezerv, dataGridView_Rezerv);
+            }
         }
 
 
@@ -2757,8 +2518,15 @@ namespace RankReminderWinForms
             {
                 if (Prodlenie_checkBox.CheckState == CheckState.Checked)
                 {
-                    dataGridView_Prodlenie.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "1"); // добавить продление службы
-                    this.SaveChangesToDataGridView_Prodlenie(sender, e);
+                    if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
+                    {
+                        this.SaveChangesToDataGridView_All(IndexProdlenie, dataGridView_Prodlenie);
+                    }
+                    else //Если метод вызван нажатием кнопки
+                    {
+                        dataGridView_Prodlenie.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "1"); // добавить продление службы
+                        this.SaveChangesToDataGridView_All(IndexProdlenie, dataGridView_Prodlenie);
+                    }
                 }
                 else if (Prodlenie_checkBox.CheckState == CheckState.Unchecked)
                 {
@@ -2773,83 +2541,6 @@ namespace RankReminderWinForms
             }
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Prodlenie НА ВКЛАДКЕ "КАРТОЧКА 23-25" ##########
-        private void SaveChangesToDataGridView_Prodlenie(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Prodlenie.Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if (cell.OwningColumn.Name == Prodlenie_Data.Name)
-                    {
-                        DateTime Prodlenie_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = Prodlenie_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
-            }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexProdlenie, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Boevye НА ВКЛАДКЕ "КАРТОЧКА 23-25" ##########
-        private void SaveChangesToDataGridView_Boevye(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Boevye.Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if ((cell.OwningColumn.Name == Boevye_DataNach.Name) || (cell.OwningColumn.Name == Boevye_DataOkonch.Name))
-                    {
-                        DateTime Boevye_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = Boevye_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
-            }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexBoevye, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
-        }
-
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Rezerv НА ВКЛАДКЕ "КАРТОЧКА 23-25" ##########
-        private void SaveChangesToDataGridView_Rezerv(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Rezerv.Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if (cell.OwningColumn.Name == Rezerv_DataPrikaza.Name)
-                    {
-                        DateTime Rezerv_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = Rezerv_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
-            }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexRezerv, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
-        }
 
 
         //               //""""""""""""""""""""""""""\\
@@ -2893,8 +2584,15 @@ namespace RankReminderWinForms
         // ##############################################################
         private void VzyskaniyaAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_Vzyskaniya.Rows.Add("---", "---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить взыскание
-            this.SaveChangesToDataGridView_Vzyskaniya(sender, e);
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
+            {
+                this.SaveChangesToDataGridView_All(IndexVzyskaniya, dataGridView_Vzyskaniya);
+            }
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_Vzyskaniya.Rows.Add("---", "---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить взыскание
+                this.SaveChangesToDataGridView_All(IndexVzyskaniya, dataGridView_Vzyskaniya);
+            }
         }
 
         // ###############################################################
@@ -2902,32 +2600,93 @@ namespace RankReminderWinForms
         // ###############################################################
         private void UvolnenieAdd_Click(object sender, EventArgs e)
         {
-            string UvolnenieProverka = dataGridView1[IndexUvolnenie, IndexRowLichnayaKarta].Value.ToString();
-            if (UvolnenieProverka == "")
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                dataGridView_Uvolnenie.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "---"); // добавить увольнение
-                this.SaveChangesToDataGridView_Uvolnenie(sender, e);
+                this.SaveChangesToDataGridView_All(IndexUvolnenie, dataGridView_Uvolnenie);
             }
-            else
+            else //Если метод вызван нажатием кнопки
             {
-                MessageBox.Show("Информация об увольнении уже существует!");
+                string UvolnenieProverka = dataGridView1[IndexUvolnenie, IndexRowLichnayaKarta].Value.ToString();
+                if (UvolnenieProverka == "") //Если информация об увольнении отсутствует
+                {
+                    dataGridView_Uvolnenie.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "---"); // добавить увольнение
+                    this.SaveChangesToDataGridView_All(IndexUvolnenie, dataGridView_Uvolnenie);                
+                }
+                else
+                {
+                    MessageBox.Show("Информация об увольнении уже существует!");
+                }
             }
         }
 
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Vzyskaniya НА ВКЛАДКЕ "КАРТОЧКА 26-29" ##########
-        private void SaveChangesToDataGridView_Vzyskaniya(object sender, EventArgs e)
+        // ###########################################################################
+        // ##########  ОБЩИЙ МЕТОД ОТРИСОВКИ dataGridView НА ВСЕХ ВКЛАДКАХ  ##########
+        // ###########################################################################
+        private void Draw_dataGridView_All(int Index, DataGridView dataGridView_Name)
+        {
+            string StringDataGrid = dataGridView1[Index, IndexRowLichnayaKarta].Value.ToString();
+            if (StringDataGrid != "") //проверка на существование данных в таблице
+            {
+                string[] string_array = StringDataGrid.Split('$');
+
+                foreach (string s in string_array)
+                {
+                    string[] Row = s.Split('^');
+                    dataGridView_Name.Rows.Add(Row);
+                }
+            }
+        }
+
+        // #######################################################################################
+        // ##########  ОБЩИЙ МЕТОД СОХРАНЕНИЯ ИЗМЕНЕНИЙ В DataGridView НА ВСЕХ ВКЛАДКАХ ##########
+        // #######################################################################################
+        private void SaveChangesToDataGridView_All(int Index, DataGridView dataGridView_Name)
         {
             StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Vzyskaniya.Rows)
+            foreach (DataGridViewRow row in dataGridView_Name.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    // Если обрабатываемая ячейка из колонки типа CalendarColumn, то обрабатываем неверный формат даты.
+                    if (cell.OwningColumn is CalendarColumn)
+                    {
+                        MessageBox.Show(cell.OwningColumn.Name);
+                        DateTime wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
+                        cell.Value = wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
+                    }
+                    sb.Append(cell.Value); // добавляем значение ячейки
+                    sb.Append("^"); // ставим разделитель ячеек 
+                }
+                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель ячеек
+                sb.Append("$"); // ставим разделитель строки
+            }
+            sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель строки
+
+            dataGridView1[Index, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
+            this.AcceptAndWriteChanges(); // Применить изменения
+        }
+
+
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Attestaciya НА ВКЛАДКЕ "КАРТОЧКА 19-20" ##########
+        private void SaveChangesToDataGridView_Attestaciya(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder(); // создаем строку для построения
+            foreach (DataGridViewRow row in dataGridView_Attestaciya.Rows)
             {
                 foreach (DataGridViewCell cell in row.Cells)
                 {
                     // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if ((cell.OwningColumn.Name == Vzyskaniya_DataPrikazaNakaz.Name) || (cell.OwningColumn.Name == Vzyskaniya_DataPrikazaSnyatie.Name))
+                    if (cell.OwningColumn is CalendarColumn)
                     {
-                        DateTime Vzyskaniya_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = Vzyskaniya_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
+                        DateTime Attestaciya_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
+                        cell.Value = Attestaciya_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
+
+                        if (cell.RowIndex + 1 == dataGridView_Attestaciya.Rows.Count)
+                        {
+                            // Заполняем ячейку "Дата следующей аттестации", прибавив 4 года к последней аттестации
+                            dataGridView1[IndexNextAttestaciyaDate, IndexRowLichnayaKarta].Value = Attestaciya_wrongdatetoconvert.AddYears(4).ToString("dd.MM.yyyy");
+                        }
                     }
                     sb.Append(cell.Value); // добавляем значение ячейки
                     sb.Append("^"); // ставим разделитель ячейки 
@@ -2937,34 +2696,39 @@ namespace RankReminderWinForms
             }
             sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
 
-            dataGridView1[IndexVzyskaniya, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
+            dataGridView1[IndexAttestaciya, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку "Аттестация" результирующей строкой
             this.AcceptAndWriteChanges(); // Применить изменения
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Uvolnenie НА ВКЛАДКЕ "КАРТОЧКА 26-29" ##########
-        private void SaveChangesToDataGridView_Uvolnenie(object sender, EventArgs e)
-        {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Uvolnenie.Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.                   
-                    if ((cell.OwningColumn.Name == Uvolnenie_Data.Name) || (cell.OwningColumn.Name == Uvolnenie_DataPrikaza.Name))
-                    {
-                        DateTime Uvolnenie_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = Uvolnenie_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-                    }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
-            }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
 
-            dataGridView1[IndexUvolnenie, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataPrisyagi_dateTimePicker НА ВКЛАДКЕ "КАРТОЧКА 16-18" ##########
+        private void DataPrisyagi_dateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (Card16to18WasLoaded == 1)
+            {
+                dataGridView1[IndexDataPrisyagi, IndexRowLichnayaKarta].Value = DataPrisyagi_dateTimePicker.Value.ToString("dd.MM.yyyy");
+                this.AcceptAndWriteChanges(); // применить изменения
+            }
+        }
+
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В KlassnostCheyPrikaz_textBox НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
+        private void KlassnostCheyPrikaz_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Card21and22WasLoaded == 1)
+            {
+                dataGridView1[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value = KlassnostCheyPrikaz_textBox.Text;
+                this.AcceptAndWriteChanges(); // применить изменения
+            }
+        }
+
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В KlassnostNomerPrikaza_textBox НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
+        private void KlassnostNomerPrikaza_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Card21and22WasLoaded == 1)
+            {
+                dataGridView1[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value = KlassnostNomerPrikaza_textBox.Text;
+                this.AcceptAndWriteChanges(); // применить изменения
+            }
         }
 
         // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В Zapolnil_textBox НА ВКЛАДКЕ "КАРТОЧКА 26-29" ##########
@@ -2987,24 +2751,6 @@ namespace RankReminderWinForms
             }
         }
 
-
-        // ###########################################################################
-        // ##########  ОБЩИЙ МЕТОД ОТРИСОВКИ dataGridView НА ВСЕХ ВКЛАДКАХ  ##########
-        // ###########################################################################
-        private void Draw_dataGridView_All(int Index, DataGridView dataGridView_Name)
-        {
-            string StringDataGrid = dataGridView1[Index, IndexRowLichnayaKarta].Value.ToString();
-            if (StringDataGrid != "") //проверка на существование данных в таблице
-            {
-                string[] string_array = StringDataGrid.Split('$');
-
-                foreach (string s in string_array)
-                {
-                    string[] Row = s.Split('^');
-                    dataGridView_Name.Rows.Add(Row);
-                }
-            }
-        }
 
         // ###################################################
         // ##  КНОПКА "ПРЕДЫДУЩАЯ КАРТОЧКА" (СТРЕЛКА ВЛЕВО) ##
