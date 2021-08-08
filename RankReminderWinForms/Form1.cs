@@ -24,7 +24,9 @@ namespace RankReminderWinForms
 
         private void button3_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("АИС \"Кадры ГФС\". Версия: 1.0.\nПрограмма для учета сведений о сотрудниках\nГосударственной фельдъегерской службы\nи автоматизации их обработки.\nАвтор программы: Банков Михаил.\nE-mail: pcuser@internet.ru");
+            MessageBox.Show("АИС \"Кадры ГФС\". Версия: 1.0.\n\nПрограмма для учета сведений о сотрудниках\nГосударственной фельдъегерской службы\nи автоматизации их обработки.\n\nАвтор: Банков Михаил aka PC_USER\nE-mail: pcuser@internet.ru\nGithub: https://github.com/Mikhail-Bankov", "О программе",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
         }
 
         private void Button4_Click(object sender, EventArgs e)

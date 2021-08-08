@@ -630,6 +630,7 @@ namespace RankReminderWinForms
             this.VyslugaCalc.Text = "Подсчет выслуги";
             this.VyslugaCalc.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.VyslugaCalc.UseVisualStyleBackColor = true;
+            this.VyslugaCalc.Visible = false;
             this.VyslugaCalc.Click += new System.EventHandler(this.VyslugaCalc_Click);
             // 
             // CurrentBase_label
@@ -1256,6 +1257,7 @@ namespace RankReminderWinForms
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
@@ -4205,13 +4207,6 @@ namespace RankReminderWinForms
         private CalendarColumn ProfPodg_DataOkonch;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProfPodg_ChtoOkonchil;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProfPodg_ProgrObuch;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Study_FormaObucheniya;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Study_Naimenovanie;
-        private CalendarColumn Study_DataPost;
-        private CalendarColumn Study_DataOkonch;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Study_Specialnost;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Study_Kvalifikaciya;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Study_Document;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nagrady_ChemNagrazhden;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nagrady_CheyPrikaz;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nagrady_NomerPrikaza;
@@ -4255,5 +4250,12 @@ namespace RankReminderWinForms
         private System.Windows.Forms.Button SendToAnotherDataTable;
         private System.Windows.Forms.Label CurrentBase_label;
         private System.Windows.Forms.Button VyslugaCalc;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Study_FormaObucheniya;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Study_Naimenovanie;
+        private CalendarColumn Study_DataPost;
+        private CalendarColumn Study_DataOkonch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Study_Specialnost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Study_Kvalifikaciya;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Study_Document;
     }
 }

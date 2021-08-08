@@ -38,6 +38,7 @@ namespace RankReminderWinForms
 
         // Общие
         int WantToDeleteRow = 0; // маркер намерения удалить строку. 0 - нет, 1 - да.
+        int SomeRowsWasHidden = 0; // маркер, указывающий, нужно ли пересчитать порядковые номера у строку. 0 - нет, 1 - да.
         int StillResizing = 0; // маркер, сообщающий, закончилось ли изменение размера формы. 0 - нет, 1 - да.
         int Card1to9WasLoaded = 0; // маркер, по которому мы определяем, прогрузилась ли вкладка "Карточка 1-9". Это нужно, так
                                    // как при подгрузке textbox'ов срабатывает событие их изменения и база данных без необходимости
@@ -104,18 +105,6 @@ namespace RankReminderWinForms
         int IndexDataZapolneniya; // Дата заполнения карточки
         int IndexImageString; // Изображение в виде текста
 
-        // Индексы колонок listVisible (грид только с "видимыми" колонками)
-        int IndexVisibleCnum; // Порядковый номер
-        int IndexVisibleDateOfBirth; // Дата рождения
-        int IndexVisibleRank; // Звание
-        int IndexVisibleRankDate; // Дата присвоения звания
-        int IndexVisibleRankLimit; // Потолок по званию
-        int IndexVisibleNextRankDate; // Следующая дата присвоения звания
-        int IndexVisibleKlassnost; // Квалификационное звание
-        int IndexVisibleKlassnostDate; // Дата присвоения квалиф. звания
-        int IndexVisibleNextKlassnostDate; // Следующая дата присвоения квалиф. звания
-
-
         // Индекс открытой личной карточки
         int IndexRowLichnayaKarta = 0;
 
@@ -125,8 +114,6 @@ namespace RankReminderWinForms
         // ###############  СТРОКОВЫЕ ПЕРЕМЕННЫЕ  ############### 
 
         string CellValueToCompare; // переменная для проверки изменения в редактируемой ячейке
-
-
 
         string CurrentDataTableName = "Kadry";
         string OtherDataTableName = "Archive";
@@ -164,7 +151,7 @@ namespace RankReminderWinForms
         DataGridViewTextBoxColumn dataprisyagi = new DataGridViewTextBoxColumn(); // Дата принятия присяги
         DataGridViewTextBoxColumn rabotagfs = new DataGridViewTextBoxColumn(); // Прохождение службы (работа) в ГФС России
         DataGridViewTextBoxColumn attestaciya = new DataGridViewTextBoxColumn(); // Аттестация
-        DataGridViewTextBoxColumn nextattestaciyadate = new DataGridViewTextBoxColumn(); // Дата следующей аттестации
+        CalendarColumn nextattestaciyadate = new CalendarColumn(); // Дата следующей аттестации
         DataGridViewTextBoxColumn profpodg = new DataGridViewTextBoxColumn(); // Профессиональная подготовка
         DataGridViewTextBoxColumn klassnostcheyprikaz = new DataGridViewTextBoxColumn(); // Чей приказ о присвоении квалиф. звания
         DataGridViewTextBoxColumn klassnostnomerprikaza = new DataGridViewTextBoxColumn(); // Номер приказа о присвоении квалиф. звания
@@ -331,8 +318,7 @@ namespace RankReminderWinForms
             dataGridView_TrudDeyat.CellValueChanged += new DataGridViewCellEventHandler(TrudDeyatAdd_Click);
             dataGridView_StazhVysluga.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_StazhVysluga);
             dataGridView_RabotaGFS.CellValueChanged += new DataGridViewCellEventHandler(RabotaGFSAdd_Click);
-
-            dataGridView_Attestaciya.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_Attestaciya);
+            dataGridView_Attestaciya.CellValueChanged += new DataGridViewCellEventHandler(AttestaciyaAdd_Click);
             dataGridView_ProfPodg.CellValueChanged += new DataGridViewCellEventHandler(ProfPodgAdd_Click);
             dataGridView_KlassnostOld.CellValueChanged += new DataGridViewCellEventHandler(KlassnostAdd_Click);
             dataGridView_Nagrady.CellValueChanged += new DataGridViewCellEventHandler(NagradyAdd_Click);
@@ -832,7 +818,7 @@ namespace RankReminderWinForms
             {
                 for (int i = 0; i < dataGridView1.RowCount; i++) // Заполняем колонку с порядковыми номерами строк
                 {
-                    dataGridView1[IndexCnum, i].Value = i + 1; //увеличиваем порядковый номер в каждой последующей строке на единицу
+                    dataGridView1[IndexCnum, i].Value = i + 1; // Увеличиваем порядковый номер в каждой последующей строке на единицу
                 }
             }
         }
@@ -1051,7 +1037,14 @@ namespace RankReminderWinForms
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            this.ShowAllColumns();
+            if (SomeRowsWasHidden == 1) // Если есть скрытые строки
+            {
+                this.ShowAllRows(); // Показываем все строки
+                this.PereschetCnum(); // Пересчитываем порядковые номера строк
+                SomeRowsWasHidden = 0; // Переводим маркер в состояние "Нет скрытых строк"
+            }
+            this.ShowAllColumns(); // Показываем "стандартные" колонки dataGridView1
+
         }
 
         private void ShowAllColumns() // показать все "стандартные" колонки dataGridView1
@@ -1096,12 +1089,17 @@ namespace RankReminderWinForms
             zapolnil.Visible = false;
             datazapolneniya.Visible = false;
             imagestring.Visible = false;
-            this.ShowAllRows();
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            this.ShowVysluga();
+            if (SomeRowsWasHidden == 1) // Если есть скрытые строки
+            {
+                this.ShowAllRows(); // Показываем все строки
+                this.PereschetCnum(); // Пересчитываем порядковые номера строк
+                SomeRowsWasHidden = 0; // Переводим маркер в состояние "Нет скрытых строк"
+            }
+            this.ShowVysluga(); // Показываем колонки dataGridView1, связанные со специальным званием
         }
 
         private void ShowVysluga() // показать только выслугу
@@ -1146,15 +1144,20 @@ namespace RankReminderWinForms
             zapolnil.Visible = false;
             datazapolneniya.Visible = false;
             imagestring.Visible = false;
-            this.ShowAllRows();
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-            this.ShowKlassnost();
+            if (SomeRowsWasHidden == 1) // Если есть скрытые строки
+            {
+                this.ShowAllRows(); // Показываем все строки
+                this.PereschetCnum(); // Пересчитываем порядковые номера строк
+                SomeRowsWasHidden = 0; // Переводим маркер в состояние "Нет скрытых строк"
+            }
+            this.ShowKlassnost(); // Показываем колонки dataGridView1, связанные с классным званием
         }
 
-        private void ShowKlassnost() // показать только классность
+        private void ShowKlassnost() // Показать только классность
         {
             personalfilenum.Visible = false;
             personalnum.Visible = false;
@@ -1196,7 +1199,6 @@ namespace RankReminderWinForms
             zapolnil.Visible = false;
             datazapolneniya.Visible = false;
             imagestring.Visible = false;
-            this.ShowAllRows();
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
@@ -1208,7 +1210,8 @@ namespace RankReminderWinForms
         {
             if (radioButton4.Checked == true) //без этой проверки, при radioButton1.Checked = true, метод срабатывает второй раз (позже разобраться почему)
             {
-                int ProverkaNaPustotu = 0;
+                int NumberOfHiddenRows = 0; // Переменная для храненения количества скрытых строк
+                int VisibleCnum = 0; // Переменная для пересчета порядковых номеров в видимых строках
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
                     if (dataGridView1[IndexNextAttestaciyaDate, row.Index].Value.ToString() != "") // если значение даты аттестации в строке не пустое
@@ -1220,17 +1223,23 @@ namespace RankReminderWinForms
                         {
                             dataGridView1.CurrentCell = null;
                             row.Visible = false; // скрываем строку
-                            ProverkaNaPustotu++;
+                            NumberOfHiddenRows++;
                         }
+                        else 
+                        {
+                            VisibleCnum++;
+                            dataGridView1[IndexCnum, row.Index].Value = VisibleCnum;
+                        }
+                            
                     }
                     else
                     {
                         dataGridView1.CurrentCell = null;
                         row.Visible = false; // скрываем строку
-                        ProverkaNaPustotu++;
+                        NumberOfHiddenRows++;
                     }
                 }
-                if (ProverkaNaPustotu == dataGridView1.Rows.Count) // Если по итогу перебора строк, все строки оказались скрыты
+                if (NumberOfHiddenRows == dataGridView1.Rows.Count) // Если по итогу перебора строк, все строки оказались скрыты
                 {
                     MessageBox.Show("Сотрудники, подпадающие под данный фильтр отсутствуют!");
                     radioButton1.Checked = true; // сбрасываем выбор фильтра
@@ -1277,6 +1286,9 @@ namespace RankReminderWinForms
                     zapolnil.Visible = false;
                     datazapolneniya.Visible = false;
                     imagestring.Visible = false;
+
+                    //this.PereschetCnum(); // Пересчитываем порядковые номера строк
+                    SomeRowsWasHidden = 1; // Переводим маркер в состояние "Есть скрытые строки"
                 }
             }
         }
@@ -1392,147 +1404,99 @@ namespace RankReminderWinForms
         // ###############  ВЫГРУЗКА dataGridView1 В EXCEL ФАЙЛ  ###############
         public void ExportDataGridToExcel()
         {
-            //Формируем новую таблицу только из видимых столбцов
-            List<DataGridViewColumn> listVisible = new List<DataGridViewColumn>();
+            //Формируем новый список listVisibleColumns, состоящий только из видимых столбцов
+            List<DataGridViewColumn> listVisibleColumns = new List<DataGridViewColumn>();
             foreach (DataGridViewColumn col in dataGridView1.Columns)
             {
                 if (col.Visible)
                 {
-                    listVisible.Add(col);
+                    listVisibleColumns.Add(col);
                 }
             }
 
-            Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
-            ExcelApp.Application.Workbooks.Add(Type.Missing);
+            //Формируем новый список listVisibleRows, состоящий только из видимых строк
+            List<DataGridViewRow> listVisibleRows = new List<DataGridViewRow>();
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Visible)
+                {
+                    listVisibleRows.Add(row);
+                }
+            }
+
+            /*==============================================================================================================*/
+
+            // Подготавливаем Excel для экспорта dataGridView1
+            Excel.Application ExcelApp = new Excel.Application();
+            ExcelApp.Application.Workbooks.Add(Type.Missing); //Создаем новую книгу
             ExcelApp.Columns.ColumnWidth = 15; // устанавливаем ширину столбцов
             ExcelApp.Cells.WrapText = "true"; // устанавливаем перенос по словам
 
-            Excel.Worksheet xlWorkSheet = (Excel.Worksheet)ExcelApp.Worksheets.get_Item(1);
+            Excel.Worksheet xlWorkSheet = (Excel.Worksheet)ExcelApp.Worksheets.get_Item(1); //Создаем новый лист
+            xlWorkSheet.Name = "Сведения о личном составе"; // именуем лист
 
-            var _with1 = xlWorkSheet.PageSetup; // блок параметров листа
+            var _with1 = xlWorkSheet.PageSetup; // Блок параметров листа
             _with1.PaperSize = Excel.XlPaperSize.xlPaperA4; // размер А4
             _with1.Orientation = Excel.XlPageOrientation.xlLandscape; // ландшафтная ориентация
             _with1.Zoom = false;
+            // Ужимаем всё при выводе на печать
             _with1.FitToPagesWide = 1;
             _with1.FitToPagesTall = 1;
 
-            xlWorkSheet.Name = "Сведения о личном составе"; // именуем лист
+            /*==============================================================================================================*/
 
-            Excel.Range range1 = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[1, listVisible.Count]); // диапазон заголовка в файле Excel
-            range1.Cells.Font.Bold = true; // жирный шрифт
-            range1.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-            range1.BorderAround(Type.Missing, Excel.XlBorderWeight.xlThick, Excel.XlColorIndex.xlColorIndexAutomatic); // увеличиваем толщину внешних границ
-            range1.Borders.Color = Color.Black; // черный цвет границ
-
-            for (int i = 0; i < listVisible.Count; i++) // Заполняем заголовок в Excel файле заголовками столбцов
+            // Заполняем заголовки
+            for (int i = 0; i < listVisibleColumns.Count; i++) // Проходим только по видимым столбцам
             {
-                ExcelApp.Cells[1, i + 1] = listVisible[i].HeaderText; // заполняется строго первая строка
+                ExcelApp.Cells[1, i + 1] = listVisibleColumns[i].HeaderText; // Заполняем первую строку Excel заголовками видимых столбцов
+            }
 
-                switch (listVisible[i].HeaderText) // просчитываем индексы в "видимом" гриде
+            // Украшаем заголовки
+            Excel.Range range_zagolovki = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[1, listVisibleColumns.Count]); // диапазон заголовка в файле Excel
+            range_zagolovki.Cells.Font.Bold = true; // жирный шрифт
+            range_zagolovki.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
+            range_zagolovki.BorderAround(Type.Missing, Excel.XlBorderWeight.xlThick, Excel.XlColorIndex.xlColorIndexAutomatic); // увеличиваем толщину внешних границ
+            range_zagolovki.Borders.Color = Color.Black; // черный цвет границ
+            range_zagolovki.Cells.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter; // вертикальное выравнивание по центру
+
+            /*==============================================================================================================*/
+
+            //Заполняем лист Excel видимыми строками, столбцами и центрируем столбцы с датами
+            for (int col = 0; col < listVisibleColumns.Count; col++)
+            {
+                if (listVisibleColumns[col] is CalendarColumn) // Центрируем столбцы с датами в Excel
                 {
-                    case Cnum_HeaderText: // Порядковый номер
-                        IndexVisibleCnum = i;
-                        break;
-                    case DateOfBirth_HeaderText: // Дата рождения
-                        IndexVisibleDateOfBirth = i;
-                        break;
-                    case Rank_HeaderText: // Звание
-                        IndexVisibleRank = i;
-                        break;
-                    case RankDate_HeaderText: // Дата присвоения звания
-                        IndexVisibleRankDate = i;
-                        break;
-                    case RankLimit_HeaderText: // Потолок по званию
-                        IndexVisibleRankLimit = i;
-                        break;
-                    case NextRankDate_HeaderText: // Следующая дата присвоения звания
-                        IndexVisibleNextRankDate = i;
-                        break;
-                    case Klassnost_HeaderText: // Квалификационное звание
-                        IndexVisibleKlassnost = i;
-                        break;
-                    case KlassnostDate_HeaderText: // Дата присвоения квалиф. звания
-                        IndexVisibleKlassnostDate = i;
-                        break;
-                    case NextKlassnostDate_HeaderText: // Следующая дата присвоения квалиф. звания
-                        IndexVisibleNextKlassnostDate = i;
-                        break;
+                    Excel.Range range_col_with_date = xlWorkSheet.get_Range(xlWorkSheet.Cells[2, col + 1], xlWorkSheet.Cells[listVisibleRows.Count + 1, col + 1]); // диапазон столбца, где обнаружена дата (без заголовка)
+                    range_col_with_date.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
+                }
+                for (int row = 0; row < listVisibleRows.Count; row++)
+                {
+                    ExcelApp.Cells[row + 2, col + 1] = dataGridView1.Rows[listVisibleRows[row].Index].Cells[listVisibleColumns[col].Index].Value.ToString(); // Наполняем лист Excel видимыми ячейками, начиная с первой строки после заголовка
                 }
             }
 
-            Excel.Range range2 = xlWorkSheet.get_Range(xlWorkSheet.Columns[1], xlWorkSheet.Columns[listVisible.Count]);// диапазон всех рабочих колонок
-            range2.Cells.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter; // вертикальное выравнивание по центру
+            //Украшаем все, кроме заголовка
+            Excel.Range range_all_cells_without_headers = xlWorkSheet.get_Range(xlWorkSheet.Cells[2, 1], xlWorkSheet.Cells[listVisibleRows.Count + 1, listVisibleColumns.Count]); // диапазон всех ячеек, кроме заголовка
+            range_all_cells_without_headers.Cells.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter; // вертикальное выравнивание по центру
+            range_all_cells_without_headers.Borders[Excel.XlBordersIndex.xlInsideVertical].Color = Color.LightGray; //внутренние вертикальные границы области с данными
+            range_all_cells_without_headers.Borders[Excel.XlBordersIndex.xlInsideHorizontal].Color = Color.Black; //внутренние горизонтальные границы области с данными
+            range_all_cells_without_headers.Borders[Excel.XlBordersIndex.xlEdgeRight].Color = Color.Black; //крайняя правая граница области с данными
+            range_all_cells_without_headers.Borders[Excel.XlBordersIndex.xlEdgeLeft].Color = Color.Black; //крайняя левая граница области с данными
+            range_all_cells_without_headers.Borders[Excel.XlBordersIndex.xlEdgeBottom].Color = Color.Black; //крайняя нижняя граница области с данными
 
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                for (int j = 0; j < listVisible.Count; j++)
-                {
-                    ExcelApp.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[listVisible[j].Index].Value.ToString();
-                }
-            }
+            Excel.Range range_Cnum = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[listVisibleRows.Count + 1, 1]); // Диапазон ячеек с порядковым номером
+            range_Cnum.ColumnWidth = 5; // уменьшаем ширину
+            range_Cnum.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
 
-            Excel.Range range3 = xlWorkSheet.get_Range(xlWorkSheet.Cells[2, 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, listVisible.Count]);
-            range3.Borders[Excel.XlBordersIndex.xlInsideVertical].Color = Color.LightGray; //внутренние вертикальные границы области с данными
-            range3.Borders[Excel.XlBordersIndex.xlInsideHorizontal].Color = Color.Black; //внутренние горизонтальные границы области с данными
-            range3.Borders[Excel.XlBordersIndex.xlEdgeRight].Color = Color.Black; //крайняя правая граница области с данными
-            range3.Borders[Excel.XlBordersIndex.xlEdgeLeft].Color = Color.Black; //крайняя левая граница области с данными
-            range3.Borders[Excel.XlBordersIndex.xlEdgeBottom].Color = Color.Black; //крайняя нижняя граница области с данными
+            /*
+                        // В ДАЛЬНЕЙШЕМ ВОЗМОЖНО ПОНАДОБИТСЯ ИМЕНОВАТЬ ЛИСТ EXCEL В ЗАВИСИМОСТИ ОТ ВЫБРАННОГО ФИЛЬТРА
+                        if (radioButton1.Checked == true) //если выбран определенный фильтр
+                        {
+                            xlWorkSheet.Name = "Название листа"; // именуем лист
+                        }
+            */
 
-            // диапазон ячеек с порядковым номером
-            Excel.Range rangeCnum = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleCnum + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleCnum + 1]);
-            rangeCnum.ColumnWidth = 5; // уменьшаем ширину
-            rangeCnum.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-
-            // ВЫВОД В EXCEL В ЗАВИСИМОСТИ ОТ ВЫБРАННОГО ФИЛЬТРА
-            if (radioButton1.Checked == true) //если фильтрация выключена
-            {
-                // Диапазон "Дата рождения"
-                Excel.Range rangeVisibleDateOfBirth = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleDateOfBirth + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleDateOfBirth + 1]);
-                rangeVisibleDateOfBirth.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-                // Диапазон "Дата присвоения звания"
-                Excel.Range rangeVisibleRankDate = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleRankDate + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleRankDate + 1]);
-                rangeVisibleRankDate.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-                // Диапазон "Следующая дата присвоения звания"
-                Excel.Range rangeVisibleNextRankDate = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleNextRankDate + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleNextRankDate + 1]);
-                rangeVisibleNextRankDate.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-                // Диапазон "Квалификационное звание"
-                Excel.Range rangeVisibleKlassnost = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleKlassnost + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleKlassnost + 1]);
-                rangeVisibleKlassnost.ColumnWidth = 20; // увеличиваем ширину
-                // Диапазон "Дата присвоения квалиф. звания"
-                Excel.Range rangeVisibleKlassnostDate = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleKlassnostDate + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleKlassnostDate + 1]);
-                rangeVisibleKlassnostDate.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-                // Диапазон "Следующая дата присвоения квалиф. звания"
-                Excel.Range rangeNextKlassnostDate = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleNextKlassnostDate + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleNextKlassnostDate + 1]);
-                rangeNextKlassnostDate.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-            }
-
-            if (radioButton2.Checked == true) //если фильтрация по званию
-            {
-                // Диапазон "Дата присвоения звания"
-                Excel.Range rangeVisibleRankDate = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleRankDate + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleRankDate + 1]);
-                rangeVisibleRankDate.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-                // Диапазон "Следующая дата присвоения звания"
-                Excel.Range rangeVisibleNextRankDate = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleNextRankDate + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleNextRankDate + 1]);
-                rangeVisibleNextRankDate.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-            }
-
-            if (radioButton3.Checked == true) //если фильтрация по классности
-            {
-                // Диапазон "Квалификационное звание"
-                Excel.Range rangeVisibleKlassnost = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleKlassnost + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleKlassnost + 1]);
-                rangeVisibleKlassnost.ColumnWidth = 20; // увеличиваем ширину
-                // Диапазон "Дата присвоения квалиф. звания"
-                Excel.Range rangeVisibleKlassnostDate = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleKlassnostDate + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleKlassnostDate + 1]);
-                rangeVisibleKlassnostDate.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-                // Диапазон "Следующая дата присвоения квалиф. звания"
-                Excel.Range rangeNextKlassnostDate = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, IndexVisibleNextKlassnostDate + 1], xlWorkSheet.Cells[dataGridView1.RowCount + 1, IndexVisibleNextKlassnostDate + 1]);
-                rangeNextKlassnostDate.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-            }
-            if (radioButton4.Checked == true) //если фильтрация по аттестации
-            {
-                // здесь будет находится код для вывода в Excel списка с аттестацией сотрудников
-            }
-            ExcelApp.Visible = true;
+            ExcelApp.Visible = true; // Показываем Excel
         }
 
 
@@ -1970,17 +1934,16 @@ namespace RankReminderWinForms
             this.Draw_dataGridView_All(IndexStudy, dataGridView_Study); // Отрисовываем таблицу dataGridView_Study
 
             Study_FormaObucheniya.MinimumWidth = 120;
-
-            //Чтобы не обрезался текст, расчитываем ширину выпадающего списка, когда ComboBox в режиме редактирования
-            Study_FormaObucheniya.DropDownWidth = Study_FormaObucheniya.Items.Cast<Object>().Select(x => x.ToString())
-    .Max(x => TextRenderer.MeasureText(x, Study_FormaObucheniya.InheritedStyle.Font, Size.Empty, TextFormatFlags.Default).Width);
-
             Study_Naimenovanie.MinimumWidth = 130;
             Study_DataPost.MinimumWidth = 120;
             Study_DataPost.Width = 120;
             Study_DataOkonch.MinimumWidth = 120;
             Study_DataOkonch.Width = 120;
             Study_Document.MinimumWidth = 140;
+
+            //Чтобы не обрезался текст, расчитываем ширину выпадающего списка, когда ComboBox в режиме редактирования
+            Study_FormaObucheniya.DropDownWidth = Study_FormaObucheniya.Items.Cast<Object>().Select(x => x.ToString())
+    .Max(x => TextRenderer.MeasureText(x, Study_FormaObucheniya.InheritedStyle.Font, Size.Empty, TextFormatFlags.Default).Width);
 
             /*==============================================================================================================*/
 
@@ -2314,8 +2277,16 @@ namespace RankReminderWinForms
         // ###############################################################
         private void AttestaciyaAdd_Click(object sender, EventArgs e)
         {
-            dataGridView_Attestaciya.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "Плановая", "Cоответствует замещаемой должности"); // добавить аттестацию
-            this.SaveChangesToDataGridView_Attestaciya(sender, e);
+            if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
+            {
+                this.SaveChangesToDataGridView_All(IndexAttestaciya, dataGridView_Attestaciya);
+            }
+            else //Если метод вызван нажатием кнопки
+            {
+                dataGridView_Attestaciya.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "Плановая", "Cоответствует замещаемой должности"); // добавить аттестацию
+                this.SaveChangesToDataGridView_All(IndexAttestaciya, dataGridView_Attestaciya);
+            }
+            Calculate_NextAttestaciyaDate(); // высчитываем дату следующей аттестации
         }
 
 
@@ -2330,7 +2301,7 @@ namespace RankReminderWinForms
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_ProfPodg.Rows.Add("Первоначальное обучение", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---"); // добавить аттестацию
+                dataGridView_ProfPodg.Rows.Add("Первоначальное обучение", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---"); // добавить проф. подготовку
                 this.SaveChangesToDataGridView_All(IndexProfPodg, dataGridView_ProfPodg);
             }
         }
@@ -2651,7 +2622,6 @@ namespace RankReminderWinForms
                     // Если обрабатываемая ячейка из колонки типа CalendarColumn, то обрабатываем неверный формат даты.
                     if (cell.OwningColumn is CalendarColumn)
                     {
-                        MessageBox.Show(cell.OwningColumn.Name);
                         DateTime wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
                         cell.Value = wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
                     }
@@ -2668,35 +2638,25 @@ namespace RankReminderWinForms
         }
 
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataGridView_Attestaciya НА ВКЛАДКЕ "КАРТОЧКА 19-20" ##########
-        private void SaveChangesToDataGridView_Attestaciya(object sender, EventArgs e)
+        // ##########  ВЫСЧИТЫВАНИЕ ДАТЫ СЛЕДУЮЩЕЙ АТТЕСТАЦИИ ##########
+        private void Calculate_NextAttestaciyaDate()
         {
-            StringBuilder sb = new StringBuilder(); // создаем строку для построения
             foreach (DataGridViewRow row in dataGridView_Attestaciya.Rows)
             {
-                foreach (DataGridViewCell cell in row.Cells)
+                if (row.Index + 1 == dataGridView_Attestaciya.Rows.Count) //Находим последнюю строку в dataGridView_Attestaciya
                 {
-                    // Обработка неверного формата даты. Возможно так и должно быть. Разобраться позже.
-                    if (cell.OwningColumn is CalendarColumn)
+                    foreach (DataGridViewCell cell in row.Cells) //Пробегаем по ячейкам в найденной строке
                     {
-                        DateTime Attestaciya_wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = Attestaciya_wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
-
-                        if (cell.RowIndex + 1 == dataGridView_Attestaciya.Rows.Count)
+                        // Обработка неверного формата даты и высчитывание даты следующей аттестации
+                        if (cell.OwningColumn is CalendarColumn)
                         {
+                            DateTime wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
                             // Заполняем ячейку "Дата следующей аттестации", прибавив 4 года к последней аттестации
-                            dataGridView1[IndexNextAttestaciyaDate, IndexRowLichnayaKarta].Value = Attestaciya_wrongdatetoconvert.AddYears(4).ToString("dd.MM.yyyy");
+                            dataGridView1[IndexNextAttestaciyaDate, IndexRowLichnayaKarta].Value = wrongdatetoconvert.AddYears(4).ToString("dd.MM.yyyy");
                         }
                     }
-                    sb.Append(cell.Value); // добавляем значение ячейки
-                    sb.Append("^"); // ставим разделитель ячейки 
-                }
-                sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель
-                sb.Append("$"); // ставим разделитель строки
+                }             
             }
-            sb.Remove(sb.Length - 1, 1); // Убираем последнюю точку с запятой
-
-            dataGridView1[IndexAttestaciya, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку "Аттестация" результирующей строкой
             this.AcceptAndWriteChanges(); // Применить изменения
         }
 
@@ -2710,6 +2670,7 @@ namespace RankReminderWinForms
                 this.AcceptAndWriteChanges(); // применить изменения
             }
         }
+
 
         // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В KlassnostCheyPrikaz_textBox НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
         private void KlassnostCheyPrikaz_textBox_TextChanged(object sender, EventArgs e)
