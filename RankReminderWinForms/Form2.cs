@@ -354,11 +354,6 @@ namespace RankReminderWinForms
             Cnum_label.Text = (IndexRowLichnayaKarta + 1).ToString() + " из " + dataGridView1.RowCount.ToString(); // Порядковый номер личной карточки
 
             label1.Text = "Сегодня: " + DateTime.Today.ToShortDateString(); //ставим текущую дату внизу формы
-
-            CardsFIO_label.Text = dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value.ToString() + " "
-                + dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString() + " "
-                + dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Прописываем ФИО над стрелками в карточке
-
         }
 
         // ###############  ОТРИСОВКА dataGridView1  ###############
@@ -366,7 +361,6 @@ namespace RankReminderWinForms
         {
             DataGridViewCellStyle style = dataGridView1.ColumnHeadersDefaultCellStyle;
             style.Alignment = DataGridViewContentAlignment.MiddleCenter; // выравниваем текст заголовков по центру
-
 
             //Столбец "Порядковый номер"
             cnum.HeaderText = Cnum_HeaderText;
@@ -1243,6 +1237,7 @@ namespace RankReminderWinForms
                 {
                     MessageBox.Show("Сотрудники, подпадающие под данный фильтр отсутствуют!");
                     radioButton1.Checked = true; // сбрасываем выбор фильтра
+                    this.ShowAllRows(); // Показываем все строки
                 }
                 else // если есть, что выводить - скрываем лишние столбцы
                 {
@@ -1603,6 +1598,7 @@ namespace RankReminderWinForms
             }
         }
 
+        // ###############  СОБЫТИЕ, ПРИ СМЕНЕ АКТИВНОЙ ВКЛАДКИ ###############
         private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {
             if (dataGridView1.Rows.Count == 0) // Проверка dataGridView1 на пустоту. Если грид пустой - не даем уйти с вкладки "Общий список"
@@ -1611,7 +1607,7 @@ namespace RankReminderWinForms
                 MessageBox.Show("Сначала добавьте хотя бы одного сотрудника!");
             }
         }
-        // ###############  СОБЫТИЕ, ПРИ СМЕНЕ АКТИВНОЙ ВКЛАДКИ ###############
+        // ###############  СОБЫТИЕ, ПОСЛЕ СМЕНЫ АКТИВНОЙ ВКЛАДКИ ###############
         private void tabControl1_SelectedIndexChanged(Object sender, EventArgs e)
         {
             if (IndexRowLichnayaKarta > dataGridView1.RowCount - 1) // Проверка на выход за пределы диапазона личных карточек.

@@ -26,19 +26,28 @@ namespace RankReminderWinForms
         }
 
         private void Button_UnloadDB_Click(object sender, EventArgs e)
-        {            
-            String date = DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year;
-            String fileName = "BaseLichSost_Backup (" + date + ")";
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Title = "Выберите место для сохранения базы данных";
-            saveFileDialog1.InitialDirectory = "c:\\";
-            saveFileDialog1.FileName = fileName;
-            saveFileDialog1.Filter = "xml файлы (*.xml)|*.xml";
+        {
+            if (!File.Exists(XMLDB.Path)) // Если база данных в формате XML не существует...
+            {
+                MessageBox.Show("Сначала создайте базу данных!", "Внимание!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+            else 
+            {
+                String date = DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year;
+                String fileName = "BaseLichSost_Backup (" + date + ")";
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+                saveFileDialog1.Title = "Выберите место для сохранения базы данных";
+                saveFileDialog1.InitialDirectory = "c:\\";
+                saveFileDialog1.FileName = fileName;
+                saveFileDialog1.Filter = "xml файлы (*.xml)|*.xml";
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {        
-                File.Copy(XMLDB.Path, saveFileDialog1.FileName);
-                MessageBox.Show("Резервная копия базы данных создана по пути: " + saveFileDialog1.FileName);
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    File.Copy(XMLDB.Path, saveFileDialog1.FileName);
+                    MessageBox.Show("Резервная копия базы данных создана по пути: " + saveFileDialog1.FileName);
+                }
             }
         }
 

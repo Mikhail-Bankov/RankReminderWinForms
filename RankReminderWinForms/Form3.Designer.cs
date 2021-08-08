@@ -125,6 +125,7 @@ namespace RankReminderWinForms
             this.ClientSize = new System.Drawing.Size(680, 450);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Button_CloseSettings);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form3";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

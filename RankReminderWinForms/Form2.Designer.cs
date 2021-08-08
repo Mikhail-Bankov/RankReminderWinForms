@@ -3895,6 +3895,7 @@ namespace RankReminderWinForms
             this.ClientSize = new System.Drawing.Size(1006, 723);
             this.Controls.Add(this.Cards_groupBox);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1024, 768);
             this.Name = "Form2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

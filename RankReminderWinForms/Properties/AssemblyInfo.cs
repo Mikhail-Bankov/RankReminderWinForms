@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанных со сборкой.
-[assembly: AssemblyTitle("RankReminderWinForms")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("АИС Кадры ГФС")]
+[assembly: AssemblyDescription("Программа для учета сведений о сотрудниках Государственной фельдъегерской службы и автоматизации их обработки.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RankReminderWinForms")]
-[assembly: AssemblyCopyright("PCUSER ©  2021")]
+[assembly: AssemblyCompany("PC_USER")]
+[assembly: AssemblyProduct("АИС Кадры ГФС")]
+[assembly: AssemblyCopyright("Copyright © 2021 PC_USER")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
