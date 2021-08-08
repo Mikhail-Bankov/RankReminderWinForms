@@ -1204,43 +1204,49 @@ namespace RankReminderWinForms
         {
             if (radioButton4.Checked == true) //без этой проверки, при radioButton1.Checked = true, метод срабатывает второй раз (позже разобраться почему)
             {
-                int NumberOfHiddenRows = 0; // Переменная для храненения количества скрытых строк
+                bool SomeRowsMustBeHidden = false; // Переменная, обозначающая, нужно ли будет скрывать строки
                 int VisibleCnum = 0; // Переменная для пересчета порядковых номеров в видимых строках
+
+                DateTime CheckedYear = DateTime.Now.AddYears(1); // прибавляем к текущей дате один год в формат DateTime
+
+                // Пробегаем по строкам первый раз и при нахождении нужных - проставляем им новые порядковые номера
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
                     if (dataGridView1[IndexNextAttestaciyaDate, row.Index].Value.ToString() != "") // если значение даты аттестации в строке не пустое
                     {
                         DateTime DateFromCurrentRow = DateTime.Parse(dataGridView1[IndexNextAttestaciyaDate, row.Index].Value.ToString()); // парсим значение даты аттестации в формат DateTime
-                        DateTime CheckedYear = DateTime.Now.AddYears(1); // прибавляем к текущей дате один год в формат DateTime
 
-                        if (DateFromCurrentRow.Year != CheckedYear.Year) // Если год из ячейки с датой следующей аттестации не является следующим годом
+                        if (DateFromCurrentRow.Year == CheckedYear.Year) // Если год из ячейки с датой следующей аттестации является следующим годом
+                        {
+                            SomeRowsMustBeHidden = true;
+                            VisibleCnum++;
+                            dataGridView1[IndexCnum, row.Index].Value = VisibleCnum; //вызывает ошибку
+                        }                            
+                    }
+                }
+
+                if (SomeRowsMustBeHidden == true) // Если были найдены сотрудники, у которых аттестация в следующем году
+                {
+                    // Пробегаем по строкам второй раз и прячем все строки, кроме найденных 
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        if (dataGridView1[IndexNextAttestaciyaDate, row.Index].Value.ToString() != "") // если значение даты аттестации в строке не пустое
+                        {
+                            DateTime DateFromCurrentRow = DateTime.Parse(dataGridView1[IndexNextAttestaciyaDate, row.Index].Value.ToString()); // парсим значение даты аттестации в формат DateTime
+
+                            if (DateFromCurrentRow.Year != CheckedYear.Year) // Если год из ячейки с датой следующей аттестации не является следующим годом
+                            {
+                                dataGridView1.CurrentCell = null;
+                                row.Visible = false; // скрываем строку
+                            }
+                        }
+                        else // Если значение даты аттестации пустое
                         {
                             dataGridView1.CurrentCell = null;
                             row.Visible = false; // скрываем строку
-                            NumberOfHiddenRows++;
                         }
-                        else 
-                        {
-                            VisibleCnum++;
-                            dataGridView1[IndexCnum, row.Index].Value = VisibleCnum;
-                        }
-                            
                     }
-                    else
-                    {
-                        dataGridView1.CurrentCell = null;
-                        row.Visible = false; // скрываем строку
-                        NumberOfHiddenRows++;
-                    }
-                }
-                if (NumberOfHiddenRows == dataGridView1.Rows.Count) // Если по итогу перебора строк, все строки оказались скрыты
-                {
-                    MessageBox.Show("Сотрудники, подпадающие под данный фильтр отсутствуют!");
-                    radioButton1.Checked = true; // сбрасываем выбор фильтра
-                    this.ShowAllRows(); // Показываем все строки
-                }
-                else // если есть, что выводить - скрываем лишние столбцы
-                {
+                    // Скрываем лишние столбцы
                     personalfilenum.Visible = false;
                     personalnum.Visible = false;
                     gender.Visible = false;
@@ -1282,9 +1288,14 @@ namespace RankReminderWinForms
                     datazapolneniya.Visible = false;
                     imagestring.Visible = false;
 
-                    //this.PereschetCnum(); // Пересчитываем порядковые номера строк
                     SomeRowsWasHidden = 1; // Переводим маркер в состояние "Есть скрытые строки"
                 }
+                else // Если по итогу первого перебора строк ничего не найдено
+                {
+                    MessageBox.Show("Сотрудники, подпадающие под данный фильтр отсутствуют!");
+                    radioButton1.Checked = true; // сбрасываем выбор фильтра
+                    this.ShowAllRows(); // Показываем все строки
+                }                
             }
         }
 
