@@ -105,12 +105,12 @@ namespace RankReminderWinForms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle72 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle73 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle74 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.dataGridView1 = new RankReminderWinForms.MyCustomDataGrid();
+            this.dgvMainList = new RankReminderWinForms.MyCustomDataGrid();
             this.Close1 = new System.Windows.Forms.Button();
             this.dataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataSetBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.AddPerson = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblCurrentDate = new System.Windows.Forms.Label();
             this.ExportToExcel = new System.Windows.Forms.Button();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -120,33 +120,33 @@ namespace RankReminderWinForms
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.VyslugaCalc = new System.Windows.Forms.Button();
-            this.CurrentBase_label = new System.Windows.Forms.Label();
+            this.lblCurrentBase = new System.Windows.Forms.Label();
             this.Archive = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.RankLimit_comboBox = new System.Windows.Forms.ComboBox();
-            this.Rank_comboBox = new System.Windows.Forms.ComboBox();
-            this.RankDate_dateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.DateOfBirth_dateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.cbxRankLimit = new System.Windows.Forms.ComboBox();
+            this.cbxRank = new System.Windows.Forms.ComboBox();
+            this.dtpRankDate = new System.Windows.Forms.DateTimePicker();
+            this.dtpDateOfBirth = new System.Windows.Forms.DateTimePicker();
             this.PersonalNum_label = new System.Windows.Forms.Label();
-            this.PersonalNum_textBox = new System.Windows.Forms.TextBox();
+            this.tbxPersonalNum = new System.Windows.Forms.TextBox();
             this.Gender_label = new System.Windows.Forms.Label();
-            this.Gender_comboBox = new System.Windows.Forms.ComboBox();
+            this.cbxGender = new System.Windows.Forms.ComboBox();
             this.PersonalFileNum_label = new System.Windows.Forms.Label();
-            this.PersonalFileNum_textBox = new System.Windows.Forms.TextBox();
+            this.tbxPersonalFileNum = new System.Windows.Forms.TextBox();
             this.PhonePlaceOfLiving_label = new System.Windows.Forms.Label();
             this.PhoneRegistration_label = new System.Windows.Forms.Label();
-            this.PhonePlaceOfLiving_textBox = new System.Windows.Forms.TextBox();
-            this.PhoneRegistration_textBox = new System.Windows.Forms.TextBox();
+            this.tbxPhonePlaceOfLiving = new System.Windows.Forms.TextBox();
+            this.tbxPhoneRegistration = new System.Windows.Forms.TextBox();
             this.PlaceOfLiving_label = new System.Windows.Forms.Label();
-            this.PlaceOfLiving_textBox = new System.Windows.Forms.TextBox();
+            this.tbxPlaceOfLiving = new System.Windows.Forms.TextBox();
             this.Registration_label = new System.Windows.Forms.Label();
-            this.Registration_textBox = new System.Windows.Forms.TextBox();
+            this.tbxRegistration = new System.Windows.Forms.TextBox();
             this.RemoveImage = new System.Windows.Forms.Button();
             this.ChooseImage = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.PlaceOfBirth_textBox = new System.Windows.Forms.TextBox();
+            this.pbMainPhoto = new System.Windows.Forms.PictureBox();
+            this.tbxPlaceOfBirth = new System.Windows.Forms.TextBox();
             this.PlaceOfBirth_label = new System.Windows.Forms.Label();
             this.DateOfBirth_label = new System.Windows.Forms.Label();
             this.NextRankDate_label = new System.Windows.Forms.Label();
@@ -157,19 +157,19 @@ namespace RankReminderWinForms
             this.MiddleName_label = new System.Windows.Forms.Label();
             this.Name_label = new System.Windows.Forms.Label();
             this.Surname_label = new System.Windows.Forms.Label();
-            this.NextRankDate_textBox = new System.Windows.Forms.TextBox();
-            this.Post_textBox = new System.Windows.Forms.TextBox();
-            this.MiddleName_textBox = new System.Windows.Forms.TextBox();
-            this.Name_textBox = new System.Windows.Forms.TextBox();
-            this.Surname_textBox = new System.Windows.Forms.TextBox();
+            this.tbxNextRankDate = new System.Windows.Forms.TextBox();
+            this.tbxPost = new System.Windows.Forms.TextBox();
+            this.tbxMiddleName = new System.Windows.Forms.TextBox();
+            this.tbxName = new System.Windows.Forms.TextBox();
+            this.tbxSurname = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
             this.UchStepenAdd = new System.Windows.Forms.Button();
-            this.dataGridView_UchStepen = new System.Windows.Forms.DataGridView();
+            this.dgvUchStepen = new System.Windows.Forms.DataGridView();
             this.UchStepen2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UchStepenDataPrisuzhdeniya = new RankReminderWinForms.CalendarColumn();
             this.StudyAdd = new System.Windows.Forms.Button();
-            this.dataGridView_Study = new System.Windows.Forms.DataGridView();
+            this.dgvStudy = new System.Windows.Forms.DataGridView();
             this.Study_FormaObucheniya = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Study_Naimenovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Study_DataPost = new RankReminderWinForms.CalendarColumn();
@@ -180,7 +180,7 @@ namespace RankReminderWinForms
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.ZvanieAdd = new System.Windows.Forms.Button();
-            this.dataGridView_PrisvZvaniy = new System.Windows.Forms.DataGridView();
+            this.dgvPrisvZvaniy = new System.Windows.Forms.DataGridView();
             this.PrisvZvaniy_ZvanieChin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PrisvZvaniy_DataPrisv = new RankReminderWinForms.CalendarColumn();
             this.PrisvZvaniy_CheyPrikaz = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -188,12 +188,12 @@ namespace RankReminderWinForms
             this.PrisvZvaniy_DataPrikaza = new RankReminderWinForms.CalendarColumn();
             this.PrisvZvaniyChinov_label = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.dataGridView_Family = new System.Windows.Forms.DataGridView();
+            this.dgvFamily = new System.Windows.Forms.DataGridView();
             this.Family_StepenRodstva = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Family_DateOfBirth = new RankReminderWinForms.CalendarColumn();
             this.Family_FIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarriedAdd = new System.Windows.Forms.Button();
-            this.dataGridView_Married = new System.Windows.Forms.DataGridView();
+            this.dgvMarried = new System.Windows.Forms.DataGridView();
             this.Married_SemeynoePolozhenie = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Married_GodRegistracii = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Married_label = new System.Windows.Forms.Label();
@@ -203,7 +203,7 @@ namespace RankReminderWinForms
             this.label17 = new System.Windows.Forms.Label();
             this.TrudDeyatAdd = new System.Windows.Forms.Button();
             this.TrudDeyat_label = new System.Windows.Forms.Label();
-            this.dataGridView_TrudDeyat = new System.Windows.Forms.DataGridView();
+            this.dgvTrudDeyat = new System.Windows.Forms.DataGridView();
             this.TrudDeyat_DataNaznach = new RankReminderWinForms.CalendarColumn();
             this.TrudDeyat_DataOsvobozhd = new RankReminderWinForms.CalendarColumn();
             this.TrudDeyat_LgotKoeff = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -212,7 +212,7 @@ namespace RankReminderWinForms
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.RabotaGFSAdd = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.dataGridView_RabotaGFS = new System.Windows.Forms.DataGridView();
+            this.dgvRabotaGFS = new System.Windows.Forms.DataGridView();
             this.RabotaGFS_DataNaznach = new RankReminderWinForms.CalendarColumn();
             this.RabotaGFS_DataOsvobozhd = new RankReminderWinForms.CalendarColumn();
             this.RabotaGFS_Dolzhnost = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -221,9 +221,9 @@ namespace RankReminderWinForms
             this.RabotaGFS_DataPrikaza = new RankReminderWinForms.CalendarColumn();
             this.RabotaGFS_Stavka = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RabotaGFS_LgotKoeff = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DataPrisyagi_dateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.dtpDataPrisyagi = new System.Windows.Forms.DateTimePicker();
             this.DataPrisyagi_label = new System.Windows.Forms.Label();
-            this.dataGridView_StazhVysluga = new System.Windows.Forms.DataGridView();
+            this.dgvStazhVysluga = new System.Windows.Forms.DataGridView();
             this.StazhVysluga_Poyasnenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StazhVysluga_Let = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StazhVysluga_Mesyacev = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -231,7 +231,7 @@ namespace RankReminderWinForms
             this.StazhVysluga_label = new System.Windows.Forms.Label();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView_Attestaciya = new System.Windows.Forms.DataGridView();
+            this.dgvAttestaciya = new System.Windows.Forms.DataGridView();
             this.Attestaciya_Data = new RankReminderWinForms.CalendarColumn();
             this.Attestaciya_Prichina = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Attestaciya_Vyvod = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -239,7 +239,7 @@ namespace RankReminderWinForms
             this.AttestaciyaAdd = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.ProfPodgAdd = new System.Windows.Forms.Button();
-            this.dataGridView_ProfPodg = new System.Windows.Forms.DataGridView();
+            this.dgvProfPodg = new System.Windows.Forms.DataGridView();
             this.ProfPodg_VidObuch = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.ProfPodg_DataNach = new RankReminderWinForms.CalendarColumn();
             this.ProfPodg_DataOkonch = new RankReminderWinForms.CalendarColumn();
@@ -248,31 +248,31 @@ namespace RankReminderWinForms
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.NagradyAdd = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.dataGridView_Nagrady = new System.Windows.Forms.DataGridView();
+            this.dgvNagrady = new System.Windows.Forms.DataGridView();
             this.Nagrady_ChemNagrazhden = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nagrady_CheyPrikaz = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nagrady_NomerPrikaza = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nagrady_DataPrikaza = new RankReminderWinForms.CalendarColumn();
             this.KlassnostOld_label = new System.Windows.Forms.Label();
             this.KlassnostAdd = new System.Windows.Forms.Button();
-            this.dataGridView_KlassnostOld = new System.Windows.Forms.DataGridView();
+            this.dgvKlassnostOld = new System.Windows.Forms.DataGridView();
             this.KlassnostZvanie_dGV = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.KlassnostCheyPrikaz_dGV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KlassnostNomerPrikaza_dGV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KlassnostDataPrikaza_dGV = new RankReminderWinForms.CalendarColumn();
-            this.KlassnostNomerPrikaza_textBox = new System.Windows.Forms.TextBox();
+            this.tbxKlassnostNomerPrikaza = new System.Windows.Forms.TextBox();
             this.KlassnostNomerPrikaza_label = new System.Windows.Forms.Label();
-            this.KlassnostCheyPrikaz_textBox = new System.Windows.Forms.TextBox();
+            this.tbxKlassnostCheyPrikaz = new System.Windows.Forms.TextBox();
             this.KlassnostCheyPrikaz_label = new System.Windows.Forms.Label();
-            this.Klassnost_comboBox = new System.Windows.Forms.ComboBox();
+            this.cbxKlassnost = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.KlassnostDate_label = new System.Windows.Forms.Label();
-            this.KlassnostDate_textBox = new System.Windows.Forms.TextBox();
+            this.tbxKlassnostDate = new System.Windows.Forms.TextBox();
             this.Klassnost_label = new System.Windows.Forms.Label();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.BoevyeAdd = new System.Windows.Forms.Button();
-            this.dataGridView_Boevye = new System.Windows.Forms.DataGridView();
+            this.dgvBoevye = new System.Windows.Forms.DataGridView();
             this.Boevye_Gde = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Boevye_DataNach = new RankReminderWinForms.CalendarColumn();
             this.Boevye_DataOkonch = new RankReminderWinForms.CalendarColumn();
@@ -280,25 +280,25 @@ namespace RankReminderWinForms
             this.Boevye_Obstanovka = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label11 = new System.Windows.Forms.Label();
             this.RezervAdd = new System.Windows.Forms.Button();
-            this.dataGridView_Rezerv = new System.Windows.Forms.DataGridView();
+            this.dgvRezerv = new System.Windows.Forms.DataGridView();
             this.Rezerv_Dolzhnost = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Rezerv_GodZach = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Rezerv_NomerPrikaza = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Rezerv_DataPrikaza = new RankReminderWinForms.CalendarColumn();
             this.label12 = new System.Windows.Forms.Label();
-            this.Prodlenie_checkBox = new System.Windows.Forms.CheckBox();
-            this.dataGridView_Prodlenie = new System.Windows.Forms.DataGridView();
+            this.chbxProdlenie = new System.Windows.Forms.CheckBox();
+            this.dgvProdlenie = new System.Windows.Forms.DataGridView();
             this.Prodlenie_Data = new RankReminderWinForms.CalendarColumn();
             this.Prodlenie_Kolich = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.label10 = new System.Windows.Forms.Label();
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.SendToAnotherDataTable = new System.Windows.Forms.Button();
-            this.Zapolnil_textBox = new System.Windows.Forms.TextBox();
-            this.DataZapolneniya_dateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.tbxZapolnil = new System.Windows.Forms.TextBox();
+            this.dtpDataZapolneniya = new System.Windows.Forms.DateTimePicker();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.UvolnenieAdd = new System.Windows.Forms.Button();
-            this.dataGridView_Uvolnenie = new System.Windows.Forms.DataGridView();
+            this.dgvUvolnenie = new System.Windows.Forms.DataGridView();
             this.Uvolnenie_Data = new RankReminderWinForms.CalendarColumn();
             this.Uvolnenie_CheyPrikaz = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Uvolnenie_NomerPrikaza = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -306,7 +306,7 @@ namespace RankReminderWinForms
             this.Uvolnenie_Statiya = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label14 = new System.Windows.Forms.Label();
             this.VzyskaniyaAdd = new System.Windows.Forms.Button();
-            this.dataGridView_Vzyskaniya = new System.Windows.Forms.DataGridView();
+            this.dgvVzyskaniya = new System.Windows.Forms.DataGridView();
             this.Vzyskaniya_Vid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Vzyskaniya_Narushenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Vzyskaniya_CheyPrikazNakaz = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -316,12 +316,12 @@ namespace RankReminderWinForms
             this.Vzyskaniya_NomerPrikazaSnyatie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Vzyskaniya_DataPrikazaSnyatie = new RankReminderWinForms.CalendarColumn();
             this.label13 = new System.Windows.Forms.Label();
-            this.Cnum_label = new System.Windows.Forms.Label();
+            this.lblCnum = new System.Windows.Forms.Label();
             this.NextCard = new System.Windows.Forms.Button();
             this.PrevCard = new System.Windows.Forms.Button();
             this.Close2 = new System.Windows.Forms.Button();
             this.Cards_groupBox = new System.Windows.Forms.GroupBox();
-            this.CardsFIO_label = new System.Windows.Forms.Label();
+            this.lblCardsFIO = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.calendarColumn1 = new RankReminderWinForms.CalendarColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -394,7 +394,7 @@ namespace RankReminderWinForms
             this.dataGridViewTextBoxColumn47 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn48 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.calendarColumn24 = new RankReminderWinForms.CalendarColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMainList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSetBindingSource1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -402,60 +402,60 @@ namespace RankReminderWinForms
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainPhoto)).BeginInit();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_UchStepen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Study)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUchStepen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStudy)).BeginInit();
             this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_PrisvZvaniy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPrisvZvaniy)).BeginInit();
             this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Family)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Married)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFamily)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMarried)).BeginInit();
             this.tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_TrudDeyat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTrudDeyat)).BeginInit();
             this.tabPage7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_RabotaGFS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_StazhVysluga)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRabotaGFS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStazhVysluga)).BeginInit();
             this.tabPage8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Attestaciya)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_ProfPodg)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAttestaciya)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProfPodg)).BeginInit();
             this.tabPage9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Nagrady)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_KlassnostOld)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNagrady)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvKlassnostOld)).BeginInit();
             this.tabPage10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Boevye)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Rezerv)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Prodlenie)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBoevye)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRezerv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProdlenie)).BeginInit();
             this.tabPage11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Uvolnenie)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Vzyskaniya)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUvolnenie)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVzyskaniya)).BeginInit();
             this.Cards_groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dgvMainList
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvMainList.AllowUserToAddRows = false;
+            this.dgvMainList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(0);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 50;
-            this.dataGridView1.Size = new System.Drawing.Size(997, 508);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
-            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
+            this.dgvMainList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMainList.Location = new System.Drawing.Point(0, 0);
+            this.dgvMainList.Margin = new System.Windows.Forms.Padding(0);
+            this.dgvMainList.MultiSelect = false;
+            this.dgvMainList.Name = "dgvMainList";
+            this.dgvMainList.RowHeadersWidth = 50;
+            this.dgvMainList.Size = new System.Drawing.Size(997, 508);
+            this.dgvMainList.TabIndex = 0;
+            this.dgvMainList.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DataGridView1_CellBeginEdit);
+            this.dgvMainList.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellEndEdit);
             // 
             // Close1
             // 
@@ -497,16 +497,16 @@ namespace RankReminderWinForms
             this.AddPerson.UseVisualStyleBackColor = true;
             this.AddPerson.Click += new System.EventHandler(this.AddPerson_Click);
             // 
-            // label1
+            // lblCurrentDate
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(800, 54);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 20);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "label1";
+            this.lblCurrentDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCurrentDate.AutoSize = true;
+            this.lblCurrentDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCurrentDate.Location = new System.Drawing.Point(800, 54);
+            this.lblCurrentDate.Name = "lblCurrentDate";
+            this.lblCurrentDate.Size = new System.Drawing.Size(53, 20);
+            this.lblCurrentDate.TabIndex = 4;
+            this.lblCurrentDate.Text = "lblCurrentDate";
             // 
             // ExportToExcel
             // 
@@ -534,7 +534,7 @@ namespace RankReminderWinForms
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Выкл";
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.RadioButton1_CheckedChanged);
             // 
             // radioButton2
             // 
@@ -547,7 +547,7 @@ namespace RankReminderWinForms
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Звания";
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.RadioButton2_CheckedChanged);
             // 
             // radioButton3
             // 
@@ -560,7 +560,7 @@ namespace RankReminderWinForms
             this.radioButton3.TabStop = true;
             this.radioButton3.Text = "Классность";
             this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.RadioButton3_CheckedChanged);
             // 
             // label2
             // 
@@ -597,18 +597,18 @@ namespace RankReminderWinForms
             this.radioButton4.TabStop = true;
             this.radioButton4.Text = "Аттестация (в след. году)";
             this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
+            this.radioButton4.CheckedChanged += new System.EventHandler(this.RadioButton4_CheckedChanged);
             // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.VyslugaCalc);
-            this.groupBox2.Controls.Add(this.CurrentBase_label);
+            this.groupBox2.Controls.Add(this.lblCurrentBase);
             this.groupBox2.Controls.Add(this.Archive);
             this.groupBox2.Controls.Add(this.groupBox1);
             this.groupBox2.Controls.Add(this.Close1);
-            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.lblCurrentDate);
             this.groupBox2.Controls.Add(this.AddPerson);
             this.groupBox2.Controls.Add(this.ExportToExcel);
             this.groupBox2.Location = new System.Drawing.Point(8, 511);
@@ -633,15 +633,15 @@ namespace RankReminderWinForms
             this.VyslugaCalc.Visible = false;
             this.VyslugaCalc.Click += new System.EventHandler(this.VyslugaCalc_Click);
             // 
-            // CurrentBase_label
+            // lblCurrentBase
             // 
-            this.CurrentBase_label.AutoSize = true;
-            this.CurrentBase_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CurrentBase_label.Location = new System.Drawing.Point(6, 16);
-            this.CurrentBase_label.Name = "CurrentBase_label";
-            this.CurrentBase_label.Size = new System.Drawing.Size(374, 20);
-            this.CurrentBase_label.TabIndex = 15;
-            this.CurrentBase_label.Text = "Текущая БД: Действующие сотрудники";
+            this.lblCurrentBase.AutoSize = true;
+            this.lblCurrentBase.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCurrentBase.Location = new System.Drawing.Point(6, 16);
+            this.lblCurrentBase.Name = "lblCurrentBase";
+            this.lblCurrentBase.Size = new System.Drawing.Size(374, 20);
+            this.lblCurrentBase.TabIndex = 15;
+            this.lblCurrentBase.Text = "Текущая БД: Действующие сотрудники";
             // 
             // Archive
             // 
@@ -683,7 +683,7 @@ namespace RankReminderWinForms
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Controls.Add(this.dgvMainList);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
@@ -697,28 +697,28 @@ namespace RankReminderWinForms
             // tabPage2
             // 
             this.tabPage2.AutoScroll = true;
-            this.tabPage2.Controls.Add(this.RankLimit_comboBox);
-            this.tabPage2.Controls.Add(this.Rank_comboBox);
-            this.tabPage2.Controls.Add(this.RankDate_dateTimePicker);
-            this.tabPage2.Controls.Add(this.DateOfBirth_dateTimePicker);
+            this.tabPage2.Controls.Add(this.cbxRankLimit);
+            this.tabPage2.Controls.Add(this.cbxRank);
+            this.tabPage2.Controls.Add(this.dtpRankDate);
+            this.tabPage2.Controls.Add(this.dtpDateOfBirth);
             this.tabPage2.Controls.Add(this.PersonalNum_label);
-            this.tabPage2.Controls.Add(this.PersonalNum_textBox);
+            this.tabPage2.Controls.Add(this.tbxPersonalNum);
             this.tabPage2.Controls.Add(this.Gender_label);
-            this.tabPage2.Controls.Add(this.Gender_comboBox);
+            this.tabPage2.Controls.Add(this.cbxGender);
             this.tabPage2.Controls.Add(this.PersonalFileNum_label);
-            this.tabPage2.Controls.Add(this.PersonalFileNum_textBox);
+            this.tabPage2.Controls.Add(this.tbxPersonalFileNum);
             this.tabPage2.Controls.Add(this.PhonePlaceOfLiving_label);
             this.tabPage2.Controls.Add(this.PhoneRegistration_label);
-            this.tabPage2.Controls.Add(this.PhonePlaceOfLiving_textBox);
-            this.tabPage2.Controls.Add(this.PhoneRegistration_textBox);
+            this.tabPage2.Controls.Add(this.tbxPhonePlaceOfLiving);
+            this.tabPage2.Controls.Add(this.tbxPhoneRegistration);
             this.tabPage2.Controls.Add(this.PlaceOfLiving_label);
-            this.tabPage2.Controls.Add(this.PlaceOfLiving_textBox);
+            this.tabPage2.Controls.Add(this.tbxPlaceOfLiving);
             this.tabPage2.Controls.Add(this.Registration_label);
-            this.tabPage2.Controls.Add(this.Registration_textBox);
+            this.tabPage2.Controls.Add(this.tbxRegistration);
             this.tabPage2.Controls.Add(this.RemoveImage);
             this.tabPage2.Controls.Add(this.ChooseImage);
-            this.tabPage2.Controls.Add(this.pictureBox1);
-            this.tabPage2.Controls.Add(this.PlaceOfBirth_textBox);
+            this.tabPage2.Controls.Add(this.pbMainPhoto);
+            this.tabPage2.Controls.Add(this.tbxPlaceOfBirth);
             this.tabPage2.Controls.Add(this.PlaceOfBirth_label);
             this.tabPage2.Controls.Add(this.DateOfBirth_label);
             this.tabPage2.Controls.Add(this.NextRankDate_label);
@@ -729,11 +729,11 @@ namespace RankReminderWinForms
             this.tabPage2.Controls.Add(this.MiddleName_label);
             this.tabPage2.Controls.Add(this.Name_label);
             this.tabPage2.Controls.Add(this.Surname_label);
-            this.tabPage2.Controls.Add(this.NextRankDate_textBox);
-            this.tabPage2.Controls.Add(this.Post_textBox);
-            this.tabPage2.Controls.Add(this.MiddleName_textBox);
-            this.tabPage2.Controls.Add(this.Name_textBox);
-            this.tabPage2.Controls.Add(this.Surname_textBox);
+            this.tabPage2.Controls.Add(this.tbxNextRankDate);
+            this.tabPage2.Controls.Add(this.tbxPost);
+            this.tabPage2.Controls.Add(this.tbxMiddleName);
+            this.tabPage2.Controls.Add(this.tbxName);
+            this.tabPage2.Controls.Add(this.tbxSurname);
             this.tabPage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
@@ -743,51 +743,51 @@ namespace RankReminderWinForms
             this.tabPage2.Text = "Карточка 1-9";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // RankLimit_comboBox
+            // cbxRankLimit
             // 
-            this.RankLimit_comboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.RankLimit_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.RankLimit_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RankLimit_comboBox.FormattingEnabled = true;
-            this.RankLimit_comboBox.Location = new System.Drawing.Point(256, 466);
-            this.RankLimit_comboBox.Name = "RankLimit_comboBox";
-            this.RankLimit_comboBox.Size = new System.Drawing.Size(210, 28);
-            this.RankLimit_comboBox.TabIndex = 53;
-            this.RankLimit_comboBox.SelectedIndexChanged += new System.EventHandler(this.RankLimit_comboBox_SelectedIndexChanged);
+            this.cbxRankLimit.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbxRankLimit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxRankLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbxRankLimit.FormattingEnabled = true;
+            this.cbxRankLimit.Location = new System.Drawing.Point(256, 466);
+            this.cbxRankLimit.Name = "cbxRankLimit";
+            this.cbxRankLimit.Size = new System.Drawing.Size(210, 28);
+            this.cbxRankLimit.TabIndex = 53;
+            this.cbxRankLimit.SelectedIndexChanged += new System.EventHandler(this.CbxRankLimit_SelectedIndexChanged);
             // 
-            // Rank_comboBox
+            // cbxRank
             // 
-            this.Rank_comboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.Rank_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Rank_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Rank_comboBox.FormattingEnabled = true;
-            this.Rank_comboBox.Location = new System.Drawing.Point(256, 391);
-            this.Rank_comboBox.Name = "Rank_comboBox";
-            this.Rank_comboBox.Size = new System.Drawing.Size(210, 28);
-            this.Rank_comboBox.TabIndex = 52;
-            this.Rank_comboBox.SelectedIndexChanged += new System.EventHandler(this.Rank_comboBox_SelectedIndexChanged);
+            this.cbxRank.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbxRank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxRank.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbxRank.FormattingEnabled = true;
+            this.cbxRank.Location = new System.Drawing.Point(256, 391);
+            this.cbxRank.Name = "cbxRank";
+            this.cbxRank.Size = new System.Drawing.Size(210, 28);
+            this.cbxRank.TabIndex = 52;
+            this.cbxRank.SelectedIndexChanged += new System.EventHandler(this.CbxRank_SelectedIndexChanged);
             // 
-            // RankDate_dateTimePicker
+            // dtpRankDate
             // 
-            this.RankDate_dateTimePicker.CustomFormat = "dd.MM.yyyy";
-            this.RankDate_dateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RankDate_dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.RankDate_dateTimePicker.Location = new System.Drawing.Point(330, 428);
-            this.RankDate_dateTimePicker.Name = "RankDate_dateTimePicker";
-            this.RankDate_dateTimePicker.Size = new System.Drawing.Size(136, 27);
-            this.RankDate_dateTimePicker.TabIndex = 51;
-            this.RankDate_dateTimePicker.ValueChanged += new System.EventHandler(this.RankDate_dateTimePicker_ValueChanged);
+            this.dtpRankDate.CustomFormat = "dd.MM.yyyy";
+            this.dtpRankDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dtpRankDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpRankDate.Location = new System.Drawing.Point(330, 428);
+            this.dtpRankDate.Name = "dtpRankDate";
+            this.dtpRankDate.Size = new System.Drawing.Size(136, 27);
+            this.dtpRankDate.TabIndex = 51;
+            this.dtpRankDate.ValueChanged += new System.EventHandler(this.DtpRankDate_ValueChanged);
             // 
-            // DateOfBirth_dateTimePicker
+            // dtpDateOfBirth
             // 
-            this.DateOfBirth_dateTimePicker.CustomFormat = "dd.MM.yyyy";
-            this.DateOfBirth_dateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DateOfBirth_dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.DateOfBirth_dateTimePicker.Location = new System.Drawing.Point(393, 146);
-            this.DateOfBirth_dateTimePicker.Name = "DateOfBirth_dateTimePicker";
-            this.DateOfBirth_dateTimePicker.Size = new System.Drawing.Size(140, 27);
-            this.DateOfBirth_dateTimePicker.TabIndex = 50;
-            this.DateOfBirth_dateTimePicker.ValueChanged += new System.EventHandler(this.DateOfBirth_dateTimePicker_ValueChanged);
+            this.dtpDateOfBirth.CustomFormat = "dd.MM.yyyy";
+            this.dtpDateOfBirth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dtpDateOfBirth.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDateOfBirth.Location = new System.Drawing.Point(393, 146);
+            this.dtpDateOfBirth.Name = "dtpDateOfBirth";
+            this.dtpDateOfBirth.Size = new System.Drawing.Size(140, 27);
+            this.dtpDateOfBirth.TabIndex = 50;
+            this.dtpDateOfBirth.ValueChanged += new System.EventHandler(this.DtpDateOfBirth_ValueChanged);
             // 
             // PersonalNum_label
             // 
@@ -799,15 +799,15 @@ namespace RankReminderWinForms
             this.PersonalNum_label.TabIndex = 49;
             this.PersonalNum_label.Text = "Личный номер:";
             // 
-            // PersonalNum_textBox
+            // tbxPersonalNum
             // 
-            this.PersonalNum_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.PersonalNum_textBox.Location = new System.Drawing.Point(840, 73);
-            this.PersonalNum_textBox.Name = "PersonalNum_textBox";
-            this.PersonalNum_textBox.Size = new System.Drawing.Size(135, 27);
-            this.PersonalNum_textBox.TabIndex = 48;
-            this.PersonalNum_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.PersonalNum_textBox.Leave += new System.EventHandler(this.PersonalNum_textBox_Leave);
+            this.tbxPersonalNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxPersonalNum.Location = new System.Drawing.Point(840, 73);
+            this.tbxPersonalNum.Name = "tbxPersonalNum";
+            this.tbxPersonalNum.Size = new System.Drawing.Size(135, 27);
+            this.tbxPersonalNum.TabIndex = 48;
+            this.tbxPersonalNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbxPersonalNum.Leave += new System.EventHandler(this.TbxPersonalNum_Leave);
             // 
             // Gender_label
             // 
@@ -819,20 +819,20 @@ namespace RankReminderWinForms
             this.Gender_label.TabIndex = 47;
             this.Gender_label.Text = "Пол:";
             // 
-            // Gender_comboBox
+            // cbxGender
             // 
-            this.Gender_comboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.Gender_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Gender_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Gender_comboBox.FormattingEnabled = true;
-            this.Gender_comboBox.Items.AddRange(new object[] {
+            this.cbxGender.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbxGender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbxGender.FormattingEnabled = true;
+            this.cbxGender.Items.AddRange(new object[] {
             "М",
             "Ж"});
-            this.Gender_comboBox.Location = new System.Drawing.Point(620, 148);
-            this.Gender_comboBox.Name = "Gender_comboBox";
-            this.Gender_comboBox.Size = new System.Drawing.Size(52, 28);
-            this.Gender_comboBox.TabIndex = 46;
-            this.Gender_comboBox.SelectedIndexChanged += new System.EventHandler(this.Gender_comboBox_SelectedIndexChanged);
+            this.cbxGender.Location = new System.Drawing.Point(620, 148);
+            this.cbxGender.Name = "cbxGender";
+            this.cbxGender.Size = new System.Drawing.Size(52, 28);
+            this.cbxGender.TabIndex = 46;
+            this.cbxGender.SelectedIndexChanged += new System.EventHandler(this.CbxGender_SelectedIndexChanged);
             // 
             // PersonalFileNum_label
             // 
@@ -844,15 +844,15 @@ namespace RankReminderWinForms
             this.PersonalFileNum_label.TabIndex = 45;
             this.PersonalFileNum_label.Text = "№ личного дела:";
             // 
-            // PersonalFileNum_textBox
+            // tbxPersonalFileNum
             // 
-            this.PersonalFileNum_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.PersonalFileNum_textBox.Location = new System.Drawing.Point(840, 38);
-            this.PersonalFileNum_textBox.Name = "PersonalFileNum_textBox";
-            this.PersonalFileNum_textBox.Size = new System.Drawing.Size(135, 27);
-            this.PersonalFileNum_textBox.TabIndex = 44;
-            this.PersonalFileNum_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.PersonalFileNum_textBox.Leave += new System.EventHandler(this.PersonalFileNum_textBox_Leave);
+            this.tbxPersonalFileNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxPersonalFileNum.Location = new System.Drawing.Point(840, 38);
+            this.tbxPersonalFileNum.Name = "tbxPersonalFileNum";
+            this.tbxPersonalFileNum.Size = new System.Drawing.Size(135, 27);
+            this.tbxPersonalFileNum.TabIndex = 44;
+            this.tbxPersonalFileNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbxPersonalFileNum.Leave += new System.EventHandler(this.TbxPersonalFileNum_Leave);
             // 
             // PhonePlaceOfLiving_label
             // 
@@ -874,25 +874,25 @@ namespace RankReminderWinForms
             this.PhoneRegistration_label.TabIndex = 42;
             this.PhoneRegistration_label.Text = "Тел. по прописке:";
             // 
-            // PhonePlaceOfLiving_textBox
+            // tbxPhonePlaceOfLiving
             // 
-            this.PhonePlaceOfLiving_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.PhonePlaceOfLiving_textBox.Location = new System.Drawing.Point(724, 317);
-            this.PhonePlaceOfLiving_textBox.Name = "PhonePlaceOfLiving_textBox";
-            this.PhonePlaceOfLiving_textBox.Size = new System.Drawing.Size(251, 27);
-            this.PhonePlaceOfLiving_textBox.TabIndex = 41;
-            this.PhonePlaceOfLiving_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.PhonePlaceOfLiving_textBox.Leave += new System.EventHandler(this.PhonePlaceOfLiving_textBox_Leave);
+            this.tbxPhonePlaceOfLiving.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxPhonePlaceOfLiving.Location = new System.Drawing.Point(724, 317);
+            this.tbxPhonePlaceOfLiving.Name = "tbxPhonePlaceOfLiving";
+            this.tbxPhonePlaceOfLiving.Size = new System.Drawing.Size(251, 27);
+            this.tbxPhonePlaceOfLiving.TabIndex = 41;
+            this.tbxPhonePlaceOfLiving.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbxPhonePlaceOfLiving.Leave += new System.EventHandler(this.TbxPhonePlaceOfLiving_Leave);
             // 
-            // PhoneRegistration_textBox
+            // tbxPhoneRegistration
             // 
-            this.PhoneRegistration_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.PhoneRegistration_textBox.Location = new System.Drawing.Point(408, 313);
-            this.PhoneRegistration_textBox.Name = "PhoneRegistration_textBox";
-            this.PhoneRegistration_textBox.Size = new System.Drawing.Size(197, 27);
-            this.PhoneRegistration_textBox.TabIndex = 40;
-            this.PhoneRegistration_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.PhoneRegistration_textBox.Leave += new System.EventHandler(this.PhoneRegistration_textBox_Leave);
+            this.tbxPhoneRegistration.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxPhoneRegistration.Location = new System.Drawing.Point(408, 313);
+            this.tbxPhoneRegistration.Name = "tbxPhoneRegistration";
+            this.tbxPhoneRegistration.Size = new System.Drawing.Size(197, 27);
+            this.tbxPhoneRegistration.TabIndex = 40;
+            this.tbxPhoneRegistration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbxPhoneRegistration.Leave += new System.EventHandler(this.TbxPhoneRegistration_Leave);
             // 
             // PlaceOfLiving_label
             // 
@@ -904,15 +904,15 @@ namespace RankReminderWinForms
             this.PlaceOfLiving_label.TabIndex = 39;
             this.PlaceOfLiving_label.Text = "Проживает:";
             // 
-            // PlaceOfLiving_textBox
+            // tbxPlaceOfLiving
             // 
-            this.PlaceOfLiving_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.PlaceOfLiving_textBox.Location = new System.Drawing.Point(615, 253);
-            this.PlaceOfLiving_textBox.Multiline = true;
-            this.PlaceOfLiving_textBox.Name = "PlaceOfLiving_textBox";
-            this.PlaceOfLiving_textBox.Size = new System.Drawing.Size(360, 50);
-            this.PlaceOfLiving_textBox.TabIndex = 38;
-            this.PlaceOfLiving_textBox.Leave += new System.EventHandler(this.PlaceOfLiving_textBox_Leave);
+            this.tbxPlaceOfLiving.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxPlaceOfLiving.Location = new System.Drawing.Point(615, 253);
+            this.tbxPlaceOfLiving.Multiline = true;
+            this.tbxPlaceOfLiving.Name = "tbxPlaceOfLiving";
+            this.tbxPlaceOfLiving.Size = new System.Drawing.Size(360, 50);
+            this.tbxPlaceOfLiving.TabIndex = 38;
+            this.tbxPlaceOfLiving.Leave += new System.EventHandler(this.TbxPlaceOfLiving_Leave);
             // 
             // Registration_label
             // 
@@ -924,15 +924,15 @@ namespace RankReminderWinForms
             this.Registration_label.TabIndex = 37;
             this.Registration_label.Text = "Прописан:";
             // 
-            // Registration_textBox
+            // tbxRegistration
             // 
-            this.Registration_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Registration_textBox.Location = new System.Drawing.Point(245, 252);
-            this.Registration_textBox.Multiline = true;
-            this.Registration_textBox.Name = "Registration_textBox";
-            this.Registration_textBox.Size = new System.Drawing.Size(360, 50);
-            this.Registration_textBox.TabIndex = 36;
-            this.Registration_textBox.Leave += new System.EventHandler(this.Registration_textBox_Leave);
+            this.tbxRegistration.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxRegistration.Location = new System.Drawing.Point(245, 252);
+            this.tbxRegistration.Multiline = true;
+            this.tbxRegistration.Name = "tbxRegistration";
+            this.tbxRegistration.Size = new System.Drawing.Size(360, 50);
+            this.tbxRegistration.TabIndex = 36;
+            this.tbxRegistration.Leave += new System.EventHandler(this.TbxRegistration_Leave);
             // 
             // RemoveImage
             // 
@@ -958,24 +958,24 @@ namespace RankReminderWinForms
             this.ChooseImage.UseVisualStyleBackColor = true;
             this.ChooseImage.Click += new System.EventHandler(this.ChooseImage_Click);
             // 
-            // pictureBox1
+            // pbMainPhoto
             // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(13, 37);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(210, 280);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 32;
-            this.pictureBox1.TabStop = false;
+            this.pbMainPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbMainPhoto.Location = new System.Drawing.Point(13, 37);
+            this.pbMainPhoto.Name = "pbMainPhoto";
+            this.pbMainPhoto.Size = new System.Drawing.Size(210, 280);
+            this.pbMainPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbMainPhoto.TabIndex = 32;
+            this.pbMainPhoto.TabStop = false;
             // 
-            // PlaceOfBirth_textBox
+            // tbxPlaceOfBirth
             // 
-            this.PlaceOfBirth_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.PlaceOfBirth_textBox.Location = new System.Drawing.Point(403, 190);
-            this.PlaceOfBirth_textBox.Name = "PlaceOfBirth_textBox";
-            this.PlaceOfBirth_textBox.Size = new System.Drawing.Size(269, 27);
-            this.PlaceOfBirth_textBox.TabIndex = 31;
-            this.PlaceOfBirth_textBox.Leave += new System.EventHandler(this.PlaceOfBirth_textBox_Leave);
+            this.tbxPlaceOfBirth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxPlaceOfBirth.Location = new System.Drawing.Point(403, 190);
+            this.tbxPlaceOfBirth.Name = "tbxPlaceOfBirth";
+            this.tbxPlaceOfBirth.Size = new System.Drawing.Size(269, 27);
+            this.tbxPlaceOfBirth.TabIndex = 31;
+            this.tbxPlaceOfBirth.Leave += new System.EventHandler(this.TbxPlaceOfBirth_Leave);
             // 
             // PlaceOfBirth_label
             // 
@@ -1077,59 +1077,59 @@ namespace RankReminderWinForms
             this.Surname_label.TabIndex = 13;
             this.Surname_label.Text = "Фамилия:";
             // 
-            // NextRankDate_textBox
+            // tbxNextRankDate
             // 
-            this.NextRankDate_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NextRankDate_textBox.Location = new System.Drawing.Point(408, 503);
-            this.NextRankDate_textBox.Name = "NextRankDate_textBox";
-            this.NextRankDate_textBox.ReadOnly = true;
-            this.NextRankDate_textBox.Size = new System.Drawing.Size(150, 27);
-            this.NextRankDate_textBox.TabIndex = 12;
-            this.NextRankDate_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbxNextRankDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxNextRankDate.Location = new System.Drawing.Point(408, 503);
+            this.tbxNextRankDate.Name = "tbxNextRankDate";
+            this.tbxNextRankDate.ReadOnly = true;
+            this.tbxNextRankDate.Size = new System.Drawing.Size(150, 27);
+            this.tbxNextRankDate.TabIndex = 12;
+            this.tbxNextRankDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // Post_textBox
+            // tbxPost
             // 
-            this.Post_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Post_textBox.Location = new System.Drawing.Point(166, 355);
-            this.Post_textBox.Name = "Post_textBox";
-            this.Post_textBox.Size = new System.Drawing.Size(439, 27);
-            this.Post_textBox.TabIndex = 8;
-            this.Post_textBox.Leave += new System.EventHandler(this.Post_textBox_Leave);
+            this.tbxPost.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxPost.Location = new System.Drawing.Point(166, 355);
+            this.tbxPost.Name = "tbxPost";
+            this.tbxPost.Size = new System.Drawing.Size(439, 27);
+            this.tbxPost.TabIndex = 8;
+            this.tbxPost.Leave += new System.EventHandler(this.TbxPost_Leave);
             // 
-            // MiddleName_textBox
+            // tbxMiddleName
             // 
-            this.MiddleName_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.MiddleName_textBox.Location = new System.Drawing.Point(339, 109);
-            this.MiddleName_textBox.Name = "MiddleName_textBox";
-            this.MiddleName_textBox.Size = new System.Drawing.Size(333, 27);
-            this.MiddleName_textBox.TabIndex = 7;
-            this.MiddleName_textBox.Leave += new System.EventHandler(this.MiddleName_textBox_Leave);
+            this.tbxMiddleName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxMiddleName.Location = new System.Drawing.Point(339, 109);
+            this.tbxMiddleName.Name = "tbxMiddleName";
+            this.tbxMiddleName.Size = new System.Drawing.Size(333, 27);
+            this.tbxMiddleName.TabIndex = 7;
+            this.tbxMiddleName.Leave += new System.EventHandler(this.TbxMiddleName_Leave);
             // 
-            // Name_textBox
+            // tbxName
             // 
-            this.Name_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Name_textBox.Location = new System.Drawing.Point(339, 72);
-            this.Name_textBox.Name = "Name_textBox";
-            this.Name_textBox.Size = new System.Drawing.Size(333, 27);
-            this.Name_textBox.TabIndex = 6;
-            this.Name_textBox.Leave += new System.EventHandler(this.Name_textBox_Leave);
+            this.tbxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxName.Location = new System.Drawing.Point(339, 72);
+            this.tbxName.Name = "tbxName";
+            this.tbxName.Size = new System.Drawing.Size(333, 27);
+            this.tbxName.TabIndex = 6;
+            this.tbxName.Leave += new System.EventHandler(this.TbxName_Leave);
             // 
-            // Surname_textBox
+            // tbxSurname
             // 
-            this.Surname_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Surname_textBox.Location = new System.Drawing.Point(339, 37);
-            this.Surname_textBox.Name = "Surname_textBox";
-            this.Surname_textBox.Size = new System.Drawing.Size(333, 27);
-            this.Surname_textBox.TabIndex = 5;
-            this.Surname_textBox.Leave += new System.EventHandler(this.Surname_textBox_Leave);
+            this.tbxSurname.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxSurname.Location = new System.Drawing.Point(339, 37);
+            this.tbxSurname.Name = "tbxSurname";
+            this.tbxSurname.Size = new System.Drawing.Size(333, 27);
+            this.tbxSurname.TabIndex = 5;
+            this.tbxSurname.Leave += new System.EventHandler(this.TbxSurname_Leave);
             // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.UchStepenAdd);
-            this.tabPage3.Controls.Add(this.dataGridView_UchStepen);
+            this.tabPage3.Controls.Add(this.dgvUchStepen);
             this.tabPage3.Controls.Add(this.StudyAdd);
-            this.tabPage3.Controls.Add(this.dataGridView_Study);
+            this.tabPage3.Controls.Add(this.dgvStudy);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
@@ -1161,11 +1161,11 @@ namespace RankReminderWinForms
             this.UchStepenAdd.UseVisualStyleBackColor = true;
             this.UchStepenAdd.Click += new System.EventHandler(this.UchStepenAdd_Click);
             // 
-            // dataGridView_UchStepen
+            // dgvUchStepen
             // 
-            this.dataGridView_UchStepen.AllowUserToAddRows = false;
-            this.dataGridView_UchStepen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView_UchStepen.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvUchStepen.AllowUserToAddRows = false;
+            this.dgvUchStepen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvUchStepen.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1173,9 +1173,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_UchStepen.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView_UchStepen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_UchStepen.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvUchStepen.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvUchStepen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUchStepen.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.UchStepen2,
             this.UchStepenDataPrisuzhdeniya});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -1185,10 +1185,10 @@ namespace RankReminderWinForms
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_UchStepen.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView_UchStepen.Location = new System.Drawing.Point(8, 438);
-            this.dataGridView_UchStepen.MultiSelect = false;
-            this.dataGridView_UchStepen.Name = "dataGridView_UchStepen";
+            this.dgvUchStepen.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvUchStepen.Location = new System.Drawing.Point(8, 438);
+            this.dgvUchStepen.MultiSelect = false;
+            this.dgvUchStepen.Name = "dgvUchStepen";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1196,12 +1196,12 @@ namespace RankReminderWinForms
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_UchStepen.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridView_UchStepen.RowHeadersWidth = 51;
-            this.dataGridView_UchStepen.RowTemplate.Height = 24;
-            this.dataGridView_UchStepen.Size = new System.Drawing.Size(695, 101);
-            this.dataGridView_UchStepen.TabIndex = 11;
-            this.dataGridView_UchStepen.Tag = "UchStepen";
+            this.dgvUchStepen.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvUchStepen.RowHeadersWidth = 51;
+            this.dgvUchStepen.RowTemplate.Height = 24;
+            this.dgvUchStepen.Size = new System.Drawing.Size(695, 101);
+            this.dgvUchStepen.TabIndex = 11;
+            this.dgvUchStepen.Tag = "UchStepen";
             // 
             // UchStepen2
             // 
@@ -1230,12 +1230,12 @@ namespace RankReminderWinForms
             this.StudyAdd.UseVisualStyleBackColor = true;
             this.StudyAdd.Click += new System.EventHandler(this.StudyAdd_Click);
             // 
-            // dataGridView_Study
+            // dgvStudy
             // 
-            this.dataGridView_Study.AllowUserToAddRows = false;
-            this.dataGridView_Study.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvStudy.AllowUserToAddRows = false;
+            this.dgvStudy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_Study.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvStudy.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1243,9 +1243,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Study.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridView_Study.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Study.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvStudy.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvStudy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStudy.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Study_FormaObucheniya,
             this.Study_Naimenovanie,
             this.Study_DataPost,
@@ -1261,10 +1261,10 @@ namespace RankReminderWinForms
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Study.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridView_Study.Location = new System.Drawing.Point(8, 32);
-            this.dataGridView_Study.MultiSelect = false;
-            this.dataGridView_Study.Name = "dataGridView_Study";
+            this.dgvStudy.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvStudy.Location = new System.Drawing.Point(8, 32);
+            this.dgvStudy.MultiSelect = false;
+            this.dgvStudy.Name = "dgvStudy";
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1272,11 +1272,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Study.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            this.dataGridView_Study.RowHeadersWidth = 51;
-            this.dataGridView_Study.RowTemplate.Height = 24;
-            this.dataGridView_Study.Size = new System.Drawing.Size(981, 324);
-            this.dataGridView_Study.TabIndex = 9;
+            this.dgvStudy.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.dgvStudy.RowHeadersWidth = 51;
+            this.dgvStudy.RowTemplate.Height = 24;
+            this.dgvStudy.Size = new System.Drawing.Size(981, 324);
+            this.dgvStudy.TabIndex = 9;
             // 
             // Study_FormaObucheniya
             // 
@@ -1357,7 +1357,7 @@ namespace RankReminderWinForms
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.ZvanieAdd);
-            this.tabPage4.Controls.Add(this.dataGridView_PrisvZvaniy);
+            this.tabPage4.Controls.Add(this.dgvPrisvZvaniy);
             this.tabPage4.Controls.Add(this.PrisvZvaniyChinov_label);
             this.tabPage4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabPage4.Location = new System.Drawing.Point(4, 29);
@@ -1380,13 +1380,13 @@ namespace RankReminderWinForms
             this.ZvanieAdd.UseVisualStyleBackColor = true;
             this.ZvanieAdd.Click += new System.EventHandler(this.ZvanieAdd_Click);
             // 
-            // dataGridView_PrisvZvaniy
+            // dgvPrisvZvaniy
             // 
-            this.dataGridView_PrisvZvaniy.AllowUserToAddRows = false;
-            this.dataGridView_PrisvZvaniy.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvPrisvZvaniy.AllowUserToAddRows = false;
+            this.dgvPrisvZvaniy.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_PrisvZvaniy.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvPrisvZvaniy.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1394,9 +1394,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_PrisvZvaniy.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridView_PrisvZvaniy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_PrisvZvaniy.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvPrisvZvaniy.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            this.dgvPrisvZvaniy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPrisvZvaniy.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.PrisvZvaniy_ZvanieChin,
             this.PrisvZvaniy_DataPrisv,
             this.PrisvZvaniy_CheyPrikaz,
@@ -1409,10 +1409,10 @@ namespace RankReminderWinForms
             dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_PrisvZvaniy.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridView_PrisvZvaniy.Location = new System.Drawing.Point(8, 32);
-            this.dataGridView_PrisvZvaniy.MultiSelect = false;
-            this.dataGridView_PrisvZvaniy.Name = "dataGridView_PrisvZvaniy";
+            this.dgvPrisvZvaniy.DefaultCellStyle = dataGridViewCellStyle9;
+            this.dgvPrisvZvaniy.Location = new System.Drawing.Point(8, 32);
+            this.dgvPrisvZvaniy.MultiSelect = false;
+            this.dgvPrisvZvaniy.Name = "dgvPrisvZvaniy";
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1420,11 +1420,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_PrisvZvaniy.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
-            this.dataGridView_PrisvZvaniy.RowHeadersWidth = 51;
-            this.dataGridView_PrisvZvaniy.RowTemplate.Height = 24;
-            this.dataGridView_PrisvZvaniy.Size = new System.Drawing.Size(981, 468);
-            this.dataGridView_PrisvZvaniy.TabIndex = 1;
+            this.dgvPrisvZvaniy.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            this.dgvPrisvZvaniy.RowHeadersWidth = 51;
+            this.dgvPrisvZvaniy.RowTemplate.Height = 24;
+            this.dgvPrisvZvaniy.Size = new System.Drawing.Size(981, 468);
+            this.dgvPrisvZvaniy.TabIndex = 1;
             // 
             // PrisvZvaniy_ZvanieChin
             // 
@@ -1471,9 +1471,9 @@ namespace RankReminderWinForms
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.dataGridView_Family);
+            this.tabPage5.Controls.Add(this.dgvFamily);
             this.tabPage5.Controls.Add(this.MarriedAdd);
-            this.tabPage5.Controls.Add(this.dataGridView_Married);
+            this.tabPage5.Controls.Add(this.dgvMarried);
             this.tabPage5.Controls.Add(this.Married_label);
             this.tabPage5.Controls.Add(this.FamilyAddPerson);
             this.tabPage5.Controls.Add(this.Family_label);
@@ -1485,14 +1485,14 @@ namespace RankReminderWinForms
             this.tabPage5.Text = "Карточка 13-14";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // dataGridView_Family
+            // dgvFamily
             // 
-            this.dataGridView_Family.AllowUserToAddRows = false;
-            this.dataGridView_Family.AllowUserToResizeColumns = false;
-            this.dataGridView_Family.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvFamily.AllowUserToAddRows = false;
+            this.dgvFamily.AllowUserToResizeColumns = false;
+            this.dgvFamily.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_Family.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvFamily.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1500,9 +1500,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Family.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
-            this.dataGridView_Family.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Family.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvFamily.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            this.dgvFamily.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFamily.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Family_StepenRodstva,
             this.Family_DateOfBirth,
             this.Family_FIO});
@@ -1515,11 +1515,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_Family.DefaultCellStyle = dataGridViewCellStyle13;
-            this.dataGridView_Family.Location = new System.Drawing.Point(8, 226);
-            this.dataGridView_Family.MaximumSize = new System.Drawing.Size(1300, 800);
-            this.dataGridView_Family.MultiSelect = false;
-            this.dataGridView_Family.Name = "dataGridView_Family";
+            this.dgvFamily.DefaultCellStyle = dataGridViewCellStyle13;
+            this.dgvFamily.Location = new System.Drawing.Point(8, 226);
+            this.dgvFamily.MaximumSize = new System.Drawing.Size(1300, 800);
+            this.dgvFamily.MultiSelect = false;
+            this.dgvFamily.Name = "dgvFamily";
             dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1527,11 +1527,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Family.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
-            this.dataGridView_Family.RowHeadersWidth = 51;
-            this.dataGridView_Family.RowTemplate.Height = 24;
-            this.dataGridView_Family.Size = new System.Drawing.Size(981, 274);
-            this.dataGridView_Family.TabIndex = 7;
+            this.dgvFamily.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            this.dgvFamily.RowHeadersWidth = 51;
+            this.dgvFamily.RowTemplate.Height = 24;
+            this.dgvFamily.Size = new System.Drawing.Size(981, 274);
+            this.dgvFamily.TabIndex = 7;
             // 
             // Family_StepenRodstva
             // 
@@ -1580,11 +1580,11 @@ namespace RankReminderWinForms
             this.MarriedAdd.UseVisualStyleBackColor = true;
             this.MarriedAdd.Click += new System.EventHandler(this.MarriedAdd_Click);
             // 
-            // dataGridView_Married
+            // dgvMarried
             // 
-            this.dataGridView_Married.AllowUserToAddRows = false;
-            this.dataGridView_Married.AllowUserToResizeColumns = false;
-            this.dataGridView_Married.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvMarried.AllowUserToAddRows = false;
+            this.dgvMarried.AllowUserToResizeColumns = false;
+            this.dgvMarried.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1592,9 +1592,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Married.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
-            this.dataGridView_Married.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Married.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvMarried.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            this.dgvMarried.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMarried.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Married_SemeynoePolozhenie,
             this.Married_GodRegistracii});
             dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -1604,10 +1604,10 @@ namespace RankReminderWinForms
             dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_Married.DefaultCellStyle = dataGridViewCellStyle16;
-            this.dataGridView_Married.Location = new System.Drawing.Point(8, 32);
-            this.dataGridView_Married.MultiSelect = false;
-            this.dataGridView_Married.Name = "dataGridView_Married";
+            this.dgvMarried.DefaultCellStyle = dataGridViewCellStyle16;
+            this.dgvMarried.Location = new System.Drawing.Point(8, 32);
+            this.dgvMarried.MultiSelect = false;
+            this.dgvMarried.Name = "dgvMarried";
             dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1615,11 +1615,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Married.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
-            this.dataGridView_Married.RowHeadersWidth = 51;
-            this.dataGridView_Married.RowTemplate.Height = 24;
-            this.dataGridView_Married.Size = new System.Drawing.Size(520, 158);
-            this.dataGridView_Married.TabIndex = 5;
+            this.dgvMarried.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            this.dgvMarried.RowHeadersWidth = 51;
+            this.dgvMarried.RowTemplate.Height = 24;
+            this.dgvMarried.Size = new System.Drawing.Size(520, 158);
+            this.dgvMarried.TabIndex = 5;
             // 
             // Married_SemeynoePolozhenie
             // 
@@ -1681,7 +1681,7 @@ namespace RankReminderWinForms
             this.tabPage6.Controls.Add(this.label17);
             this.tabPage6.Controls.Add(this.TrudDeyatAdd);
             this.tabPage6.Controls.Add(this.TrudDeyat_label);
-            this.tabPage6.Controls.Add(this.dataGridView_TrudDeyat);
+            this.tabPage6.Controls.Add(this.dgvTrudDeyat);
             this.tabPage6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabPage6.Location = new System.Drawing.Point(4, 29);
             this.tabPage6.Name = "tabPage6";
@@ -1723,13 +1723,13 @@ namespace RankReminderWinForms
             this.TrudDeyat_label.TabIndex = 1;
             this.TrudDeyat_label.Text = "15. Трудовая деятельность до прихода в ГФС России:";
             // 
-            // dataGridView_TrudDeyat
+            // dgvTrudDeyat
             // 
-            this.dataGridView_TrudDeyat.AllowUserToAddRows = false;
-            this.dataGridView_TrudDeyat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvTrudDeyat.AllowUserToAddRows = false;
+            this.dgvTrudDeyat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_TrudDeyat.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvTrudDeyat.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1737,9 +1737,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_TrudDeyat.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
-            this.dataGridView_TrudDeyat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_TrudDeyat.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvTrudDeyat.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            this.dgvTrudDeyat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTrudDeyat.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.TrudDeyat_DataNaznach,
             this.TrudDeyat_DataOsvobozhd,
             this.TrudDeyat_LgotKoeff,
@@ -1752,10 +1752,10 @@ namespace RankReminderWinForms
             dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_TrudDeyat.DefaultCellStyle = dataGridViewCellStyle24;
-            this.dataGridView_TrudDeyat.Location = new System.Drawing.Point(8, 72);
-            this.dataGridView_TrudDeyat.MultiSelect = false;
-            this.dataGridView_TrudDeyat.Name = "dataGridView_TrudDeyat";
+            this.dgvTrudDeyat.DefaultCellStyle = dataGridViewCellStyle24;
+            this.dgvTrudDeyat.Location = new System.Drawing.Point(8, 72);
+            this.dgvTrudDeyat.MultiSelect = false;
+            this.dgvTrudDeyat.Name = "dgvTrudDeyat";
             dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1763,11 +1763,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_TrudDeyat.RowHeadersDefaultCellStyle = dataGridViewCellStyle25;
-            this.dataGridView_TrudDeyat.RowHeadersWidth = 51;
-            this.dataGridView_TrudDeyat.RowTemplate.Height = 24;
-            this.dataGridView_TrudDeyat.Size = new System.Drawing.Size(981, 428);
-            this.dataGridView_TrudDeyat.TabIndex = 0;
+            this.dgvTrudDeyat.RowHeadersDefaultCellStyle = dataGridViewCellStyle25;
+            this.dgvTrudDeyat.RowHeadersWidth = 51;
+            this.dgvTrudDeyat.RowTemplate.Height = 24;
+            this.dgvTrudDeyat.Size = new System.Drawing.Size(981, 428);
+            this.dgvTrudDeyat.TabIndex = 0;
             // 
             // TrudDeyat_DataNaznach
             // 
@@ -1838,10 +1838,10 @@ namespace RankReminderWinForms
             // 
             this.tabPage7.Controls.Add(this.RabotaGFSAdd);
             this.tabPage7.Controls.Add(this.label5);
-            this.tabPage7.Controls.Add(this.dataGridView_RabotaGFS);
-            this.tabPage7.Controls.Add(this.DataPrisyagi_dateTimePicker);
+            this.tabPage7.Controls.Add(this.dgvRabotaGFS);
+            this.tabPage7.Controls.Add(this.dtpDataPrisyagi);
             this.tabPage7.Controls.Add(this.DataPrisyagi_label);
-            this.tabPage7.Controls.Add(this.dataGridView_StazhVysluga);
+            this.tabPage7.Controls.Add(this.dgvStazhVysluga);
             this.tabPage7.Controls.Add(this.StazhVysluga_label);
             this.tabPage7.Location = new System.Drawing.Point(4, 29);
             this.tabPage7.Name = "tabPage7";
@@ -1873,15 +1873,15 @@ namespace RankReminderWinForms
             this.label5.TabIndex = 6;
             this.label5.Text = "18. Прохождение службы (работа) в ГФС России:";
             // 
-            // dataGridView_RabotaGFS
+            // dgvRabotaGFS
             // 
-            this.dataGridView_RabotaGFS.AllowUserToAddRows = false;
-            this.dataGridView_RabotaGFS.AllowUserToResizeColumns = false;
-            this.dataGridView_RabotaGFS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvRabotaGFS.AllowUserToAddRows = false;
+            this.dgvRabotaGFS.AllowUserToResizeColumns = false;
+            this.dgvRabotaGFS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_RabotaGFS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView_RabotaGFS.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvRabotaGFS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvRabotaGFS.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1889,9 +1889,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_RabotaGFS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle26;
-            this.dataGridView_RabotaGFS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_RabotaGFS.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvRabotaGFS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle26;
+            this.dgvRabotaGFS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRabotaGFS.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.RabotaGFS_DataNaznach,
             this.RabotaGFS_DataOsvobozhd,
             this.RabotaGFS_Dolzhnost,
@@ -1907,16 +1907,16 @@ namespace RankReminderWinForms
             dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_RabotaGFS.DefaultCellStyle = dataGridViewCellStyle27;
-            this.dataGridView_RabotaGFS.Location = new System.Drawing.Point(8, 268);
-            this.dataGridView_RabotaGFS.MaximumSize = new System.Drawing.Size(1300, 800);
-            this.dataGridView_RabotaGFS.MultiSelect = false;
-            this.dataGridView_RabotaGFS.Name = "dataGridView_RabotaGFS";
-            this.dataGridView_RabotaGFS.RowHeadersWidth = 51;
-            this.dataGridView_RabotaGFS.RowTemplate.Height = 24;
-            this.dataGridView_RabotaGFS.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView_RabotaGFS.Size = new System.Drawing.Size(981, 232);
-            this.dataGridView_RabotaGFS.TabIndex = 5;
+            this.dgvRabotaGFS.DefaultCellStyle = dataGridViewCellStyle27;
+            this.dgvRabotaGFS.Location = new System.Drawing.Point(8, 268);
+            this.dgvRabotaGFS.MaximumSize = new System.Drawing.Size(1300, 800);
+            this.dgvRabotaGFS.MultiSelect = false;
+            this.dgvRabotaGFS.Name = "dgvRabotaGFS";
+            this.dgvRabotaGFS.RowHeadersWidth = 51;
+            this.dgvRabotaGFS.RowTemplate.Height = 24;
+            this.dgvRabotaGFS.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvRabotaGFS.Size = new System.Drawing.Size(981, 232);
+            this.dgvRabotaGFS.TabIndex = 5;
             // 
             // RabotaGFS_DataNaznach
             // 
@@ -1977,15 +1977,15 @@ namespace RankReminderWinForms
             this.RabotaGFS_LgotKoeff.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.RabotaGFS_LgotKoeff.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // DataPrisyagi_dateTimePicker
+            // dtpDataPrisyagi
             // 
-            this.DataPrisyagi_dateTimePicker.CustomFormat = "dd.MM.yyyy";
-            this.DataPrisyagi_dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.DataPrisyagi_dateTimePicker.Location = new System.Drawing.Point(744, 220);
-            this.DataPrisyagi_dateTimePicker.Name = "DataPrisyagi_dateTimePicker";
-            this.DataPrisyagi_dateTimePicker.Size = new System.Drawing.Size(140, 27);
-            this.DataPrisyagi_dateTimePicker.TabIndex = 4;
-            this.DataPrisyagi_dateTimePicker.ValueChanged += new System.EventHandler(this.DataPrisyagi_dateTimePicker_ValueChanged);
+            this.dtpDataPrisyagi.CustomFormat = "dd.MM.yyyy";
+            this.dtpDataPrisyagi.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDataPrisyagi.Location = new System.Drawing.Point(744, 220);
+            this.dtpDataPrisyagi.Name = "dtpDataPrisyagi";
+            this.dtpDataPrisyagi.Size = new System.Drawing.Size(140, 27);
+            this.dtpDataPrisyagi.TabIndex = 4;
+            this.dtpDataPrisyagi.ValueChanged += new System.EventHandler(this.DataPrisyagi_dateTimePicker_ValueChanged);
             // 
             // DataPrisyagi_label
             // 
@@ -1997,44 +1997,44 @@ namespace RankReminderWinForms
             this.DataPrisyagi_label.TabIndex = 2;
             this.DataPrisyagi_label.Text = "17. Дата принятия присяги сотрудника органов внутренних дел (дд.мм.гггг):";
             // 
-            // dataGridView_StazhVysluga
+            // dgvStazhVysluga
             // 
-            this.dataGridView_StazhVysluga.AllowUserToAddRows = false;
-            this.dataGridView_StazhVysluga.AllowUserToDeleteRows = false;
-            this.dataGridView_StazhVysluga.AllowUserToResizeRows = false;
-            this.dataGridView_StazhVysluga.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvStazhVysluga.AllowUserToAddRows = false;
+            this.dgvStazhVysluga.AllowUserToDeleteRows = false;
+            this.dgvStazhVysluga.AllowUserToResizeRows = false;
+            this.dgvStazhVysluga.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_StazhVysluga.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvStazhVysluga.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle28.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             dataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dataGridView_StazhVysluga.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle28;
-            this.dataGridView_StazhVysluga.ColumnHeadersHeight = 29;
-            this.dataGridView_StazhVysluga.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvStazhVysluga.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle28;
+            this.dgvStazhVysluga.ColumnHeadersHeight = 29;
+            this.dgvStazhVysluga.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.StazhVysluga_Poyasnenie,
             this.StazhVysluga_Let,
             this.StazhVysluga_Mesyacev,
             this.StazhVysluga_Dney});
-            this.dataGridView_StazhVysluga.Location = new System.Drawing.Point(8, 36);
-            this.dataGridView_StazhVysluga.MaximumSize = new System.Drawing.Size(1300, 175);
-            this.dataGridView_StazhVysluga.MultiSelect = false;
-            this.dataGridView_StazhVysluga.Name = "dataGridView_StazhVysluga";
+            this.dgvStazhVysluga.Location = new System.Drawing.Point(8, 36);
+            this.dgvStazhVysluga.MaximumSize = new System.Drawing.Size(1300, 175);
+            this.dgvStazhVysluga.MultiSelect = false;
+            this.dgvStazhVysluga.Name = "dgvStazhVysluga";
             dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle30.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle30.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             dataGridViewCellStyle30.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle30.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle30.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dataGridView_StazhVysluga.RowHeadersDefaultCellStyle = dataGridViewCellStyle30;
-            this.dataGridView_StazhVysluga.RowHeadersWidth = 51;
-            this.dataGridView_StazhVysluga.RowTemplate.Height = 24;
-            this.dataGridView_StazhVysluga.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView_StazhVysluga.Size = new System.Drawing.Size(981, 170);
-            this.dataGridView_StazhVysluga.TabIndex = 1;
+            this.dgvStazhVysluga.RowHeadersDefaultCellStyle = dataGridViewCellStyle30;
+            this.dgvStazhVysluga.RowHeadersWidth = 51;
+            this.dgvStazhVysluga.RowTemplate.Height = 24;
+            this.dgvStazhVysluga.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dgvStazhVysluga.Size = new System.Drawing.Size(981, 170);
+            this.dgvStazhVysluga.TabIndex = 1;
             // 
             // StazhVysluga_Poyasnenie
             // 
@@ -2100,7 +2100,7 @@ namespace RankReminderWinForms
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.dataGridView_Attestaciya);
+            this.splitContainer1.Panel1.Controls.Add(this.dgvAttestaciya);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
             this.splitContainer1.Panel1.Controls.Add(this.AttestaciyaAdd);
             // 
@@ -2108,18 +2108,18 @@ namespace RankReminderWinForms
             // 
             this.splitContainer1.Panel2.Controls.Add(this.label7);
             this.splitContainer1.Panel2.Controls.Add(this.ProfPodgAdd);
-            this.splitContainer1.Panel2.Controls.Add(this.dataGridView_ProfPodg);
+            this.splitContainer1.Panel2.Controls.Add(this.dgvProfPodg);
             this.splitContainer1.Size = new System.Drawing.Size(997, 543);
             this.splitContainer1.SplitterDistance = 259;
             this.splitContainer1.TabIndex = 43;
             // 
-            // dataGridView_Attestaciya
+            // dgvAttestaciya
             // 
-            this.dataGridView_Attestaciya.AllowUserToAddRows = false;
-            this.dataGridView_Attestaciya.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvAttestaciya.AllowUserToAddRows = false;
+            this.dgvAttestaciya.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_Attestaciya.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvAttestaciya.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle31.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle31.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2127,9 +2127,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Attestaciya.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle31;
-            this.dataGridView_Attestaciya.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Attestaciya.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvAttestaciya.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle31;
+            this.dgvAttestaciya.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAttestaciya.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Attestaciya_Data,
             this.Attestaciya_Prichina,
             this.Attestaciya_Vyvod});
@@ -2140,11 +2140,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle32.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Attestaciya.DefaultCellStyle = dataGridViewCellStyle32;
-            this.dataGridView_Attestaciya.Location = new System.Drawing.Point(8, 31);
-            this.dataGridView_Attestaciya.MaximumSize = new System.Drawing.Size(1300, 800);
-            this.dataGridView_Attestaciya.MultiSelect = false;
-            this.dataGridView_Attestaciya.Name = "dataGridView_Attestaciya";
+            this.dgvAttestaciya.DefaultCellStyle = dataGridViewCellStyle32;
+            this.dgvAttestaciya.Location = new System.Drawing.Point(8, 31);
+            this.dgvAttestaciya.MaximumSize = new System.Drawing.Size(1300, 800);
+            this.dgvAttestaciya.MultiSelect = false;
+            this.dgvAttestaciya.Name = "dgvAttestaciya";
             dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle33.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2152,13 +2152,13 @@ namespace RankReminderWinForms
             dataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Attestaciya.RowHeadersDefaultCellStyle = dataGridViewCellStyle33;
-            this.dataGridView_Attestaciya.RowHeadersWidth = 51;
+            this.dgvAttestaciya.RowHeadersDefaultCellStyle = dataGridViewCellStyle33;
+            this.dgvAttestaciya.RowHeadersWidth = 51;
             dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Attestaciya.RowsDefaultCellStyle = dataGridViewCellStyle34;
-            this.dataGridView_Attestaciya.RowTemplate.Height = 24;
-            this.dataGridView_Attestaciya.Size = new System.Drawing.Size(981, 175);
-            this.dataGridView_Attestaciya.TabIndex = 36;
+            this.dgvAttestaciya.RowsDefaultCellStyle = dataGridViewCellStyle34;
+            this.dgvAttestaciya.RowTemplate.Height = 24;
+            this.dgvAttestaciya.Size = new System.Drawing.Size(981, 175);
+            this.dgvAttestaciya.TabIndex = 36;
             // 
             // Attestaciya_Data
             // 
@@ -2244,13 +2244,13 @@ namespace RankReminderWinForms
             this.ProfPodgAdd.UseVisualStyleBackColor = true;
             this.ProfPodgAdd.Click += new System.EventHandler(this.ProfPodgAdd_Click);
             // 
-            // dataGridView_ProfPodg
+            // dgvProfPodg
             // 
-            this.dataGridView_ProfPodg.AllowUserToAddRows = false;
-            this.dataGridView_ProfPodg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvProfPodg.AllowUserToAddRows = false;
+            this.dgvProfPodg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_ProfPodg.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvProfPodg.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2258,9 +2258,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_ProfPodg.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle35;
-            this.dataGridView_ProfPodg.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_ProfPodg.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvProfPodg.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle35;
+            this.dgvProfPodg.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProfPodg.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ProfPodg_VidObuch,
             this.ProfPodg_DataNach,
             this.ProfPodg_DataOkonch,
@@ -2273,11 +2273,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle37.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle37.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_ProfPodg.DefaultCellStyle = dataGridViewCellStyle37;
-            this.dataGridView_ProfPodg.Location = new System.Drawing.Point(8, 33);
-            this.dataGridView_ProfPodg.MaximumSize = new System.Drawing.Size(1300, 800);
-            this.dataGridView_ProfPodg.MultiSelect = false;
-            this.dataGridView_ProfPodg.Name = "dataGridView_ProfPodg";
+            this.dgvProfPodg.DefaultCellStyle = dataGridViewCellStyle37;
+            this.dgvProfPodg.Location = new System.Drawing.Point(8, 33);
+            this.dgvProfPodg.MaximumSize = new System.Drawing.Size(1300, 800);
+            this.dgvProfPodg.MultiSelect = false;
+            this.dgvProfPodg.Name = "dgvProfPodg";
             dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle38.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2285,11 +2285,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_ProfPodg.RowHeadersDefaultCellStyle = dataGridViewCellStyle38;
-            this.dataGridView_ProfPodg.RowHeadersWidth = 51;
-            this.dataGridView_ProfPodg.RowTemplate.Height = 24;
-            this.dataGridView_ProfPodg.Size = new System.Drawing.Size(981, 205);
-            this.dataGridView_ProfPodg.TabIndex = 39;
+            this.dgvProfPodg.RowHeadersDefaultCellStyle = dataGridViewCellStyle38;
+            this.dgvProfPodg.RowHeadersWidth = 51;
+            this.dgvProfPodg.RowTemplate.Height = 24;
+            this.dgvProfPodg.Size = new System.Drawing.Size(981, 205);
+            this.dgvProfPodg.TabIndex = 39;
             // 
             // ProfPodg_VidObuch
             // 
@@ -2341,18 +2341,18 @@ namespace RankReminderWinForms
             // 
             this.tabPage9.Controls.Add(this.NagradyAdd);
             this.tabPage9.Controls.Add(this.label9);
-            this.tabPage9.Controls.Add(this.dataGridView_Nagrady);
+            this.tabPage9.Controls.Add(this.dgvNagrady);
             this.tabPage9.Controls.Add(this.KlassnostOld_label);
             this.tabPage9.Controls.Add(this.KlassnostAdd);
-            this.tabPage9.Controls.Add(this.dataGridView_KlassnostOld);
-            this.tabPage9.Controls.Add(this.KlassnostNomerPrikaza_textBox);
+            this.tabPage9.Controls.Add(this.dgvKlassnostOld);
+            this.tabPage9.Controls.Add(this.tbxKlassnostNomerPrikaza);
             this.tabPage9.Controls.Add(this.KlassnostNomerPrikaza_label);
-            this.tabPage9.Controls.Add(this.KlassnostCheyPrikaz_textBox);
+            this.tabPage9.Controls.Add(this.tbxKlassnostCheyPrikaz);
             this.tabPage9.Controls.Add(this.KlassnostCheyPrikaz_label);
-            this.tabPage9.Controls.Add(this.Klassnost_comboBox);
+            this.tabPage9.Controls.Add(this.cbxKlassnost);
             this.tabPage9.Controls.Add(this.label8);
             this.tabPage9.Controls.Add(this.KlassnostDate_label);
-            this.tabPage9.Controls.Add(this.KlassnostDate_textBox);
+            this.tabPage9.Controls.Add(this.tbxKlassnostDate);
             this.tabPage9.Controls.Add(this.Klassnost_label);
             this.tabPage9.Location = new System.Drawing.Point(4, 29);
             this.tabPage9.Name = "tabPage9";
@@ -2384,13 +2384,13 @@ namespace RankReminderWinForms
             this.label9.TabIndex = 51;
             this.label9.Text = "22. Награды и поощрения (кроме общественных организаций):";
             // 
-            // dataGridView_Nagrady
+            // dgvNagrady
             // 
-            this.dataGridView_Nagrady.AllowUserToAddRows = false;
-            this.dataGridView_Nagrady.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvNagrady.AllowUserToAddRows = false;
+            this.dgvNagrady.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_Nagrady.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvNagrady.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle39.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2398,9 +2398,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Nagrady.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle39;
-            this.dataGridView_Nagrady.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Nagrady.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvNagrady.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle39;
+            this.dgvNagrady.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvNagrady.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Nagrady_ChemNagrazhden,
             this.Nagrady_CheyPrikaz,
             this.Nagrady_NomerPrikaza,
@@ -2412,15 +2412,15 @@ namespace RankReminderWinForms
             dataGridViewCellStyle40.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Nagrady.DefaultCellStyle = dataGridViewCellStyle40;
-            this.dataGridView_Nagrady.Location = new System.Drawing.Point(8, 371);
-            this.dataGridView_Nagrady.MaximumSize = new System.Drawing.Size(1300, 800);
-            this.dataGridView_Nagrady.MultiSelect = false;
-            this.dataGridView_Nagrady.Name = "dataGridView_Nagrady";
-            this.dataGridView_Nagrady.RowHeadersWidth = 51;
-            this.dataGridView_Nagrady.RowTemplate.Height = 24;
-            this.dataGridView_Nagrady.Size = new System.Drawing.Size(981, 129);
-            this.dataGridView_Nagrady.TabIndex = 50;
+            this.dgvNagrady.DefaultCellStyle = dataGridViewCellStyle40;
+            this.dgvNagrady.Location = new System.Drawing.Point(8, 371);
+            this.dgvNagrady.MaximumSize = new System.Drawing.Size(1300, 800);
+            this.dgvNagrady.MultiSelect = false;
+            this.dgvNagrady.Name = "dgvNagrady";
+            this.dgvNagrady.RowHeadersWidth = 51;
+            this.dgvNagrady.RowTemplate.Height = 24;
+            this.dgvNagrady.Size = new System.Drawing.Size(981, 129);
+            this.dgvNagrady.TabIndex = 50;
             // 
             // Nagrady_ChemNagrazhden
             // 
@@ -2470,12 +2470,12 @@ namespace RankReminderWinForms
             this.KlassnostAdd.UseVisualStyleBackColor = true;
             this.KlassnostAdd.Click += new System.EventHandler(this.KlassnostAdd_Click);
             // 
-            // dataGridView_KlassnostOld
+            // dgvKlassnostOld
             // 
-            this.dataGridView_KlassnostOld.AllowUserToAddRows = false;
-            this.dataGridView_KlassnostOld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvKlassnostOld.AllowUserToAddRows = false;
+            this.dgvKlassnostOld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_KlassnostOld.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvKlassnostOld.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle41.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle41.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2483,9 +2483,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle41.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle41.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle41.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_KlassnostOld.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle41;
-            this.dataGridView_KlassnostOld.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_KlassnostOld.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvKlassnostOld.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle41;
+            this.dgvKlassnostOld.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvKlassnostOld.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.KlassnostZvanie_dGV,
             this.KlassnostCheyPrikaz_dGV,
             this.KlassnostNomerPrikaza_dGV,
@@ -2497,15 +2497,15 @@ namespace RankReminderWinForms
             dataGridViewCellStyle42.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle42.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle42.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_KlassnostOld.DefaultCellStyle = dataGridViewCellStyle42;
-            this.dataGridView_KlassnostOld.Location = new System.Drawing.Point(8, 151);
-            this.dataGridView_KlassnostOld.MaximumSize = new System.Drawing.Size(1300, 800);
-            this.dataGridView_KlassnostOld.MultiSelect = false;
-            this.dataGridView_KlassnostOld.Name = "dataGridView_KlassnostOld";
-            this.dataGridView_KlassnostOld.RowHeadersWidth = 51;
-            this.dataGridView_KlassnostOld.RowTemplate.Height = 24;
-            this.dataGridView_KlassnostOld.Size = new System.Drawing.Size(981, 150);
-            this.dataGridView_KlassnostOld.TabIndex = 47;
+            this.dgvKlassnostOld.DefaultCellStyle = dataGridViewCellStyle42;
+            this.dgvKlassnostOld.Location = new System.Drawing.Point(8, 151);
+            this.dgvKlassnostOld.MaximumSize = new System.Drawing.Size(1300, 800);
+            this.dgvKlassnostOld.MultiSelect = false;
+            this.dgvKlassnostOld.Name = "dgvKlassnostOld";
+            this.dgvKlassnostOld.RowHeadersWidth = 51;
+            this.dgvKlassnostOld.RowTemplate.Height = 24;
+            this.dgvKlassnostOld.Size = new System.Drawing.Size(981, 150);
+            this.dgvKlassnostOld.TabIndex = 47;
             // 
             // KlassnostZvanie_dGV
             // 
@@ -2539,13 +2539,13 @@ namespace RankReminderWinForms
             this.KlassnostDataPrikaza_dGV.MinimumWidth = 6;
             this.KlassnostDataPrikaza_dGV.Name = "KlassnostDataPrikaza_dGV";
             // 
-            // KlassnostNomerPrikaza_textBox
+            // tbxKlassnostNomerPrikaza
             // 
-            this.KlassnostNomerPrikaza_textBox.Location = new System.Drawing.Point(164, 94);
-            this.KlassnostNomerPrikaza_textBox.Name = "KlassnostNomerPrikaza_textBox";
-            this.KlassnostNomerPrikaza_textBox.Size = new System.Drawing.Size(156, 27);
-            this.KlassnostNomerPrikaza_textBox.TabIndex = 46;
-            this.KlassnostNomerPrikaza_textBox.TextChanged += new System.EventHandler(this.KlassnostNomerPrikaza_textBox_TextChanged);
+            this.tbxKlassnostNomerPrikaza.Location = new System.Drawing.Point(164, 94);
+            this.tbxKlassnostNomerPrikaza.Name = "tbxKlassnostNomerPrikaza";
+            this.tbxKlassnostNomerPrikaza.Size = new System.Drawing.Size(156, 27);
+            this.tbxKlassnostNomerPrikaza.TabIndex = 46;
+            this.tbxKlassnostNomerPrikaza.TextChanged += new System.EventHandler(this.KlassnostNomerPrikaza_textBox_TextChanged);
             // 
             // KlassnostNomerPrikaza_label
             // 
@@ -2556,13 +2556,13 @@ namespace RankReminderWinForms
             this.KlassnostNomerPrikaza_label.TabIndex = 45;
             this.KlassnostNomerPrikaza_label.Text = "Номер приказа:";
             // 
-            // KlassnostCheyPrikaz_textBox
+            // tbxKlassnostCheyPrikaz
             // 
-            this.KlassnostCheyPrikaz_textBox.Location = new System.Drawing.Point(132, 63);
-            this.KlassnostCheyPrikaz_textBox.Name = "KlassnostCheyPrikaz_textBox";
-            this.KlassnostCheyPrikaz_textBox.Size = new System.Drawing.Size(534, 27);
-            this.KlassnostCheyPrikaz_textBox.TabIndex = 44;
-            this.KlassnostCheyPrikaz_textBox.TextChanged += new System.EventHandler(this.KlassnostCheyPrikaz_textBox_TextChanged);
+            this.tbxKlassnostCheyPrikaz.Location = new System.Drawing.Point(132, 63);
+            this.tbxKlassnostCheyPrikaz.Name = "tbxKlassnostCheyPrikaz";
+            this.tbxKlassnostCheyPrikaz.Size = new System.Drawing.Size(534, 27);
+            this.tbxKlassnostCheyPrikaz.TabIndex = 44;
+            this.tbxKlassnostCheyPrikaz.TextChanged += new System.EventHandler(this.KlassnostCheyPrikaz_textBox_TextChanged);
             // 
             // KlassnostCheyPrikaz_label
             // 
@@ -2573,22 +2573,22 @@ namespace RankReminderWinForms
             this.KlassnostCheyPrikaz_label.TabIndex = 43;
             this.KlassnostCheyPrikaz_label.Text = "Чей приказ:";
             // 
-            // Klassnost_comboBox
+            // cbxKlassnost
             // 
-            this.Klassnost_comboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.Klassnost_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Klassnost_comboBox.FormattingEnabled = true;
-            this.Klassnost_comboBox.Items.AddRange(new object[] {
+            this.cbxKlassnost.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbxKlassnost.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxKlassnost.FormattingEnabled = true;
+            this.cbxKlassnost.Items.AddRange(new object[] {
             "Отсутствует",
             "Специалист 3 класса",
             "Специалист 2 класса",
             "Специалист 1 класса",
             "Мастер"});
-            this.Klassnost_comboBox.Location = new System.Drawing.Point(340, 32);
-            this.Klassnost_comboBox.Name = "Klassnost_comboBox";
-            this.Klassnost_comboBox.Size = new System.Drawing.Size(215, 28);
-            this.Klassnost_comboBox.TabIndex = 42;
-            this.Klassnost_comboBox.SelectedIndexChanged += new System.EventHandler(this.Klassnost_comboBox_SelectedIndexChanged);
+            this.cbxKlassnost.Location = new System.Drawing.Point(340, 32);
+            this.cbxKlassnost.Name = "cbxKlassnost";
+            this.cbxKlassnost.Size = new System.Drawing.Size(215, 28);
+            this.cbxKlassnost.TabIndex = 42;
+            this.cbxKlassnost.SelectedIndexChanged += new System.EventHandler(this.Klassnost_comboBox_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -2609,14 +2609,14 @@ namespace RankReminderWinForms
             this.KlassnostDate_label.TabIndex = 39;
             this.KlassnostDate_label.Text = "Дата присвоения квалификационного звания (дата приказа):";
             // 
-            // KlassnostDate_textBox
+            // tbxKlassnostDate
             // 
-            this.KlassnostDate_textBox.Location = new System.Drawing.Point(879, 94);
-            this.KlassnostDate_textBox.Name = "KlassnostDate_textBox";
-            this.KlassnostDate_textBox.ReadOnly = true;
-            this.KlassnostDate_textBox.Size = new System.Drawing.Size(110, 27);
-            this.KlassnostDate_textBox.TabIndex = 37;
-            this.KlassnostDate_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbxKlassnostDate.Location = new System.Drawing.Point(879, 94);
+            this.tbxKlassnostDate.Name = "tbxKlassnostDate";
+            this.tbxKlassnostDate.ReadOnly = true;
+            this.tbxKlassnostDate.Size = new System.Drawing.Size(110, 27);
+            this.tbxKlassnostDate.TabIndex = 37;
+            this.tbxKlassnostDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Klassnost_label
             // 
@@ -2630,8 +2630,8 @@ namespace RankReminderWinForms
             // tabPage10
             // 
             this.tabPage10.Controls.Add(this.splitContainer2);
-            this.tabPage10.Controls.Add(this.Prodlenie_checkBox);
-            this.tabPage10.Controls.Add(this.dataGridView_Prodlenie);
+            this.tabPage10.Controls.Add(this.chbxProdlenie);
+            this.tabPage10.Controls.Add(this.dgvProdlenie);
             this.tabPage10.Controls.Add(this.label10);
             this.tabPage10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabPage10.Location = new System.Drawing.Point(4, 29);
@@ -2653,13 +2653,13 @@ namespace RankReminderWinForms
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.BoevyeAdd);
-            this.splitContainer2.Panel1.Controls.Add(this.dataGridView_Boevye);
+            this.splitContainer2.Panel1.Controls.Add(this.dgvBoevye);
             this.splitContainer2.Panel1.Controls.Add(this.label11);
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.RezervAdd);
-            this.splitContainer2.Panel2.Controls.Add(this.dataGridView_Rezerv);
+            this.splitContainer2.Panel2.Controls.Add(this.dgvRezerv);
             this.splitContainer2.Panel2.Controls.Add(this.label12);
             this.splitContainer2.Size = new System.Drawing.Size(997, 452);
             this.splitContainer2.SplitterDistance = 224;
@@ -2678,13 +2678,13 @@ namespace RankReminderWinForms
             this.BoevyeAdd.UseVisualStyleBackColor = true;
             this.BoevyeAdd.Click += new System.EventHandler(this.BoevyeAdd_Click);
             // 
-            // dataGridView_Boevye
+            // dgvBoevye
             // 
-            this.dataGridView_Boevye.AllowUserToAddRows = false;
-            this.dataGridView_Boevye.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvBoevye.AllowUserToAddRows = false;
+            this.dgvBoevye.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_Boevye.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvBoevye.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle43.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle43.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2692,9 +2692,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle43.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle43.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle43.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Boevye.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle43;
-            this.dataGridView_Boevye.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Boevye.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvBoevye.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle43;
+            this.dgvBoevye.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBoevye.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Boevye_Gde,
             this.Boevye_DataNach,
             this.Boevye_DataOkonch,
@@ -2707,11 +2707,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle48.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle48.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle48.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Boevye.DefaultCellStyle = dataGridViewCellStyle48;
-            this.dataGridView_Boevye.Location = new System.Drawing.Point(8, 28);
-            this.dataGridView_Boevye.MaximumSize = new System.Drawing.Size(1300, 800);
-            this.dataGridView_Boevye.MultiSelect = false;
-            this.dataGridView_Boevye.Name = "dataGridView_Boevye";
+            this.dgvBoevye.DefaultCellStyle = dataGridViewCellStyle48;
+            this.dgvBoevye.Location = new System.Drawing.Point(8, 28);
+            this.dgvBoevye.MaximumSize = new System.Drawing.Size(1300, 800);
+            this.dgvBoevye.MultiSelect = false;
+            this.dgvBoevye.Name = "dgvBoevye";
             dataGridViewCellStyle49.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle49.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle49.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2719,11 +2719,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle49.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle49.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle49.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Boevye.RowHeadersDefaultCellStyle = dataGridViewCellStyle49;
-            this.dataGridView_Boevye.RowHeadersWidth = 51;
-            this.dataGridView_Boevye.RowTemplate.Height = 24;
-            this.dataGridView_Boevye.Size = new System.Drawing.Size(981, 153);
-            this.dataGridView_Boevye.TabIndex = 50;
+            this.dgvBoevye.RowHeadersDefaultCellStyle = dataGridViewCellStyle49;
+            this.dgvBoevye.RowHeadersWidth = 51;
+            this.dgvBoevye.RowTemplate.Height = 24;
+            this.dgvBoevye.Size = new System.Drawing.Size(981, 153);
+            this.dgvBoevye.TabIndex = 50;
             // 
             // Boevye_Gde
             // 
@@ -2789,13 +2789,13 @@ namespace RankReminderWinForms
             this.RezervAdd.UseVisualStyleBackColor = true;
             this.RezervAdd.Click += new System.EventHandler(this.RezervAdd_Click);
             // 
-            // dataGridView_Rezerv
+            // dgvRezerv
             // 
-            this.dataGridView_Rezerv.AllowUserToAddRows = false;
-            this.dataGridView_Rezerv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvRezerv.AllowUserToAddRows = false;
+            this.dgvRezerv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_Rezerv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvRezerv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle50.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle50.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2803,9 +2803,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle50.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle50.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle50.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Rezerv.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle50;
-            this.dataGridView_Rezerv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Rezerv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvRezerv.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle50;
+            this.dgvRezerv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRezerv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Rezerv_Dolzhnost,
             this.Rezerv_GodZach,
             this.Rezerv_NomerPrikaza,
@@ -2817,11 +2817,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle52.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle52.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle52.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_Rezerv.DefaultCellStyle = dataGridViewCellStyle52;
-            this.dataGridView_Rezerv.Location = new System.Drawing.Point(8, 28);
-            this.dataGridView_Rezerv.MaximumSize = new System.Drawing.Size(1300, 800);
-            this.dataGridView_Rezerv.MultiSelect = false;
-            this.dataGridView_Rezerv.Name = "dataGridView_Rezerv";
+            this.dgvRezerv.DefaultCellStyle = dataGridViewCellStyle52;
+            this.dgvRezerv.Location = new System.Drawing.Point(8, 28);
+            this.dgvRezerv.MaximumSize = new System.Drawing.Size(1300, 800);
+            this.dgvRezerv.MultiSelect = false;
+            this.dgvRezerv.Name = "dgvRezerv";
             dataGridViewCellStyle53.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle53.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle53.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2829,11 +2829,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle53.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle53.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle53.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Rezerv.RowHeadersDefaultCellStyle = dataGridViewCellStyle53;
-            this.dataGridView_Rezerv.RowHeadersWidth = 51;
-            this.dataGridView_Rezerv.RowTemplate.Height = 24;
-            this.dataGridView_Rezerv.Size = new System.Drawing.Size(981, 155);
-            this.dataGridView_Rezerv.TabIndex = 52;
+            this.dgvRezerv.RowHeadersDefaultCellStyle = dataGridViewCellStyle53;
+            this.dgvRezerv.RowHeadersWidth = 51;
+            this.dgvRezerv.RowTemplate.Height = 24;
+            this.dgvRezerv.Size = new System.Drawing.Size(981, 155);
+            this.dgvRezerv.TabIndex = 52;
             // 
             // Rezerv_Dolzhnost
             // 
@@ -2875,25 +2875,25 @@ namespace RankReminderWinForms
             this.label12.TabIndex = 51;
             this.label12.Text = "25. Состояние в резерве на выдвижение:";
             // 
-            // Prodlenie_checkBox
+            // chbxProdlenie
             // 
-            this.Prodlenie_checkBox.AutoSize = true;
-            this.Prodlenie_checkBox.Checked = true;
-            this.Prodlenie_checkBox.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.Prodlenie_checkBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Prodlenie_checkBox.Location = new System.Drawing.Point(544, 47);
-            this.Prodlenie_checkBox.Name = "Prodlenie_checkBox";
-            this.Prodlenie_checkBox.Size = new System.Drawing.Size(173, 24);
-            this.Prodlenie_checkBox.TabIndex = 48;
-            this.Prodlenie_checkBox.Text = "Продления были";
-            this.Prodlenie_checkBox.UseVisualStyleBackColor = true;
-            this.Prodlenie_checkBox.CheckedChanged += new System.EventHandler(this.Prodlenie_checkBox_CheckedChanged);
+            this.chbxProdlenie.AutoSize = true;
+            this.chbxProdlenie.Checked = true;
+            this.chbxProdlenie.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chbxProdlenie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chbxProdlenie.Location = new System.Drawing.Point(544, 47);
+            this.chbxProdlenie.Name = "chbxProdlenie";
+            this.chbxProdlenie.Size = new System.Drawing.Size(173, 24);
+            this.chbxProdlenie.TabIndex = 48;
+            this.chbxProdlenie.Text = "Продления были";
+            this.chbxProdlenie.UseVisualStyleBackColor = true;
+            this.chbxProdlenie.CheckedChanged += new System.EventHandler(this.Prodlenie_checkBox_CheckedChanged);
             // 
-            // dataGridView_Prodlenie
+            // dgvProdlenie
             // 
-            this.dataGridView_Prodlenie.AllowUserToAddRows = false;
-            this.dataGridView_Prodlenie.AllowUserToDeleteRows = false;
-            this.dataGridView_Prodlenie.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvProdlenie.AllowUserToAddRows = false;
+            this.dgvProdlenie.AllowUserToDeleteRows = false;
+            this.dgvProdlenie.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle54.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle54.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2901,9 +2901,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle54.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle54.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle54.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Prodlenie.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle54;
-            this.dataGridView_Prodlenie.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Prodlenie.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvProdlenie.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle54;
+            this.dgvProdlenie.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProdlenie.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Prodlenie_Data,
             this.Prodlenie_Kolich});
             dataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -2913,10 +2913,10 @@ namespace RankReminderWinForms
             dataGridViewCellStyle57.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle57.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle57.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_Prodlenie.DefaultCellStyle = dataGridViewCellStyle57;
-            this.dataGridView_Prodlenie.Location = new System.Drawing.Point(8, 31);
-            this.dataGridView_Prodlenie.MultiSelect = false;
-            this.dataGridView_Prodlenie.Name = "dataGridView_Prodlenie";
+            this.dgvProdlenie.DefaultCellStyle = dataGridViewCellStyle57;
+            this.dgvProdlenie.Location = new System.Drawing.Point(8, 31);
+            this.dgvProdlenie.MultiSelect = false;
+            this.dgvProdlenie.Name = "dgvProdlenie";
             dataGridViewCellStyle58.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle58.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle58.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2924,11 +2924,11 @@ namespace RankReminderWinForms
             dataGridViewCellStyle58.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle58.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle58.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Prodlenie.RowHeadersDefaultCellStyle = dataGridViewCellStyle58;
-            this.dataGridView_Prodlenie.RowHeadersWidth = 51;
-            this.dataGridView_Prodlenie.RowTemplate.Height = 24;
-            this.dataGridView_Prodlenie.Size = new System.Drawing.Size(520, 53);
-            this.dataGridView_Prodlenie.TabIndex = 47;
+            this.dgvProdlenie.RowHeadersDefaultCellStyle = dataGridViewCellStyle58;
+            this.dgvProdlenie.RowHeadersWidth = 51;
+            this.dgvProdlenie.RowTemplate.Height = 24;
+            this.dgvProdlenie.Size = new System.Drawing.Size(520, 53);
+            this.dgvProdlenie.TabIndex = 47;
             // 
             // Prodlenie_Data
             // 
@@ -2966,15 +2966,15 @@ namespace RankReminderWinForms
             // tabPage11
             // 
             this.tabPage11.Controls.Add(this.SendToAnotherDataTable);
-            this.tabPage11.Controls.Add(this.Zapolnil_textBox);
-            this.tabPage11.Controls.Add(this.DataZapolneniya_dateTimePicker);
+            this.tabPage11.Controls.Add(this.tbxZapolnil);
+            this.tabPage11.Controls.Add(this.dtpDataZapolneniya);
             this.tabPage11.Controls.Add(this.label16);
             this.tabPage11.Controls.Add(this.label15);
             this.tabPage11.Controls.Add(this.UvolnenieAdd);
-            this.tabPage11.Controls.Add(this.dataGridView_Uvolnenie);
+            this.tabPage11.Controls.Add(this.dgvUvolnenie);
             this.tabPage11.Controls.Add(this.label14);
             this.tabPage11.Controls.Add(this.VzyskaniyaAdd);
-            this.tabPage11.Controls.Add(this.dataGridView_Vzyskaniya);
+            this.tabPage11.Controls.Add(this.dgvVzyskaniya);
             this.tabPage11.Controls.Add(this.label13);
             this.tabPage11.Location = new System.Drawing.Point(4, 29);
             this.tabPage11.Name = "tabPage11";
@@ -2994,28 +2994,28 @@ namespace RankReminderWinForms
             this.SendToAnotherDataTable.UseVisualStyleBackColor = true;
             this.SendToAnotherDataTable.Click += new System.EventHandler(this.SendToAnotherDataTable_Click);
             // 
-            // Zapolnil_textBox
+            // tbxZapolnil
             // 
-            this.Zapolnil_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbxZapolnil.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Zapolnil_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Zapolnil_textBox.Location = new System.Drawing.Point(236, 424);
-            this.Zapolnil_textBox.MaximumSize = new System.Drawing.Size(1072, 400);
-            this.Zapolnil_textBox.Multiline = true;
-            this.Zapolnil_textBox.Name = "Zapolnil_textBox";
-            this.Zapolnil_textBox.Size = new System.Drawing.Size(753, 50);
-            this.Zapolnil_textBox.TabIndex = 59;
-            this.Zapolnil_textBox.TextChanged += new System.EventHandler(this.Zapolnil_textBox_TextChanged);
+            this.tbxZapolnil.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbxZapolnil.Location = new System.Drawing.Point(236, 424);
+            this.tbxZapolnil.MaximumSize = new System.Drawing.Size(1072, 400);
+            this.tbxZapolnil.Multiline = true;
+            this.tbxZapolnil.Name = "tbxZapolnil";
+            this.tbxZapolnil.Size = new System.Drawing.Size(753, 50);
+            this.tbxZapolnil.TabIndex = 59;
+            this.tbxZapolnil.TextChanged += new System.EventHandler(this.Zapolnil_textBox_TextChanged);
             // 
-            // DataZapolneniya_dateTimePicker
+            // dtpDataZapolneniya
             // 
-            this.DataZapolneniya_dateTimePicker.CustomFormat = "dd.MM.yyyy";
-            this.DataZapolneniya_dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.DataZapolneniya_dateTimePicker.Location = new System.Drawing.Point(236, 487);
-            this.DataZapolneniya_dateTimePicker.Name = "DataZapolneniya_dateTimePicker";
-            this.DataZapolneniya_dateTimePicker.Size = new System.Drawing.Size(140, 27);
-            this.DataZapolneniya_dateTimePicker.TabIndex = 58;
-            this.DataZapolneniya_dateTimePicker.ValueChanged += new System.EventHandler(this.DataZapolneniya_dateTimePicker_ValueChanged);
+            this.dtpDataZapolneniya.CustomFormat = "dd.MM.yyyy";
+            this.dtpDataZapolneniya.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDataZapolneniya.Location = new System.Drawing.Point(236, 487);
+            this.dtpDataZapolneniya.Name = "dtpDataZapolneniya";
+            this.dtpDataZapolneniya.Size = new System.Drawing.Size(140, 27);
+            this.dtpDataZapolneniya.TabIndex = 58;
+            this.dtpDataZapolneniya.ValueChanged += new System.EventHandler(this.DataZapolneniya_dateTimePicker_ValueChanged);
             // 
             // label16
             // 
@@ -3049,13 +3049,13 @@ namespace RankReminderWinForms
             this.UvolnenieAdd.UseVisualStyleBackColor = true;
             this.UvolnenieAdd.Click += new System.EventHandler(this.UvolnenieAdd_Click);
             // 
-            // dataGridView_Uvolnenie
+            // dgvUvolnenie
             // 
-            this.dataGridView_Uvolnenie.AllowUserToAddRows = false;
-            this.dataGridView_Uvolnenie.AllowUserToDeleteRows = false;
-            this.dataGridView_Uvolnenie.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvUvolnenie.AllowUserToAddRows = false;
+            this.dgvUvolnenie.AllowUserToDeleteRows = false;
+            this.dgvUvolnenie.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_Uvolnenie.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvUvolnenie.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle59.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle59.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -3063,9 +3063,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle59.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle59.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle59.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_Uvolnenie.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle59;
-            this.dataGridView_Uvolnenie.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Uvolnenie.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvUvolnenie.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle59;
+            this.dgvUvolnenie.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUvolnenie.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Uvolnenie_Data,
             this.Uvolnenie_CheyPrikaz,
             this.Uvolnenie_NomerPrikaza,
@@ -3078,15 +3078,15 @@ namespace RankReminderWinForms
             dataGridViewCellStyle60.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle60.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle60.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Uvolnenie.DefaultCellStyle = dataGridViewCellStyle60;
-            this.dataGridView_Uvolnenie.Location = new System.Drawing.Point(9, 318);
-            this.dataGridView_Uvolnenie.MaximumSize = new System.Drawing.Size(1300, 400);
-            this.dataGridView_Uvolnenie.MultiSelect = false;
-            this.dataGridView_Uvolnenie.Name = "dataGridView_Uvolnenie";
-            this.dataGridView_Uvolnenie.RowHeadersWidth = 51;
-            this.dataGridView_Uvolnenie.RowTemplate.Height = 24;
-            this.dataGridView_Uvolnenie.Size = new System.Drawing.Size(981, 53);
-            this.dataGridView_Uvolnenie.TabIndex = 54;
+            this.dgvUvolnenie.DefaultCellStyle = dataGridViewCellStyle60;
+            this.dgvUvolnenie.Location = new System.Drawing.Point(9, 318);
+            this.dgvUvolnenie.MaximumSize = new System.Drawing.Size(1300, 400);
+            this.dgvUvolnenie.MultiSelect = false;
+            this.dgvUvolnenie.Name = "dgvUvolnenie";
+            this.dgvUvolnenie.RowHeadersWidth = 51;
+            this.dgvUvolnenie.RowTemplate.Height = 24;
+            this.dgvUvolnenie.Size = new System.Drawing.Size(981, 53);
+            this.dgvUvolnenie.TabIndex = 54;
             // 
             // Uvolnenie_Data
             // 
@@ -3143,12 +3143,12 @@ namespace RankReminderWinForms
             this.VzyskaniyaAdd.UseVisualStyleBackColor = true;
             this.VzyskaniyaAdd.Click += new System.EventHandler(this.VzyskaniyaAdd_Click);
             // 
-            // dataGridView_Vzyskaniya
+            // dgvVzyskaniya
             // 
-            this.dataGridView_Vzyskaniya.AllowUserToAddRows = false;
-            this.dataGridView_Vzyskaniya.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvVzyskaniya.AllowUserToAddRows = false;
+            this.dgvVzyskaniya.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView_Vzyskaniya.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvVzyskaniya.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle61.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle61.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle61.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -3156,9 +3156,9 @@ namespace RankReminderWinForms
             dataGridViewCellStyle61.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle61.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle61.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Vzyskaniya.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle61;
-            this.dataGridView_Vzyskaniya.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Vzyskaniya.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvVzyskaniya.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle61;
+            this.dgvVzyskaniya.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVzyskaniya.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Vzyskaniya_Vid,
             this.Vzyskaniya_Narushenie,
             this.Vzyskaniya_CheyPrikazNakaz,
@@ -3174,15 +3174,15 @@ namespace RankReminderWinForms
             dataGridViewCellStyle62.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle62.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle62.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Vzyskaniya.DefaultCellStyle = dataGridViewCellStyle62;
-            this.dataGridView_Vzyskaniya.Location = new System.Drawing.Point(8, 31);
-            this.dataGridView_Vzyskaniya.MaximumSize = new System.Drawing.Size(1300, 800);
-            this.dataGridView_Vzyskaniya.MultiSelect = false;
-            this.dataGridView_Vzyskaniya.Name = "dataGridView_Vzyskaniya";
-            this.dataGridView_Vzyskaniya.RowHeadersWidth = 51;
-            this.dataGridView_Vzyskaniya.RowTemplate.Height = 24;
-            this.dataGridView_Vzyskaniya.Size = new System.Drawing.Size(981, 212);
-            this.dataGridView_Vzyskaniya.TabIndex = 51;
+            this.dgvVzyskaniya.DefaultCellStyle = dataGridViewCellStyle62;
+            this.dgvVzyskaniya.Location = new System.Drawing.Point(8, 31);
+            this.dgvVzyskaniya.MaximumSize = new System.Drawing.Size(1300, 800);
+            this.dgvVzyskaniya.MultiSelect = false;
+            this.dgvVzyskaniya.Name = "dgvVzyskaniya";
+            this.dgvVzyskaniya.RowHeadersWidth = 51;
+            this.dgvVzyskaniya.RowTemplate.Height = 24;
+            this.dgvVzyskaniya.Size = new System.Drawing.Size(981, 212);
+            this.dgvVzyskaniya.TabIndex = 51;
             // 
             // Vzyskaniya_Vid
             // 
@@ -3248,15 +3248,15 @@ namespace RankReminderWinForms
             this.label13.TabIndex = 43;
             this.label13.Text = "26. Взыскания:";
             // 
-            // Cnum_label
+            // lblCnum
             // 
-            this.Cnum_label.AutoSize = true;
-            this.Cnum_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Cnum_label.Location = new System.Drawing.Point(7, 18);
-            this.Cnum_label.Name = "Cnum_label";
-            this.Cnum_label.Size = new System.Drawing.Size(53, 20);
-            this.Cnum_label.TabIndex = 29;
-            this.Cnum_label.Text = "Cnum";
+            this.lblCnum.AutoSize = true;
+            this.lblCnum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCnum.Location = new System.Drawing.Point(7, 18);
+            this.lblCnum.Name = "lblCnum";
+            this.lblCnum.Size = new System.Drawing.Size(53, 20);
+            this.lblCnum.TabIndex = 29;
+            this.lblCnum.Text = "Cnum";
             // 
             // NextCard
             // 
@@ -3306,26 +3306,26 @@ namespace RankReminderWinForms
             this.Cards_groupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Cards_groupBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.Cards_groupBox.Controls.Add(this.CardsFIO_label);
+            this.Cards_groupBox.Controls.Add(this.lblCardsFIO);
             this.Cards_groupBox.Controls.Add(this.PrevCard);
             this.Cards_groupBox.Controls.Add(this.NextCard);
             this.Cards_groupBox.Controls.Add(this.Close2);
-            this.Cards_groupBox.Controls.Add(this.Cnum_label);
+            this.Cards_groupBox.Controls.Add(this.lblCnum);
             this.Cards_groupBox.Location = new System.Drawing.Point(12, 569);
             this.Cards_groupBox.Name = "Cards_groupBox";
             this.Cards_groupBox.Size = new System.Drawing.Size(981, 143);
             this.Cards_groupBox.TabIndex = 50;
             this.Cards_groupBox.TabStop = false;
             // 
-            // CardsFIO_label
+            // lblCardsFIO
             // 
-            this.CardsFIO_label.AutoSize = true;
-            this.CardsFIO_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CardsFIO_label.Location = new System.Drawing.Point(7, 45);
-            this.CardsFIO_label.Name = "CardsFIO_label";
-            this.CardsFIO_label.Size = new System.Drawing.Size(181, 20);
-            this.CardsFIO_label.TabIndex = 30;
-            this.CardsFIO_label.Text = "Ф.И.О. сотрудника";
+            this.lblCardsFIO.AutoSize = true;
+            this.lblCardsFIO.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCardsFIO.Location = new System.Drawing.Point(7, 45);
+            this.lblCardsFIO.Name = "lblCardsFIO";
+            this.lblCardsFIO.Size = new System.Drawing.Size(181, 20);
+            this.lblCardsFIO.TabIndex = 30;
+            this.lblCardsFIO.Text = "Ф.И.О. сотрудника";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -3902,7 +3902,7 @@ namespace RankReminderWinForms
             this.Text = "АИС \"Кадры ГФС\"";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form2_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMainList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSetBindingSource1)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -3913,25 +3913,25 @@ namespace RankReminderWinForms
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainPhoto)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_UchStepen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Study)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUchStepen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStudy)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_PrisvZvaniy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPrisvZvaniy)).EndInit();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Family)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Married)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFamily)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMarried)).EndInit();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_TrudDeyat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTrudDeyat)).EndInit();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_RabotaGFS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_StazhVysluga)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRabotaGFS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStazhVysluga)).EndInit();
             this.tabPage8.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -3939,12 +3939,12 @@ namespace RankReminderWinForms
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Attestaciya)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_ProfPodg)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAttestaciya)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProfPodg)).EndInit();
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Nagrady)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_KlassnostOld)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNagrady)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvKlassnostOld)).EndInit();
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
@@ -3953,13 +3953,13 @@ namespace RankReminderWinForms
             this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Boevye)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Rezerv)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Prodlenie)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBoevye)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRezerv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProdlenie)).EndInit();
             this.tabPage11.ResumeLayout(false);
             this.tabPage11.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Uvolnenie)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Vzyskaniya)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUvolnenie)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVzyskaniya)).EndInit();
             this.Cards_groupBox.ResumeLayout(false);
             this.Cards_groupBox.PerformLayout();
             this.ResumeLayout(false);
@@ -3968,13 +3968,13 @@ namespace RankReminderWinForms
 
         #endregion
 
-        private MyCustomDataGrid dataGridView1;
+        private MyCustomDataGrid dgvMainList;
  
         private System.Windows.Forms.Button Close1;
         private System.Windows.Forms.BindingSource dataSetBindingSource;
         private System.Windows.Forms.BindingSource dataSetBindingSource1;
         private System.Windows.Forms.Button AddPerson;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblCurrentDate;
         private System.Windows.Forms.Button ExportToExcel;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
@@ -3989,11 +3989,11 @@ namespace RankReminderWinForms
         private System.Windows.Forms.Button Close2;
         private System.Windows.Forms.Button NextCard;
         private System.Windows.Forms.Button PrevCard;
-        private System.Windows.Forms.TextBox MiddleName_textBox;
-        private System.Windows.Forms.TextBox Name_textBox;
-        private System.Windows.Forms.TextBox Surname_textBox;
-        private System.Windows.Forms.TextBox Post_textBox;
-        private System.Windows.Forms.TextBox NextRankDate_textBox;
+        private System.Windows.Forms.TextBox tbxMiddleName;
+        private System.Windows.Forms.TextBox tbxName;
+        private System.Windows.Forms.TextBox tbxSurname;
+        private System.Windows.Forms.TextBox tbxPost;
+        private System.Windows.Forms.TextBox tbxNextRankDate;
         private System.Windows.Forms.Label MiddleName_label;
         private System.Windows.Forms.Label Name_label;
         private System.Windows.Forms.Label Surname_label;
@@ -4003,25 +4003,25 @@ namespace RankReminderWinForms
         private System.Windows.Forms.Label RankLimit_label;
         private System.Windows.Forms.Label NextRankDate_label;
         private System.Windows.Forms.Label DateOfBirth_label;
-        private System.Windows.Forms.Label Cnum_label;
+        private System.Windows.Forms.Label lblCnum;
         private System.Windows.Forms.Label PlaceOfBirth_label;
-        private System.Windows.Forms.TextBox PlaceOfBirth_textBox;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox tbxPlaceOfBirth;
+        private System.Windows.Forms.PictureBox pbMainPhoto;
         private System.Windows.Forms.Button ChooseImage;
         private System.Windows.Forms.Button RemoveImage;
-        private System.Windows.Forms.TextBox Registration_textBox;
+        private System.Windows.Forms.TextBox tbxRegistration;
         private System.Windows.Forms.Label Registration_label;
         private System.Windows.Forms.Label PlaceOfLiving_label;
-        private System.Windows.Forms.TextBox PlaceOfLiving_textBox;
-        private System.Windows.Forms.TextBox PhonePlaceOfLiving_textBox;
-        private System.Windows.Forms.TextBox PhoneRegistration_textBox;
+        private System.Windows.Forms.TextBox tbxPlaceOfLiving;
+        private System.Windows.Forms.TextBox tbxPhonePlaceOfLiving;
+        private System.Windows.Forms.TextBox tbxPhoneRegistration;
         private System.Windows.Forms.Label PhoneRegistration_label;
         private System.Windows.Forms.Label PhonePlaceOfLiving_label;
         private System.Windows.Forms.Label PersonalFileNum_label;
-        private System.Windows.Forms.TextBox PersonalFileNum_textBox;
-        private System.Windows.Forms.ComboBox Gender_comboBox;
+        private System.Windows.Forms.TextBox tbxPersonalFileNum;
+        private System.Windows.Forms.ComboBox cbxGender;
         private System.Windows.Forms.Label Gender_label;
-        private System.Windows.Forms.TextBox PersonalNum_textBox;
+        private System.Windows.Forms.TextBox tbxPersonalNum;
         private System.Windows.Forms.Label PersonalNum_label;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
@@ -4033,27 +4033,27 @@ namespace RankReminderWinForms
         private System.Windows.Forms.Label Family_label;
         private System.Windows.Forms.Button FamilyAddPerson;
         private System.Windows.Forms.GroupBox Cards_groupBox;
-        private System.Windows.Forms.Label CardsFIO_label;
+        private System.Windows.Forms.Label lblCardsFIO;
         private System.Windows.Forms.Label Married_label;
-        private System.Windows.Forms.DataGridView dataGridView_Married;
+        private System.Windows.Forms.DataGridView dgvMarried;
         private System.Windows.Forms.Button MarriedAdd;
-        private System.Windows.Forms.DataGridView dataGridView_Study;
+        private System.Windows.Forms.DataGridView dgvStudy;
         private System.Windows.Forms.Button StudyAdd;
         private System.Windows.Forms.Button UchStepenAdd;
-        private System.Windows.Forms.DataGridView dataGridView_UchStepen;
+        private System.Windows.Forms.DataGridView dgvUchStepen;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label PrisvZvaniyChinov_label;
-        private System.Windows.Forms.DataGridView dataGridView_PrisvZvaniy;
+        private System.Windows.Forms.DataGridView dgvPrisvZvaniy;
         private System.Windows.Forms.Button ZvanieAdd;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.Label TrudDeyat_label;
-        private System.Windows.Forms.DataGridView dataGridView_TrudDeyat;
+        private System.Windows.Forms.DataGridView dgvTrudDeyat;
         private System.Windows.Forms.Button TrudDeyatAdd;
         private System.Windows.Forms.Label StazhVysluga_label;
-        private System.Windows.Forms.DataGridView dataGridView_StazhVysluga;
+        private System.Windows.Forms.DataGridView dgvStazhVysluga;
         private System.Windows.Forms.Label DataPrisyagi_label;
-        private System.Windows.Forms.DateTimePicker DataPrisyagi_dateTimePicker;
-        private System.Windows.Forms.DataGridView dataGridView_RabotaGFS;
+        private System.Windows.Forms.DateTimePicker dtpDataPrisyagi;
+        private System.Windows.Forms.DataGridView dgvRabotaGFS;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button RabotaGFSAdd;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
@@ -4093,53 +4093,53 @@ namespace RankReminderWinForms
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridView dataGridView_Attestaciya;
+        private System.Windows.Forms.DataGridView dgvAttestaciya;
         private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.Button AttestaciyaAdd;
         private System.Windows.Forms.Label KlassnostDate_label;
-        private System.Windows.Forms.TextBox KlassnostDate_textBox;
+        private System.Windows.Forms.TextBox tbxKlassnostDate;
         private System.Windows.Forms.Label Klassnost_label;
-        private System.Windows.Forms.DataGridView dataGridView_ProfPodg;
+        private System.Windows.Forms.DataGridView dgvProfPodg;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button ProfPodgAdd;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox Klassnost_comboBox;
-        private System.Windows.Forms.TextBox KlassnostCheyPrikaz_textBox;
+        private System.Windows.Forms.ComboBox cbxKlassnost;
+        private System.Windows.Forms.TextBox tbxKlassnostCheyPrikaz;
         private System.Windows.Forms.Label KlassnostCheyPrikaz_label;
-        private System.Windows.Forms.TextBox KlassnostNomerPrikaza_textBox;
+        private System.Windows.Forms.TextBox tbxKlassnostNomerPrikaza;
         private System.Windows.Forms.Label KlassnostNomerPrikaza_label;
-        private System.Windows.Forms.DataGridView dataGridView_KlassnostOld;
+        private System.Windows.Forms.DataGridView dgvKlassnostOld;
         private System.Windows.Forms.Button KlassnostAdd;
         private System.Windows.Forms.Label KlassnostOld_label;
-        private System.Windows.Forms.DataGridView dataGridView_Nagrady;
+        private System.Windows.Forms.DataGridView dgvNagrady;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button NagradyAdd;
         private System.Windows.Forms.TabPage tabPage11;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.DataGridView dataGridView_Prodlenie;
-        private System.Windows.Forms.CheckBox Prodlenie_checkBox;
-        private System.Windows.Forms.DataGridView dataGridView_Family;
+        private System.Windows.Forms.DataGridView dgvProdlenie;
+        private System.Windows.Forms.CheckBox chbxProdlenie;
+        private System.Windows.Forms.DataGridView dgvFamily;
         private CalendarColumn Prodlenie_Data;
         private System.Windows.Forms.DataGridViewComboBoxColumn Prodlenie_Kolich;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataGridView dataGridView_Boevye;
-        private System.Windows.Forms.DataGridView dataGridView_Rezerv;
+        private System.Windows.Forms.DataGridView dgvBoevye;
+        private System.Windows.Forms.DataGridView dgvRezerv;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button BoevyeAdd;
         private System.Windows.Forms.Button RezervAdd;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.DataGridView dataGridView_Vzyskaniya;
+        private System.Windows.Forms.DataGridView dgvVzyskaniya;
         private System.Windows.Forms.Button VzyskaniyaAdd;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.DataGridView dataGridView_Uvolnenie;
+        private System.Windows.Forms.DataGridView dgvUvolnenie;
         private System.Windows.Forms.Button UvolnenieAdd;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.DateTimePicker DataZapolneniya_dateTimePicker;
-        private System.Windows.Forms.TextBox Zapolnil_textBox;
-        private System.Windows.Forms.DateTimePicker DateOfBirth_dateTimePicker;
+        private System.Windows.Forms.DateTimePicker dtpDataZapolneniya;
+        private System.Windows.Forms.TextBox tbxZapolnil;
+        private System.Windows.Forms.DateTimePicker dtpDateOfBirth;
         private CalendarColumn calendarColumn12;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
         private CalendarColumn calendarColumn13;
@@ -4238,9 +4238,9 @@ namespace RankReminderWinForms
         private System.Windows.Forms.DataGridViewTextBoxColumn Vzyskaniya_CheyPrikazSnyatie;
         private System.Windows.Forms.DataGridViewTextBoxColumn Vzyskaniya_NomerPrikazaSnyatie;
         private CalendarColumn Vzyskaniya_DataPrikazaSnyatie;
-        private System.Windows.Forms.DateTimePicker RankDate_dateTimePicker;
-        private System.Windows.Forms.ComboBox Rank_comboBox;
-        private System.Windows.Forms.ComboBox RankLimit_comboBox;
+        private System.Windows.Forms.DateTimePicker dtpRankDate;
+        private System.Windows.Forms.ComboBox cbxRank;
+        private System.Windows.Forms.ComboBox cbxRankLimit;
         private CalendarColumn TrudDeyat_DataNaznach;
         private CalendarColumn TrudDeyat_DataOsvobozhd;
         private System.Windows.Forms.DataGridViewTextBoxColumn TrudDeyat_LgotKoeff;
@@ -4249,7 +4249,7 @@ namespace RankReminderWinForms
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button Archive;
         private System.Windows.Forms.Button SendToAnotherDataTable;
-        private System.Windows.Forms.Label CurrentBase_label;
+        private System.Windows.Forms.Label lblCurrentBase;
         private System.Windows.Forms.Button VyslugaCalc;
         private System.Windows.Forms.DataGridViewComboBoxColumn Study_FormaObucheniya;
         private System.Windows.Forms.DataGridViewTextBoxColumn Study_Naimenovanie;

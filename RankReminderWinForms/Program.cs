@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
-using Excel = Microsoft.Office.Interop.Excel;
-using System.ComponentModel;
-using System.IO;
 
 namespace RankReminderWinForms
 {
@@ -23,7 +15,7 @@ namespace RankReminderWinForms
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
-        }        
+        }
     }
 
 
@@ -54,11 +46,11 @@ namespace RankReminderWinForms
 
     public class CalendarCell : DataGridViewTextBoxCell
     {
-             //    ​private DateTimePicker cellDateTimePicker;
+        //    ​private DateTimePicker cellDateTimePicker;
         public CalendarCell()
             : base()
         {
-            this.Style.Format = "dd.MM.yyyy"; // После выбора даты выводим в ячейку текст в нужном формате
+            Style.Format = "dd.MM.yyyy"; // После выбора даты выводим в ячейку текст в нужном формате
         }
 
         public override void InitializeEditingControl(int rowIndex, object
@@ -75,37 +67,37 @@ namespace RankReminderWinForms
                 DataGridView.EditingControl as CalendarEditingControl;
             // Use the default row value when Value property is null.
             //ctl.CustomFormat = "dd/MM/yyyy";
-           // ctl.Format = DateTimePickerFormat.Custom;
+            // ctl.Format = DateTimePickerFormat.Custom;
 
-            if ((this.Value == null) || (this.Value.ToString() == "---"))
+            if ((Value == null) || (Value.ToString() == "---"))
             {
                 ctl.Value = DateTime.Now;
             }
-            else if (this.Value.ToString() == "не установлена")
+            else if (Value.ToString() == "не установлена")
             {
                 MessageBox.Show("Срок выслуги в текущем звании не установлен");
                 SendKeys.Send("{ESC}");
             }
-            else if (this.Value.ToString() == "роста нет")
+            else if (Value.ToString() == "роста нет")
             {
                 MessageBox.Show("Текущее звание равно, либо превышает звание по должности");
                 SendKeys.Send("{ESC}");
             }
-            else if (this.Value.ToString() == "высшее звание")
+            else if (Value.ToString() == "высшее звание")
             {
                 MessageBox.Show("Сотрудник уже имеет высшее квалификационное звание");
                 SendKeys.Send("{ESC}");
             }
-            else if (this.Value.ToString() == "--.--.----")
+            else if (Value.ToString() == "--.--.----")
             {
                 MessageBox.Show("Сотрудник не имеет квалификационного звания");
                 SendKeys.Send("{ESC}");
             }
             else
             {
-                peremennaya = this.Value.ToString(); // считываем значение даты из ячейки в peremennaya типа string
-                //MessageBox.Show(this.Value.ToString());
-                bool isLetter = !String.IsNullOrEmpty(peremennaya) && Char.IsLetter(peremennaya[0]) || Char.IsLetter(peremennaya[1]); // проверяем, если ячейка начинается с сокращенного дня недели
+                peremennaya = Value.ToString(); // считываем значение даты из ячейки в peremennaya типа string
+                //MessageBox.Show(Value.ToString());
+                bool isLetter = !String.IsNullOrEmpty(peremennaya) && char.IsLetter(peremennaya[0]) || char.IsLetter(peremennaya[1]); // проверяем, если ячейка начинается с сокращенного дня недели
 
                 if (isLetter == true) // если текстовая дата записана в неправильном формате и начинается с сокращенного дня недели (ПН, ВТ, СР и т.д.)
                 {
@@ -119,13 +111,11 @@ namespace RankReminderWinForms
                 pMonth = Convert.ToInt32(peremennaya.Substring(3, 2)); // парсим peremennaya с 4го символа, длина - 2 символа
                 //MessageBox.Show(pMonth.ToString());
 
-                pDay = Convert.ToInt32(peremennaya.Substring(0, 2)); // парсим peremennaya с 1го символа, длина - 2 символа
-                //MessageBox.Show(pDay.ToString());
-                
+                pDay = Convert.ToInt32(peremennaya.Substring(0, 2)); // парсим peremennaya с 1го символа, длина - 2 символа                                                                    
+
                 DateTime proverka = new DateTime(pYear, pMonth, pDay);
                 ctl.Value = (DateTime)proverka;
-                
-            }               
+            }
         }
 
 
@@ -166,10 +156,10 @@ namespace RankReminderWinForms
 
         public CalendarEditingControl() // отвечает за отображение даты в ячейке во время редактирования (выбора даты)
         {
-            this.Format = DateTimePickerFormat.Short;  // день недели сокращенно и дата
-            
-            // this.Format = DateTimePickerFormat.Custom;
-            //this.CustomFormat = "dd.MM.yyyy";
+            Format = DateTimePickerFormat.Short;  // день недели сокращенно и дата
+
+            // Format = DateTimePickerFormat.Custom;
+            // CustomFormat = "dd.MM.yyyy";
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlFormattedValue
@@ -178,25 +168,25 @@ namespace RankReminderWinForms
         {
             get
             {
-                //return this.Value.ToShortDateString();
-                return this.Value.ToString("dd.MM.yyyy"); //Этот параметр отвечает за вывод даты в datagrid в нужном формате
+                //return Value.ToShortDateString();
+                return Value.ToString("dd.MM.yyyy"); //Этот параметр отвечает за вывод даты в datagrid в нужном формате
             }
             set
             {
-                if (value is String)
+                if (value is String @string)
                 {
                     try
                     {
                         // This will throw an exception of the string is
                         // null, empty, or not in the format of a date.
-                        this.Value = DateTime.Parse((String)value);
+                        Value = DateTime.Parse(@string);
                     }
                     catch
                     {
                         // In the case of an exception, just use the
                         // default value so we're not left with a null
                         // value.
-                        this.Value = DateTime.Now;
+                        Value = DateTime.Now;
                     }
                 }
             }
@@ -215,9 +205,9 @@ namespace RankReminderWinForms
         public void ApplyCellStyleToEditingControl(
             DataGridViewCellStyle dataGridViewCellStyle)
         {
-            this.Font = dataGridViewCellStyle.Font;
-            //this.CalendarForeColor = dataGridViewCellStyle.ForeColor;
-            //this.CalendarMonthBackground = dataGridViewCellStyle.BackColor;
+            Font = dataGridViewCellStyle.Font;
+            //CalendarForeColor = dataGridViewCellStyle.ForeColor;
+            //CalendarMonthBackground = dataGridViewCellStyle.BackColor;
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlRowIndex
@@ -316,7 +306,7 @@ namespace RankReminderWinForms
             // Notify the DataGridView that the contents of the cell
             // have changed.
             valueChanged = true;
-            this.EditingControlDataGridView.NotifyCurrentCellDirty(true);
+            EditingControlDataGridView.NotifyCurrentCellDirty(true);
             base.OnValueChanged(eventargs);
         }
     }

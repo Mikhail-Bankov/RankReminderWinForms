@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Linq;
-using System.Xml;
-using System.Text;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.ComponentModel;
-using System.Windows.Forms.VisualStyles;
-using System.IO;
 
 namespace RankReminderWinForms
 {
@@ -18,10 +16,10 @@ namespace RankReminderWinForms
     {
         //string filePath = @"C:\C#_Projects\Rank_Reminder\BaseLichSost.xml";
 
-        public DataSet dataSet1 = new DataSet(); // создаем DataSet с именем dataSet1
+        public DataSet dsMain = new DataSet(); // создаем DataSet с именем dsMain
         string Required_PersonalFileNum, Required_PersonalNum, Required_Surname, Required_Name, Required_MiddleName, Required_DateOfBirth; // переменные для однозначного поиска сотрудника в Datatable
 
-        List<string> ZvanieList = new List<string>() //словарь "Звания"
+        readonly List<string> ZvanieList = new List<string>() //словарь "Звания"
             {
                 "Рядовой", "Мл. сержант", "Сержант", "Ст. сержант", "Старшина",
                 "Прапорщик", "Ст. прапорщик", "Мл. лейтенант", "Лейтенант",
@@ -29,7 +27,7 @@ namespace RankReminderWinForms
                 "Генерал-майор", "Генерал-лейтенант", "Генерал-полковник", "Генерал"
             };
 
-        List<string> KlassnostList = new List<string>() //словарь "Классность"
+        readonly List<string> KlassnostList = new List<string>() //словарь "Классность"
             {
                 "Отсутствует", "Специалист 3 класса", "Специалист 2 класса", "Специалист 1 класса", "Мастер"
             };
@@ -58,7 +56,7 @@ namespace RankReminderWinForms
         int LastEditedCellCol; // индекс столбца редактируемой ячейки
 
 
-        // Индексы колонок dataGridView1
+        // Индексы колонок dgvMainList
         int IndexCnum; // Порядковый номер
         int IndexPersonalFileNum; // Номер личного дела
         int IndexPersonalNum; // Личный номер
@@ -120,54 +118,54 @@ namespace RankReminderWinForms
 
 
         //Создаем колонки для грида "Общий список"
-        DataGridViewTextBoxColumn cnum = new DataGridViewTextBoxColumn(); // Порядковый номер
-        DataGridViewTextBoxColumn personalfilenum = new DataGridViewTextBoxColumn(); // Номер личного дела
-        DataGridViewTextBoxColumn personalnum = new DataGridViewTextBoxColumn(); // Личный номер
-        DataGridViewTextBoxColumn surname = new DataGridViewTextBoxColumn(); // Фамилия
-        DataGridViewTextBoxColumn name = new DataGridViewTextBoxColumn(); // Имя
-        DataGridViewTextBoxColumn middleName = new DataGridViewTextBoxColumn(); // Отчество
-        DataGridViewTextBoxColumn gender = new DataGridViewTextBoxColumn(); // Пол
-        CalendarColumn dateofbirth = new CalendarColumn(); // Дата рождения
-        DataGridViewTextBoxColumn placeofbirth = new DataGridViewTextBoxColumn(); // Место рождения
-        DataGridViewTextBoxColumn registration = new DataGridViewTextBoxColumn(); // Прописан
-        DataGridViewTextBoxColumn placeofliving = new DataGridViewTextBoxColumn(); // Место жительства
-        DataGridViewTextBoxColumn phoneregistration = new DataGridViewTextBoxColumn(); // Телефон по прописке
-        DataGridViewTextBoxColumn phoneplaceofliving = new DataGridViewTextBoxColumn(); // Телефон по месту жительства
-        DataGridViewTextBoxColumn post = new DataGridViewTextBoxColumn(); // Должность
-        DataGridViewComboBoxColumn rank = new DataGridViewComboBoxColumn(); // Звание
-        CalendarColumn rankdate = new CalendarColumn(); // Дата присвоения звания
-        DataGridViewComboBoxColumn ranklimit = new DataGridViewComboBoxColumn(); // Потолок по званию
-        CalendarColumn nextrankdate = new CalendarColumn(); // Следующая дата присвоения звания
-        DataGridViewComboBoxColumn klassnost = new DataGridViewComboBoxColumn(); // Квалификационное звание (Классность)
-        CalendarColumn klassnostdate = new CalendarColumn(); // Дата присвоения квалиф. звания
-        CalendarColumn nextklassnostdate = new CalendarColumn(); // Следующая дата присвоения квалиф. звания
-        DataGridViewTextBoxColumn study = new DataGridViewTextBoxColumn(); // Образование
-        DataGridViewTextBoxColumn uchstepen = new DataGridViewTextBoxColumn(); // Ученая степень
-        DataGridViewTextBoxColumn prisvzvaniy = new DataGridViewTextBoxColumn(); // Дата присвоения званий и чинов        
-        DataGridViewTextBoxColumn married = new DataGridViewTextBoxColumn(); // Семейное положение
-        DataGridViewTextBoxColumn family = new DataGridViewTextBoxColumn(); // Члены семьи
-        DataGridViewTextBoxColumn truddeyat = new DataGridViewTextBoxColumn(); // Трудовая деятельность до прихода
-        DataGridViewTextBoxColumn stazhvysluga = new DataGridViewTextBoxColumn(); // Стаж и выслуга до прихода
-        DataGridViewTextBoxColumn dataprisyagi = new DataGridViewTextBoxColumn(); // Дата принятия присяги
-        DataGridViewTextBoxColumn rabotagfs = new DataGridViewTextBoxColumn(); // Прохождение службы (работа) в ГФС России
-        DataGridViewTextBoxColumn attestaciya = new DataGridViewTextBoxColumn(); // Аттестация
-        CalendarColumn nextattestaciyadate = new CalendarColumn(); // Дата следующей аттестации
-        DataGridViewTextBoxColumn profpodg = new DataGridViewTextBoxColumn(); // Профессиональная подготовка
-        DataGridViewTextBoxColumn klassnostcheyprikaz = new DataGridViewTextBoxColumn(); // Чей приказ о присвоении квалиф. звания
-        DataGridViewTextBoxColumn klassnostnomerprikaza = new DataGridViewTextBoxColumn(); // Номер приказа о присвоении квалиф. звания
-        DataGridViewTextBoxColumn klassnostold = new DataGridViewTextBoxColumn(); // Предыдущие квалификационные звания
-        DataGridViewTextBoxColumn nagrady = new DataGridViewTextBoxColumn(); // Награды и поощрения
-        DataGridViewTextBoxColumn prodlenie = new DataGridViewTextBoxColumn(); // Продление службы
-        DataGridViewTextBoxColumn boevye = new DataGridViewTextBoxColumn(); // Участие в боевых действиях
-        DataGridViewTextBoxColumn rezerv = new DataGridViewTextBoxColumn(); // Состояние в резерве
-        DataGridViewTextBoxColumn vzyskaniya = new DataGridViewTextBoxColumn(); // Взыскания
-        DataGridViewTextBoxColumn uvolnenie = new DataGridViewTextBoxColumn(); // Увольнение
-        DataGridViewTextBoxColumn zapolnil = new DataGridViewTextBoxColumn(); // Увольнение
-        DataGridViewTextBoxColumn datazapolneniya = new DataGridViewTextBoxColumn(); // Дата заполнения карточки     
-        DataGridViewTextBoxColumn imagestring = new DataGridViewTextBoxColumn(); // Изображение в виде текста
+        readonly DataGridViewTextBoxColumn cnum = new DataGridViewTextBoxColumn(); // Порядковый номер
+        readonly DataGridViewTextBoxColumn personalfilenum = new DataGridViewTextBoxColumn(); // Номер личного дела
+        readonly DataGridViewTextBoxColumn personalnum = new DataGridViewTextBoxColumn(); // Личный номер
+        readonly DataGridViewTextBoxColumn surname = new DataGridViewTextBoxColumn(); // Фамилия
+        readonly DataGridViewTextBoxColumn name = new DataGridViewTextBoxColumn(); // Имя
+        readonly DataGridViewTextBoxColumn middleName = new DataGridViewTextBoxColumn(); // Отчество
+        readonly DataGridViewTextBoxColumn gender = new DataGridViewTextBoxColumn(); // Пол
+        readonly CalendarColumn dateofbirth = new CalendarColumn(); // Дата рождения
+        readonly DataGridViewTextBoxColumn placeofbirth = new DataGridViewTextBoxColumn(); // Место рождения
+        readonly DataGridViewTextBoxColumn registration = new DataGridViewTextBoxColumn(); // Прописан
+        readonly DataGridViewTextBoxColumn placeofliving = new DataGridViewTextBoxColumn(); // Место жительства
+        readonly DataGridViewTextBoxColumn phoneregistration = new DataGridViewTextBoxColumn(); // Телефон по прописке
+        readonly DataGridViewTextBoxColumn phoneplaceofliving = new DataGridViewTextBoxColumn(); // Телефон по месту жительства
+        readonly DataGridViewTextBoxColumn post = new DataGridViewTextBoxColumn(); // Должность
+        readonly DataGridViewComboBoxColumn rank = new DataGridViewComboBoxColumn(); // Звание
+        readonly CalendarColumn rankdate = new CalendarColumn(); // Дата присвоения звания
+        readonly DataGridViewComboBoxColumn ranklimit = new DataGridViewComboBoxColumn(); // Потолок по званию
+        readonly CalendarColumn nextrankdate = new CalendarColumn(); // Следующая дата присвоения звания
+        readonly DataGridViewComboBoxColumn klassnost = new DataGridViewComboBoxColumn(); // Квалификационное звание (Классность)
+        readonly CalendarColumn klassnostdate = new CalendarColumn(); // Дата присвоения квалиф. звания
+        readonly CalendarColumn nextklassnostdate = new CalendarColumn(); // Следующая дата присвоения квалиф. звания
+        readonly DataGridViewTextBoxColumn study = new DataGridViewTextBoxColumn(); // Образование
+        readonly DataGridViewTextBoxColumn uchstepen = new DataGridViewTextBoxColumn(); // Ученая степень
+        readonly DataGridViewTextBoxColumn prisvzvaniy = new DataGridViewTextBoxColumn(); // Дата присвоения званий и чинов        
+        readonly DataGridViewTextBoxColumn married = new DataGridViewTextBoxColumn(); // Семейное положение
+        readonly DataGridViewTextBoxColumn family = new DataGridViewTextBoxColumn(); // Члены семьи
+        readonly DataGridViewTextBoxColumn truddeyat = new DataGridViewTextBoxColumn(); // Трудовая деятельность до прихода
+        readonly DataGridViewTextBoxColumn stazhvysluga = new DataGridViewTextBoxColumn(); // Стаж и выслуга до прихода
+        readonly DataGridViewTextBoxColumn dataprisyagi = new DataGridViewTextBoxColumn(); // Дата принятия присяги
+        readonly DataGridViewTextBoxColumn rabotagfs = new DataGridViewTextBoxColumn(); // Прохождение службы (работа) в ГФС России
+        readonly DataGridViewTextBoxColumn attestaciya = new DataGridViewTextBoxColumn(); // Аттестация
+        readonly CalendarColumn nextattestaciyadate = new CalendarColumn(); // Дата следующей аттестации
+        readonly DataGridViewTextBoxColumn profpodg = new DataGridViewTextBoxColumn(); // Профессиональная подготовка
+        readonly DataGridViewTextBoxColumn klassnostcheyprikaz = new DataGridViewTextBoxColumn(); // Чей приказ о присвоении квалиф. звания
+        readonly DataGridViewTextBoxColumn klassnostnomerprikaza = new DataGridViewTextBoxColumn(); // Номер приказа о присвоении квалиф. звания
+        readonly DataGridViewTextBoxColumn klassnostold = new DataGridViewTextBoxColumn(); // Предыдущие квалификационные звания
+        readonly DataGridViewTextBoxColumn nagrady = new DataGridViewTextBoxColumn(); // Награды и поощрения
+        readonly DataGridViewTextBoxColumn prodlenie = new DataGridViewTextBoxColumn(); // Продление службы
+        readonly DataGridViewTextBoxColumn boevye = new DataGridViewTextBoxColumn(); // Участие в боевых действиях
+        readonly DataGridViewTextBoxColumn rezerv = new DataGridViewTextBoxColumn(); // Состояние в резерве
+        readonly DataGridViewTextBoxColumn vzyskaniya = new DataGridViewTextBoxColumn(); // Взыскания
+        readonly DataGridViewTextBoxColumn uvolnenie = new DataGridViewTextBoxColumn(); // Увольнение
+        readonly DataGridViewTextBoxColumn zapolnil = new DataGridViewTextBoxColumn(); // Увольнение
+        readonly DataGridViewTextBoxColumn datazapolneniya = new DataGridViewTextBoxColumn(); // Дата заполнения карточки     
+        readonly DataGridViewTextBoxColumn imagestring = new DataGridViewTextBoxColumn(); // Изображение в виде текста
 
 
-        //Наименования столбцов dataGridView1
+        //Наименования столбцов dgvMainList
         const string Cnum_HeaderText = "№"; // Порядковый номер
         const string PersonalFileNum_HeaderText = "№ личного дела"; // Номер личного дела
         const string PersonalNum_HeaderText = "Личный номер"; // Личный номер
@@ -218,8 +216,8 @@ namespace RankReminderWinForms
         public Form2()
         {
             InitializeComponent();
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvMainList.AutoGenerateColumns = false;
+            dgvMainList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             if (!File.Exists(XMLDB.Path)) // Если база данных в формате XML не существует...
             {
@@ -230,11 +228,11 @@ namespace RankReminderWinForms
 
                 if (File.Exists(XMLDB.Path)) // Еще раз проверяем, создалась ли база данных
                 {
-                    MessageBox.Show("База данных успешно создана по пути:\n" + XMLDB.Path, "Внимание!",
+                    MessageBox.Show($"База данных успешно создана по пути:\n{XMLDB.Path}", "Внимание!",
                                  MessageBoxButtons.OK,
                                  MessageBoxIcon.Information);
                 }
-                else 
+                else
                 {
                     MessageBox.Show("Произошла неизвестная ошибка при создании базы данных. Попробуйте запустить программу от имени администратора.", "Ошибка!",
                MessageBoxButtons.OK,
@@ -242,35 +240,35 @@ namespace RankReminderWinForms
                 }
             }
 
-            dataSet1.ReadXml(XMLDB.Path); // считываем XML базу данных в dataSet1
+            dsMain.ReadXml(XMLDB.Path); // считываем XML базу данных в dsMain
 
-            if (dataSet1.Tables["Kadry"] == null) // Если DataTable "Kadry" отсутствует
+            if (dsMain.Tables["Kadry"] == null) // Если DataTable "Kadry" отсутствует
             {
-                dataSet1.Tables.Add("Kadry");
+                dsMain.Tables.Add("Kadry");
 
-                foreach (DataColumn column in dataSet1.Tables["BackUp"].Columns) // Заполняем новый DataTable необходимыми колонками
+                foreach (DataColumn column in dsMain.Tables["BackUp"].Columns) // Заполняем новый DataTable необходимыми колонками
                 {
-                    dataSet1.Tables["Kadry"].Columns.Add(column.ColumnName);
+                    dsMain.Tables["Kadry"].Columns.Add(column.ColumnName);
                 }
             }
 
-            if (dataSet1.Tables["Archive"] == null) // Если DataTable "Archive" отсутствует
+            if (dsMain.Tables["Archive"] == null) // Если DataTable "Archive" отсутствует
             {
-                dataSet1.Tables.Add("Archive");
+                dsMain.Tables.Add("Archive");
 
-                foreach (DataColumn column in dataSet1.Tables["BackUp"].Columns) // Заполняем новый DataTable необходимыми колонками
+                foreach (DataColumn column in dsMain.Tables["BackUp"].Columns) // Заполняем новый DataTable необходимыми колонками
                 {
-                    dataSet1.Tables["Archive"].Columns.Add(column.ColumnName);
+                    dsMain.Tables["Archive"].Columns.Add(column.ColumnName);
                 }
             }
 
-            dataGridView1.DataSource = dataSet1.Tables[CurrentDataTableName]; // присваиваем источник данных для dataGridView1
+            dgvMainList.DataSource = dsMain.Tables[CurrentDataTableName]; // присваиваем источник данных для dgvMainList
 
-            this.DrawDatagrid(); // формируем DataGrid
-            this.CheckColumnsIndex(); // сверяем индексы просчитываемых столбцов
-            this.PereschetZvanie(); // пересчитываем звания
-            this.PereschetKlassnost(); // пересчитываем классность
-            this.PereschetCnum(); // пересчитываем порядковые номера 
+            DrawDatagrid(); // формируем DataGrid
+            CheckColumnsIndex(); // сверяем индексы просчитываемых столбцов
+            PereschetZvanie(); // пересчитываем звания
+            PereschetKlassnost(); // пересчитываем классность
+            PereschetCnum(); // пересчитываем порядковые номера 
         }
 
         // ###############  ДЕЙСТВИЯ ПОСЛЕ ЗАГРУЗКИ ФОРМЫ  ###############
@@ -280,58 +278,56 @@ namespace RankReminderWinForms
             Cards_groupBox.Visible = false; // изначально не показывать кнопки карточек
 
             // ###############  ОБРАБОТЧИКИ СОБЫТИЙ УДАЛЕНИЯ СТРОК В ТАБЛИЦАХ  ###############
-            dataSet1.Tables["Kadry"].RowDeleting += new System.Data.DataRowChangeEventHandler(RowDeleting); // обработчик события попытки удаления строки
-            dataSet1.Tables["Kadry"].RowDeleted += new System.Data.DataRowChangeEventHandler(RowDeleted); // обработчик события удаления строки                                                                                         
-            dataSet1.Tables["Archive"].RowDeleting += new System.Data.DataRowChangeEventHandler(RowDeleting); // обработчик события попытки удаления строки
-            dataSet1.Tables["Archive"].RowDeleted += new System.Data.DataRowChangeEventHandler(RowDeleted); // обработчик события удаления строки     
-            //dataGridView_Family.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(WhichRowDeleted); // обработчик события удаления строки
-            
-
+            dsMain.Tables["Kadry"].RowDeleting += new DataRowChangeEventHandler(RowDeleting); // обработчик события попытки удаления строки
+            dsMain.Tables["Kadry"].RowDeleted += new DataRowChangeEventHandler(RowDeleted); // обработчик события удаления строки                                                                                         
+            dsMain.Tables["Archive"].RowDeleting += new DataRowChangeEventHandler(RowDeleting); // обработчик события попытки удаления строки
+            dsMain.Tables["Archive"].RowDeleted += new DataRowChangeEventHandler(RowDeleted); // обработчик события удаления строки     
+                                                                                              //dgvFamily.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(WhichRowDeleted); // обработчик события удаления строки
 
             // ###############  РАЗНЫЕ ОБРАБОТЧИКИ СОБЫТИЙ  ###############
-            dataGridView1.Sorted += new System.EventHandler(dataGridView1_Sorted); // обработчик события сортировки колонки
-            tabControl1.Selecting += tabControl1_Selecting; // обработчик события перед сменой активной вкладки
-            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged; // обработчик события смены активной вкладки
+            dgvMainList.Sorted += new System.EventHandler(DataGridView1_Sorted); // обработчик события сортировки колонки
+            tabControl1.Selecting += TabControl1_Selecting; // обработчик события перед сменой активной вкладки
+            tabControl1.SelectedIndexChanged += TabControl1_SelectedIndexChanged; // обработчик события смены активной вкладки
 
 
             // ###############  ОБРАБОТЧИК ComboBox'ов ДЛЯ ЦЕНТРОВКИ В РЕЖИМЕ РЕДАКТИРОВАНИЯ  ###############
-            Gender_comboBox.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Пол
-            Klassnost_comboBox.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Текущее квалификационное звание
-            Rank_comboBox.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Текущее звание
-            RankLimit_comboBox.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Потолок по званию
-                                                                                                                  // Test_comboBox.DrawItem += new DrawItemEventHandler(OnDrawItem); // Потолок по званию
+            cbxGender.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Пол
+            cbxKlassnost.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Текущее квалификационное звание
+            cbxRank.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Текущее звание
+            cbxRankLimit.DrawItem += new DrawItemEventHandler(CenteredComboBox.ComboBox_DrawItem_Centered); // Потолок по званию
+                                                                                                            // Test_comboBox.DrawItem += new DrawItemEventHandler(OnDrawItem); // Потолок по званию
 
             // ###############  ОБРАБОТЧИК ComboBox'ов В dataGridView ДЛЯ ЦЕНТРОВКИ В РЕЖИМЕ РЕДАКТИРОВАНИЯ  ###############
-            dataGridView_Prodlenie.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Продление службы
-            dataGridView_KlassnostOld.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Классность
-            dataGridView_Attestaciya.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Аттестация
-            dataGridView_Family.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Члены семьи
-            dataGridView_Married.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Семейное положение
-            dataGridView_ProfPodg.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Профессиональная подготовка
+            dgvProdlenie.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Продление службы
+            dgvKlassnostOld.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Классность
+            dgvAttestaciya.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Аттестация
+            dgvFamily.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Члены семьи
+            dgvMarried.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Семейное положение
+            dgvProfPodg.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(CenteredComboBox.MyDGV_EditingControlShowing); // Профессиональная подготовка
 
             // ###############  ОБРАБОТЧИКИ СОБЫТИЙ ИЗМЕНЕНИЯ ТАБЛИЦ  ###############
-            dataGridView_Married.CellValueChanged += new DataGridViewCellEventHandler(MarriedAdd_Click);
-            dataGridView_Family.CellValueChanged += new DataGridViewCellEventHandler(FamilyAddPerson_Click);
-            dataGridView_Study.CellValueChanged += new DataGridViewCellEventHandler(StudyAdd_Click);
-            dataGridView_UchStepen.CellValueChanged += new DataGridViewCellEventHandler(UchStepenAdd_Click);
-            dataGridView_PrisvZvaniy.CellValueChanged += new DataGridViewCellEventHandler(ZvanieAdd_Click);
-            dataGridView_TrudDeyat.CellValueChanged += new DataGridViewCellEventHandler(TrudDeyatAdd_Click);
-            dataGridView_StazhVysluga.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_StazhVysluga);
-            dataGridView_RabotaGFS.CellValueChanged += new DataGridViewCellEventHandler(RabotaGFSAdd_Click);
-            dataGridView_Attestaciya.CellValueChanged += new DataGridViewCellEventHandler(AttestaciyaAdd_Click);
-            dataGridView_ProfPodg.CellValueChanged += new DataGridViewCellEventHandler(ProfPodgAdd_Click);
-            dataGridView_KlassnostOld.CellValueChanged += new DataGridViewCellEventHandler(KlassnostAdd_Click);
-            dataGridView_Nagrady.CellValueChanged += new DataGridViewCellEventHandler(NagradyAdd_Click);
-            dataGridView_Prodlenie.CellValueChanged += new DataGridViewCellEventHandler(Prodlenie_checkBox_CheckedChanged);
-            dataGridView_Boevye.CellValueChanged += new DataGridViewCellEventHandler(BoevyeAdd_Click);
-            dataGridView_Rezerv.CellValueChanged += new DataGridViewCellEventHandler(RezervAdd_Click);
-            dataGridView_Vzyskaniya.CellValueChanged += new DataGridViewCellEventHandler(VzyskaniyaAdd_Click);
-            dataGridView_Uvolnenie.CellValueChanged += new DataGridViewCellEventHandler(UvolnenieAdd_Click);
+            dgvMarried.CellValueChanged += new DataGridViewCellEventHandler(MarriedAdd_Click);
+            dgvFamily.CellValueChanged += new DataGridViewCellEventHandler(FamilyAddPerson_Click);
+            dgvStudy.CellValueChanged += new DataGridViewCellEventHandler(StudyAdd_Click);
+            dgvUchStepen.CellValueChanged += new DataGridViewCellEventHandler(UchStepenAdd_Click);
+            dgvPrisvZvaniy.CellValueChanged += new DataGridViewCellEventHandler(ZvanieAdd_Click);
+            dgvTrudDeyat.CellValueChanged += new DataGridViewCellEventHandler(TrudDeyatAdd_Click);
+            dgvStazhVysluga.CellValueChanged += new DataGridViewCellEventHandler(SaveChangesToDataGridView_StazhVysluga);
+            dgvRabotaGFS.CellValueChanged += new DataGridViewCellEventHandler(RabotaGFSAdd_Click);
+            dgvAttestaciya.CellValueChanged += new DataGridViewCellEventHandler(AttestaciyaAdd_Click);
+            dgvProfPodg.CellValueChanged += new DataGridViewCellEventHandler(ProfPodgAdd_Click);
+            dgvKlassnostOld.CellValueChanged += new DataGridViewCellEventHandler(KlassnostAdd_Click);
+            dgvNagrady.CellValueChanged += new DataGridViewCellEventHandler(NagradyAdd_Click);
+            dgvProdlenie.CellValueChanged += new DataGridViewCellEventHandler(Prodlenie_checkBox_CheckedChanged);
+            dgvBoevye.CellValueChanged += new DataGridViewCellEventHandler(BoevyeAdd_Click);
+            dgvRezerv.CellValueChanged += new DataGridViewCellEventHandler(RezervAdd_Click);
+            dgvVzyskaniya.CellValueChanged += new DataGridViewCellEventHandler(VzyskaniyaAdd_Click);
+            dgvUvolnenie.CellValueChanged += new DataGridViewCellEventHandler(UvolnenieAdd_Click);
 
             // ###############  ОБРАБОТЧИКИ СОБЫТИЙ ИЗМЕНЕНИЯ РАЗМЕРА ТАБЛИЦ  ###############
-            ResizeBegin += this.FormResizeBegin;
-            Resize += this.FormResize;
-            ResizeEnd += this.FormResizeEnd;
+            ResizeBegin += FormResizeBegin;
+            Resize += FormResize;
+            ResizeEnd += FormResizeEnd;
 
             // ###############  ПЕРЕПИСЫВАЕМ ОТРИСОВКУ ComboBox'ов В НЕОБХОДИМЫХ ТАБЛИЦАХ  ###############
 
@@ -351,15 +347,15 @@ namespace RankReminderWinForms
             TrudDeyat_Sokrash.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             TrudDeyat_Sokrash.Items.AddRange(new string[] { "У", "УВ", "Р", "ВС", "СЗ", "ГС" });
 
-            Cnum_label.Text = (IndexRowLichnayaKarta + 1).ToString() + " из " + dataGridView1.RowCount.ToString(); // Порядковый номер личной карточки
+            lblCnum.Text = $"{IndexRowLichnayaKarta + 1} из {dgvMainList.RowCount}"; // Порядковый номер личной карточки
 
-            label1.Text = "Сегодня: " + DateTime.Today.ToShortDateString(); //ставим текущую дату внизу формы
+            lblCurrentDate.Text = $"Сегодня: {DateTime.Today.ToShortDateString()}"; //ставим текущую дату внизу формы
         }
 
-        // ###############  ОТРИСОВКА dataGridView1  ###############
+        // ###############  ОТРИСОВКА dgvMainList  ###############
         private void DrawDatagrid()
         {
-            DataGridViewCellStyle style = dataGridView1.ColumnHeadersDefaultCellStyle;
+            DataGridViewCellStyle style = dgvMainList.ColumnHeadersDefaultCellStyle;
             style.Alignment = DataGridViewContentAlignment.MiddleCenter; // выравниваем текст заголовков по центру
 
             //Столбец "Порядковый номер"
@@ -454,7 +450,7 @@ namespace RankReminderWinForms
             rank.DataSource = ZvanieList;
             rank.FlatStyle = FlatStyle.Flat;
             rank.HeaderText = Rank_HeaderText;
-            rank.DataPropertyName = "Rank";
+            rank.DataPropertyName = "rankLimit";
             rank.MinimumWidth = 150;
             rank.FillWeight = 160;
 
@@ -650,16 +646,16 @@ namespace RankReminderWinForms
             imagestring.SortMode = DataGridViewColumnSortMode.NotSortable; //запрещаем сортировку данной колонки
 
             //Выводим столбцы в нужном нам порядке
-            dataGridView1.Columns.AddRange(cnum, personalfilenum, personalnum, surname, name, middleName, gender, dateofbirth, placeofbirth, registration, placeofliving, phoneregistration, phoneplaceofliving, post, rank,
+            dgvMainList.Columns.AddRange(cnum, personalfilenum, personalnum, surname, name, middleName, gender, dateofbirth, placeofbirth, registration, placeofliving, phoneregistration, phoneplaceofliving, post, rank,
             rankdate, ranklimit, nextrankdate, klassnost, klassnostdate, nextklassnostdate, study, uchstepen, prisvzvaniy, married, family, truddeyat, stazhvysluga, dataprisyagi, rabotagfs, attestaciya, nextattestaciyadate, profpodg, klassnostcheyprikaz,
             klassnostnomerprikaza, klassnostold, nagrady, prodlenie, boevye, rezerv, vzyskaniya, uvolnenie, zapolnil, datazapolneniya, imagestring);
         }
 
 
-    // ###############  ОСНОВНОЙ МЕТОД СЧИТЫВАНИЯ ИНДЕКСОВ У НЕОБХОДИМЫХ КОЛОНОК  ###############
-    private void CheckColumnsIndex()
+        // ###############  ОСНОВНОЙ МЕТОД СЧИТЫВАНИЯ ИНДЕКСОВ У НЕОБХОДИМЫХ КОЛОНОК  ###############
+        private void CheckColumnsIndex()
         {
-            foreach (DataGridViewColumn currColumn in dataGridView1.Columns) //пробегаем по всем колонкам в dataGridView1
+            foreach (DataGridViewColumn currColumn in dgvMainList.Columns) //пробегаем по всем колонкам в dgvMainList
             {
                 switch (currColumn.HeaderText)
                 {
@@ -808,11 +804,11 @@ namespace RankReminderWinForms
         // Пересчет колонки с порядковыми номерами строк
         private void PereschetCnum()
         {
-            if (dataGridView1.Rows.Count != 0) // Проверка dataGridView1 на пустоту
+            if (dgvMainList.Rows.Count != 0) // Проверка dgvMainList на пустоту
             {
-                for (int i = 0; i < dataGridView1.RowCount; i++) // Заполняем колонку с порядковыми номерами строк
+                for (int i = 0; i < dgvMainList.RowCount; i++) // Заполняем колонку с порядковыми номерами строк
                 {
-                    dataGridView1[IndexCnum, i].Value = i + 1; // Увеличиваем порядковый номер в каждой последующей строке на единицу
+                    dgvMainList[IndexCnum, i].Value = i + 1; // Увеличиваем порядковый номер в каждой последующей строке на единицу
                 }
             }
         }
@@ -821,7 +817,7 @@ namespace RankReminderWinForms
         // ###############  ОСНОВНОЙ МЕТОД ПРОВЕРКИ И ПЕРЕСЧЁТА СРОКОВ ВЫСЛУГИ  ###############
         private void PereschetZvanie()
         {
-            if (dataGridView1.Rows.Count != 0) // Проверка dataGridView1 на пустоту
+            if (dgvMainList.Rows.Count != 0) // Проверка dgvMainList на пустоту
             {
                 int RankVariable = 0;
                 int CurrentRankToCompare = 0; //"вес" текущего звания
@@ -830,20 +826,20 @@ namespace RankReminderWinForms
                 int pYear2, pMonth2, pDay2; //переменные для парсинга текстовой даты в год, месяц, день
                 string peremennaya2; //переменная для хранения даты из ячеек
 
-                foreach (DataGridViewRow currRow in dataGridView1.Rows) // проходим по каждой строке в таблице
+                foreach (DataGridViewRow currRow in dgvMainList.Rows) // проходим по каждой строке в таблице
                 {
-                    string elemStr = currRow.Cells[IndexRank].Value.ToString(); // Переменная с текущим званием
-                    string elemStr2 = currRow.Cells[IndexRankLimit].Value.ToString(); // Переменная с "потолком" по званию
+                    string rankCurrent = currRow.Cells[IndexRank].Value.ToString(); // Переменная с текущим званием
+                    string rankLimit = currRow.Cells[IndexRankLimit].Value.ToString(); // Переменная с "потолком" по званию
 
 
-                    if (elemStr == elemStr2) // Чтобы лишний раз не гонять циклы, первым делом проверяем,
-                                             // равно ли текущее звание "потолку" звания по должности.
-                                             // Если равно, то пишем "роста нет" и переходим к следующей строке.
+                    if (rankCurrent == rankLimit) // Чтобы лишний раз не гонять циклы, первым делом проверяем,
+                                                  // равно ли текущее звание "потолку" звания по должности.
+                                                  // Если равно, то пишем "роста нет" и переходим к следующей строке.
                     {
                         currRow.Cells[IndexNextRankDate].Value = "роста нет";
                     }
                     else // Если же звания отличаются, то запускаем их обработку и высчитываем дату присвоения следующего звания
-                    
+
                     {
                         string elemVariable = "unknown";
 
@@ -853,11 +849,11 @@ namespace RankReminderWinForms
                         {
                             if (i == 0) // если первый проход цикла...
                             {
-                                elemVariable = elemStr; // ...то работаем с текущим званием
+                                elemVariable = rankCurrent; // ...то работаем с текущим званием
                             }
                             else if (i == 1) // если второй проход цикла...
                             {
-                                elemVariable = elemStr2; // ...то работаем с "потолком" по званию
+                                elemVariable = rankLimit; // ...то работаем с "потолком" по званию
                             }
 
                             switch (elemVariable) // непосредственно проверка званий и установка их числового "веса" для сравнения 
@@ -929,27 +925,47 @@ namespace RankReminderWinForms
                         }
 
                         //НАЧИНАЕМ СВЕРЯТЬ ЧИСЛОВОЙ "ВЕС" ЗВАНИЙ И ВЫСЧИТЫВАТЬ ДАТУ ПРИСВОЕНИЯ СЛЕДУЮЩЕГО ЗВАНИЯ
-     
+
                         if (CurrentRankToCompare > RankLimitToCompare) // Если текущее звание выше звания по должности...
-                        {                        
+                        {
                             currRow.Cells[IndexNextRankDate].Value = "роста нет"; // ...значит расти дальше некуда
                         }
-                        else if ((CurrentRankToCompare < RankLimitToCompare) && (CurrentRankToCompare == 5 || CurrentRankToCompare == 7 || CurrentRankToCompare == 14 || CurrentRankToCompare == 15 || CurrentRankToCompare == 16 || CurrentRankToCompare == 17 || CurrentRankToCompare == 18))
-                        {                        
+                        else if ((CurrentRankToCompare < RankLimitToCompare) &&
+                            (CurrentRankToCompare == 5 || CurrentRankToCompare == 7 || CurrentRankToCompare == 14 || CurrentRankToCompare == 15 || CurrentRankToCompare == 16 || CurrentRankToCompare == 17 || CurrentRankToCompare == 18))
+                        {
                             currRow.Cells[IndexNextRankDate].Value = "не установлена"; // для перечисленных званий срок выслуги не установлен
                         }
                         else if (CurrentRankToCompare < RankLimitToCompare) // Если есть куда расти, то определяем количество лет до следующего звания
-                        {              
-                            // Звания со сроком выслуги в один год:
-                            if ((CurrentRankToCompare == 1) || (CurrentRankToCompare == 2) || (CurrentRankToCompare == 8)) NumberOfYears = 1;
-                            // Звания со сроком выслуги в два года:
-                            if ((CurrentRankToCompare == 3) || (CurrentRankToCompare == 9)) NumberOfYears = 2;
-                            // Звания со сроком выслуги в три года:
-                            if ((CurrentRankToCompare == 4) || (CurrentRankToCompare == 10) || (CurrentRankToCompare == 11)) NumberOfYears = 3;
-                            // Звания со сроком выслуги в четыре года:
-                            if (CurrentRankToCompare == 12) NumberOfYears = 4;
-                            // Звания со сроком выслуги в пять лет:
-                            if ((CurrentRankToCompare == 6) || (CurrentRankToCompare == 13)) NumberOfYears = 5;
+                        {
+                            switch (CurrentRankToCompare)
+                            {
+                                // Звания со сроком выслуги в один год:
+                                case 1:
+                                case 2:
+                                case 8:
+                                    NumberOfYears = 1;
+                                    break;
+                                // Звания со сроком выслуги в два года:
+                                case 3:
+                                case 9:
+                                    NumberOfYears = 2;
+                                    break;
+                                // Звания со сроком выслуги в три года:
+                                case 4:
+                                case 10:
+                                case 11:
+                                    NumberOfYears = 3;
+                                    break;
+                                // Звания со сроком выслуги в четыре года:
+                                case 12:
+                                    NumberOfYears = 4;
+                                    break;
+                                // Звания со сроком выслуги в пять лет:
+                                case 6:
+                                case 13:
+                                    NumberOfYears = 5;
+                                    break;
+                            }
 
                             peremennaya2 = currRow.Cells[IndexRankDate].Value.ToString(); // считываем значение даты из ячейки в peremennaya2 типа string
                                                                                           //MessageBox.Show(peremennaya2);
@@ -971,29 +987,31 @@ namespace RankReminderWinForms
         // ###############  ОСНОВНОЙ МЕТОД ПРОВЕРКИ И ПЕРЕСЧЁТА КВАЛИФИКАЦИОННЫХ ЗВАНИЙ  ###############
         private void PereschetKlassnost()
         {
-            if (dataGridView1.Rows.Count != 0) // Проверка dataGridView1 на пустоту
+            if (dgvMainList.Rows.Count != 0) // Проверка dgvMainList на пустоту
             {
                 int NumberOfYearsKlassnost = 3; // срок выслуги до следующего квалификационного звания
                 int pYear3, pMonth3, pDay3; // переменные для парсинга текстовой даты в год, месяц, день
                 string peremennaya3; // переменная для хранения даты из ячеек
 
-                foreach (DataGridViewRow currRow in dataGridView1.Rows) // проходим по каждой строке в таблице
+                foreach (DataGridViewRow currRow in dgvMainList.Rows) // проходим по каждой строке в таблице
                 {
                     string elemStr = currRow.Cells[IndexKlassnost].Value.ToString(); // Переменная с текущим значением классности
 
                     // Если классность отсутствует
-                    if (elemStr == "Отсутствует") 
+                    if (elemStr == "Отсутствует")
                     {
                         currRow.Cells[IndexKlassnostDate].Value = "--.--.----"; // убираем дату присвоения классности
                         currRow.Cells[IndexNextKlassnostDate].Value = "--.--.----"; // убираем следующую дату присвоения классности
                     }
 
                     // Если сотрудник является специалистом 3, 2 или 1 класса
-                    if ((elemStr == "Специалист 3 класса") || (elemStr == "Специалист 2 класса") || (elemStr == "Специалист 1 класса")) //(KlassnostCompare == 3)
+                    if ((elemStr == "Специалист 3 класса")
+                        || (elemStr == "Специалист 2 класса")
+                        || (elemStr == "Специалист 1 класса")) //(KlassnostCompare == 3)
                     {
                         if (currRow.Cells[IndexKlassnostDate].Value.ToString() == "--.--.----") currRow.Cells[IndexKlassnostDate].Value = DateTime.Now.ToString("dd.MM.yyyy");
                         peremennaya3 = currRow.Cells[IndexKlassnostDate].Value.ToString(); // считываем значение даты из ячейки в peremennaya2 типа string
-                                                                                            //MessageBox.Show(peremennaya3);
+                                                                                           //MessageBox.Show(peremennaya3);
                         pYear3 = Convert.ToInt32(peremennaya3.Substring(6, 4)); // парсим peremennaya2 с 7го символа, длина - 4 символа
                                                                                 //MessageBox.Show(pYear.ToString());
                         pMonth3 = Convert.ToInt32(peremennaya3.Substring(3, 2)); // парсим peremennaya2 с 4го символа, длина - 2 символа
@@ -1005,14 +1023,13 @@ namespace RankReminderWinForms
                     }
 
                     // Если сотрудник имеет высшее квалификационное звание "Мастер"
-                    if (elemStr == "Мастер") 
+                    if (elemStr == "Мастер")
                     {
                         if (currRow.Cells[IndexKlassnostDate].Value.ToString() == "--.--.----") // Если дата присвоения отсутствует... 
                         {
                             currRow.Cells[IndexKlassnostDate].Value = DateTime.Now.ToString("dd.MM.yyyy"); // ...ставим текущую дату
                         }
                         currRow.Cells[IndexNextKlassnostDate].Value = "высшее звание"; // в ячейке со следующей датой пишем "высшее звание"
-                            
                     }
                 }
             }
@@ -1020,28 +1037,28 @@ namespace RankReminderWinForms
 
         // ###############  ФИЛЬТРАЦИЯ  ############### 
 
-        private void ShowAllRows() // показать все строки dataGridView1
+        private void ShowAllRows() // показать все строки dgvMainList
         {
-            dataGridView1.CurrentCell = null;
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            dgvMainList.CurrentCell = null;
+            foreach (DataGridViewRow currentRow in dgvMainList.Rows)
             {
-                row.Visible = true; // показываем строку
+                currentRow.Visible = true; // показываем строку
             }
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if (SomeRowsWasHidden == 1) // Если есть скрытые строки
             {
-                this.ShowAllRows(); // Показываем все строки
-                this.PereschetCnum(); // Пересчитываем порядковые номера строк
+                ShowAllRows(); // Показываем все строки
+                PereschetCnum(); // Пересчитываем порядковые номера строк
                 SomeRowsWasHidden = 0; // Переводим маркер в состояние "Нет скрытых строк"
             }
-            this.ShowAllColumns(); // Показываем "стандартные" колонки dataGridView1
+            ShowAllColumns(); // Показываем "стандартные" колонки dgvMainList
 
         }
 
-        private void ShowAllColumns() // показать все "стандартные" колонки dataGridView1
+        private void ShowAllColumns() // показать все "стандартные" колонки dgvMainList
         {
             personalfilenum.Visible = false;
             personalnum.Visible = false;
@@ -1085,15 +1102,15 @@ namespace RankReminderWinForms
             imagestring.Visible = false;
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void RadioButton2_CheckedChanged(object sender, EventArgs e)
         {
             if (SomeRowsWasHidden == 1) // Если есть скрытые строки
             {
-                this.ShowAllRows(); // Показываем все строки
-                this.PereschetCnum(); // Пересчитываем порядковые номера строк
+                ShowAllRows(); // Показываем все строки
+                PereschetCnum(); // Пересчитываем порядковые номера строк
                 SomeRowsWasHidden = 0; // Переводим маркер в состояние "Нет скрытых строк"
             }
-            this.ShowVysluga(); // Показываем колонки dataGridView1, связанные со специальным званием
+            ShowVysluga(); // Показываем колонки dgvMainList, связанные со специальным званием
         }
 
         private void ShowVysluga() // показать только выслугу
@@ -1140,15 +1157,15 @@ namespace RankReminderWinForms
             imagestring.Visible = false;
         }
 
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        private void RadioButton3_CheckedChanged(object sender, EventArgs e)
         {
             if (SomeRowsWasHidden == 1) // Если есть скрытые строки
             {
-                this.ShowAllRows(); // Показываем все строки
-                this.PereschetCnum(); // Пересчитываем порядковые номера строк
+                ShowAllRows(); // Показываем все строки
+                PereschetCnum(); // Пересчитываем порядковые номера строк
                 SomeRowsWasHidden = 0; // Переводим маркер в состояние "Нет скрытых строк"
             }
-            this.ShowKlassnost(); // Показываем колонки dataGridView1, связанные с классным званием
+            ShowKlassnost(); // Показываем колонки dgvMainList, связанные с классным званием
         }
 
         private void ShowKlassnost() // Показать только классность
@@ -1195,9 +1212,9 @@ namespace RankReminderWinForms
             imagestring.Visible = false;
         }
 
-        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        private void RadioButton4_CheckedChanged(object sender, EventArgs e)
         {
-            this.ShowAttestaciya();
+            ShowAttestaciya();
         }
 
         private void ShowAttestaciya() // показать только тех, у кого аттестация в следующем году (проводится каждые 4 года)
@@ -1210,40 +1227,40 @@ namespace RankReminderWinForms
                 DateTime CheckedYear = DateTime.Now.AddYears(1); // прибавляем к текущей дате один год в формат DateTime
 
                 // Пробегаем по строкам первый раз и при нахождении нужных - проставляем им новые порядковые номера
-                foreach (DataGridViewRow row in dataGridView1.Rows)
+                foreach (DataGridViewRow currentRow in dgvMainList.Rows)
                 {
-                    if (dataGridView1[IndexNextAttestaciyaDate, row.Index].Value.ToString() != "") // если значение даты аттестации в строке не пустое
+                    if (dgvMainList[IndexNextAttestaciyaDate, currentRow.Index].Value.ToString() != "") // если значение даты аттестации в строке не пустое
                     {
-                        DateTime DateFromCurrentRow = DateTime.Parse(dataGridView1[IndexNextAttestaciyaDate, row.Index].Value.ToString()); // парсим значение даты аттестации в формат DateTime
+                        DateTime DateFromCurrentRow = DateTime.Parse(dgvMainList[IndexNextAttestaciyaDate, currentRow.Index].Value.ToString()); // парсим значение даты аттестации в формат DateTime
 
                         if (DateFromCurrentRow.Year == CheckedYear.Year) // Если год из ячейки с датой следующей аттестации является следующим годом
                         {
                             SomeRowsMustBeHidden = true;
                             VisibleCnum++;
-                            dataGridView1[IndexCnum, row.Index].Value = VisibleCnum; //вызывает ошибку
-                        }                            
+                            dgvMainList[IndexCnum, currentRow.Index].Value = VisibleCnum; //вызывает ошибку
+                        }
                     }
                 }
 
                 if (SomeRowsMustBeHidden == true) // Если были найдены сотрудники, у которых аттестация в следующем году
                 {
                     // Пробегаем по строкам второй раз и прячем все строки, кроме найденных 
-                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    foreach (DataGridViewRow currentRow in dgvMainList.Rows)
                     {
-                        if (dataGridView1[IndexNextAttestaciyaDate, row.Index].Value.ToString() != "") // если значение даты аттестации в строке не пустое
+                        if (dgvMainList[IndexNextAttestaciyaDate, currentRow.Index].Value.ToString() != "") // если значение даты аттестации в строке не пустое
                         {
-                            DateTime DateFromCurrentRow = DateTime.Parse(dataGridView1[IndexNextAttestaciyaDate, row.Index].Value.ToString()); // парсим значение даты аттестации в формат DateTime
+                            DateTime DateFromCurrentRow = DateTime.Parse(dgvMainList[IndexNextAttestaciyaDate, currentRow.Index].Value.ToString()); // парсим значение даты аттестации в формат DateTime
 
                             if (DateFromCurrentRow.Year != CheckedYear.Year) // Если год из ячейки с датой следующей аттестации не является следующим годом
                             {
-                                dataGridView1.CurrentCell = null;
-                                row.Visible = false; // скрываем строку
+                                dgvMainList.CurrentCell = null;
+                                currentRow.Visible = false; // скрываем строку
                             }
                         }
                         else // Если значение даты аттестации пустое
                         {
-                            dataGridView1.CurrentCell = null;
-                            row.Visible = false; // скрываем строку
+                            dgvMainList.CurrentCell = null;
+                            currentRow.Visible = false; // скрываем строку
                         }
                     }
                     // Скрываем лишние столбцы
@@ -1294,24 +1311,22 @@ namespace RankReminderWinForms
                 {
                     MessageBox.Show("Сотрудники, подпадающие под данный фильтр отсутствуют!");
                     radioButton1.Checked = true; // сбрасываем выбор фильтра
-                    this.ShowAllRows(); // Показываем все строки
-                }                
+                    ShowAllRows(); // Показываем все строки
+                }
             }
         }
 
 
-        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Tab && dataGridView1.CurrentCell.ColumnIndex == 1)
+            if (e.KeyCode == Keys.Tab && dgvMainList.CurrentCell.ColumnIndex == 1)
             {
                 e.Handled = true;
-                DataGridViewCell cell = dataGridView1.Rows[0].Cells[0];
-                dataGridView1.CurrentCell = cell;
-                dataGridView1.BeginEdit(true);
+                DataGridViewCell cell = dgvMainList.Rows[0].Cells[0];
+                dgvMainList.CurrentCell = cell;
+                dgvMainList.BeginEdit(true);
             }
         }
-
-
 
 
 
@@ -1320,7 +1335,7 @@ namespace RankReminderWinForms
         // #################################################
         private void Close1_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         // ####################################
@@ -1330,23 +1345,34 @@ namespace RankReminderWinForms
         {
             int id;
 
-            if (dataGridView1.Rows.Count == 0) // Проверка dataGridView1 на пустоту
+            if (dgvMainList.Rows.Count == 0) // Проверка dgvMainList на пустоту
             {
                 id = 0;
             }
             else
             {
-                this.PereschetCnum();
-                id = Convert.ToInt32(dataGridView1[IndexCnum, dataGridView1.RowCount - 1].Value); //присваиваем переменной ID последний порядковый номер
+                PereschetCnum();
+                id = Convert.ToInt32(dgvMainList[IndexCnum, dgvMainList.RowCount - 1].Value); //присваиваем переменной ID последний порядковый номер
             }
 
-            dataSet1.Tables[CurrentDataTableName].Rows.Add(id + 1, "не указан", "не указан", "Фамилия", "Имя", "Отчество", "М", DateTime.Now.ToString("dd.MM.yyyy")/* Дата рождения */,
-                "Город", "Прописка", "Адрес проживания", "не указан"/* Телефон 1 */, "не указан"/* Телефон 2 */, "Должность", "Рядовой"/* Спец. звание */,
-                DateTime.Now.ToString("dd.MM.yyyy")/* Дата присвоения звания */, "Рядовой"/* Потолок по званию */, "роста нет"/* Дата след. звания */,
-                "Отсутствует"/* Классность */, "--.--.----"/* Дата классности */, "--.--.----"/* След. дата классности */,
+            dsMain.Tables[CurrentDataTableName].Rows.Add(id + 1, "не указан", "не указан", "Фамилия", "Имя", "Отчество", "М",
+                DateTime.Now.ToString("dd.MM.yyyy")/* Дата рождения */,
+                "Город", "Прописка", "Адрес проживания",
+                "не указан"/* Телефон 1 */,
+                "не указан"/* Телефон 2 */, "Должность",
+                "Рядовой"/* Спец. звание */,
+                DateTime.Now.ToString("dd.MM.yyyy")/* Дата присвоения звания */,
+                "Рядовой"/* Потолок по званию */,
+                "роста нет"/* Дата след. звания */,
+                "Отсутствует"/* Классность */,
+                "--.--.----"/* Дата классности */,
+                "--.--.----"/* След. дата классности */,
                 ""/* 10.Образование */,
-                ""/* 11. Ученая степень */, ""/* 12.Присвоение званий, чинов */,
-                ""/* 13.Семейное положение */, ""/* 14.Члены семьи */, ""/* 15.Труд. деят. до прихода */,
+                ""/* 11. Ученая степень */,
+                ""/* 12.Присвоение званий, чинов */,
+                ""/* 13.Семейное положение */,
+                ""/* 14.Члены семьи */,
+                ""/* 15.Труд. деят. до прихода */,
                 "Общий трудовой стаж^0^0^0$Льготная выслуга^0^0^0$Стаж для государственных служащих^0^0^0$Половина периода обучения в высш. и сред. спец. учебных заведениях (для лиц начальствующего состава)^0^0^0$Календарная выслуга^0^0^0"/* 16.Стаж и выслуга до прихода */,
                 DateTime.Now.ToString("dd.MM.yyyy")/* 17.Дата принятия присяги */,
                 ""/* 18.Прохождение службы (работа) в ГФС России */,
@@ -1355,10 +1381,11 @@ namespace RankReminderWinForms
                 ""/* 21.Профессиональная подготовка */,
                 "---"/* 22.Чей приказ о присвоении квалиф. звания */, "---"/* 23.Дата приказа о присвоении квалиф. звания */, ""/* 24.Сведения о присвоенных ранее квалиф. званиях  */,
                 ""/* 25.Награды и поощрения */, ""/* 26.Продление службы */, ""/* 27.Участие в боевых действиях */, ""/* 28.Состояние в резерве */,
-                ""/* 29.Взыскания */, ""/* 30.Увольнение */, ""/* 31.Карточку заполнил */, DateTime.Now.ToString("dd.MM.yyyy")/* 32.Дата заполнения карточки */,
+                ""/* 29.Взыскания */, ""/* 30.Увольнение */, ""/* 31.Карточку заполнил */,
+                DateTime.Now.ToString("dd.MM.yyyy")/* 32.Дата заполнения карточки */,
                 ""/* 33.Фото */);
-            this.AcceptAndWriteChanges();
-            Cnum_label.Text = (IndexRowLichnayaKarta + 1).ToString() + " из " + dataGridView1.RowCount.ToString(); // Порядковый номер личной карточки         
+            AcceptAndWriteChanges();
+            lblCnum.Text = $"{IndexRowLichnayaKarta + 1} из {dgvMainList.RowCount}"; // Порядковый номер личной карточки         
         }
 
         // ###########################################################
@@ -1371,7 +1398,7 @@ namespace RankReminderWinForms
                 Archive.Text = "Действующие сотрудники";
                 CurrentDataTableName = "Archive";
                 OtherDataTableName = "Kadry";
-                CurrentBase_label.Text = "Текущая БД: Архивные сотрудники";
+                lblCurrentBase.Text = "Текущая БД: Архивные сотрудники";
                 MessageBox.Show("Перешли в архивную базу данных");
             }
             else if (CurrentDataTableName == "Archive")
@@ -1379,21 +1406,19 @@ namespace RankReminderWinForms
                 Archive.Text = "Архивные сотрудники";
                 CurrentDataTableName = "Kadry";
                 OtherDataTableName = "Archive";
-                CurrentBase_label.Text = "Текущая БД: Действующие сотрудники";
+                lblCurrentBase.Text = "Текущая БД: Действующие сотрудники";
                 MessageBox.Show("Перешли в текущую базу данных");
             }
-            this.RefreshDataGridView1(); // обновляем DataGridView1
+            RefreshDgvMainList(); // обновляем DataGridView1
 
-            if (dataGridView1.Rows.Count != 0) // Проверка dataGridView1 на пустоту
+            if (dgvMainList.Rows.Count != 0) // Проверка dgvMainList на пустоту
             {
                 IndexRowLichnayaKarta = 0;
-                this.PereschetZvanie();
-                this.PereschetKlassnost();
-                this.PereschetCnum(); // пересчитываем порядковые номера 
-                Cnum_label.Text = (IndexRowLichnayaKarta + 1).ToString() + " из " + dataGridView1.RowCount.ToString(); // Порядковый номер личной карточки
-                CardsFIO_label.Text = dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value.ToString() + " "
-        + dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString() + " "
-        + dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Прописываем ФИО над стрелками в карточке
+                PereschetZvanie();
+                PereschetKlassnost();
+                PereschetCnum(); // пересчитываем порядковые номера 
+                lblCnum.Text = $"{IndexRowLichnayaKarta + 1} из {dgvMainList.RowCount}"; // Порядковый номер личной карточки
+                lblCardsFIO.Text = $"{dgvMainList[IndexSurname, IndexRowLichnayaKarta].Value} {dgvMainList[IndexName, IndexRowLichnayaKarta].Value} {dgvMainList[IndexMiddleName, IndexRowLichnayaKarta].Value}"; // Прописываем ФИО над стрелками в карточке
             }
             // При необходимости, добавить сюда события при пустом гриде
         }
@@ -1404,35 +1429,35 @@ namespace RankReminderWinForms
         // ##################################
         private void ExportToExcel_Click(object sender, EventArgs e)
         {
-            this.ExportDataGridToExcel();
+            ExportDataGridToExcel();
         }
 
-        // ###############  ВЫГРУЗКА dataGridView1 В EXCEL ФАЙЛ  ###############
+        // ###############  ВЫГРУЗКА dgvMainList В EXCEL ФАЙЛ  ###############
         public void ExportDataGridToExcel()
         {
             //Формируем новый список listVisibleColumns, состоящий только из видимых столбцов
             List<DataGridViewColumn> listVisibleColumns = new List<DataGridViewColumn>();
-            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            foreach (DataGridViewColumn currentCol in dgvMainList.Columns)
             {
-                if (col.Visible)
+                if (currentCol.Visible)
                 {
-                    listVisibleColumns.Add(col);
+                    listVisibleColumns.Add(currentCol);
                 }
             }
 
             //Формируем новый список listVisibleRows, состоящий только из видимых строк
             List<DataGridViewRow> listVisibleRows = new List<DataGridViewRow>();
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            foreach (DataGridViewRow currentRow in dgvMainList.Rows)
             {
-                if (row.Visible)
+                if (currentRow.Visible)
                 {
-                    listVisibleRows.Add(row);
+                    listVisibleRows.Add(currentRow);
                 }
             }
 
             /*==============================================================================================================*/
 
-            // Подготавливаем Excel для экспорта dataGridView1
+            // Подготавливаем Excel для экспорта dgvMainList
             Excel.Application ExcelApp = new Excel.Application();
             ExcelApp.Application.Workbooks.Add(Type.Missing); //Создаем новую книгу
             ExcelApp.Columns.ColumnWidth = 15; // устанавливаем ширину столбцов
@@ -1441,13 +1466,13 @@ namespace RankReminderWinForms
             Excel.Worksheet xlWorkSheet = (Excel.Worksheet)ExcelApp.Worksheets.get_Item(1); //Создаем новый лист
             xlWorkSheet.Name = "Сведения о личном составе"; // именуем лист
 
-            var _with1 = xlWorkSheet.PageSetup; // Блок параметров листа
-            _with1.PaperSize = Excel.XlPaperSize.xlPaperA4; // размер А4
-            _with1.Orientation = Excel.XlPageOrientation.xlLandscape; // ландшафтная ориентация
-            _with1.Zoom = false;
+            Excel.PageSetup pageSetup = xlWorkSheet.PageSetup; // Блок параметров листа
+            pageSetup.PaperSize = Excel.XlPaperSize.xlPaperA4; // размер А4
+            pageSetup.Orientation = Excel.XlPageOrientation.xlLandscape; // ландшафтная ориентация
+            pageSetup.Zoom = false;
             // Ужимаем всё при выводе на печать
-            _with1.FitToPagesWide = 1;
-            _with1.FitToPagesTall = 1;
+            pageSetup.FitToPagesWide = 1;
+            pageSetup.FitToPagesTall = 1;
 
             /*==============================================================================================================*/
 
@@ -1458,12 +1483,12 @@ namespace RankReminderWinForms
             }
 
             // Украшаем заголовки
-            Excel.Range range_zagolovki = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[1, listVisibleColumns.Count]); // диапазон заголовка в файле Excel
-            range_zagolovki.Cells.Font.Bold = true; // жирный шрифт
-            range_zagolovki.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
-            range_zagolovki.BorderAround(Type.Missing, Excel.XlBorderWeight.xlThick, Excel.XlColorIndex.xlColorIndexAutomatic); // увеличиваем толщину внешних границ
-            range_zagolovki.Borders.Color = Color.Black; // черный цвет границ
-            range_zagolovki.Cells.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter; // вертикальное выравнивание по центру
+            Excel.Range rngZagolovki = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[1, listVisibleColumns.Count]); // диапазон заголовка в файле Excel
+            rngZagolovki.Cells.Font.Bold = true; // жирный шрифт
+            rngZagolovki.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
+            rngZagolovki.BorderAround(Type.Missing, Excel.XlBorderWeight.xlThick, Excel.XlColorIndex.xlColorIndexAutomatic); // увеличиваем толщину внешних границ
+            rngZagolovki.Borders.Color = Color.Black; // черный цвет границ
+            rngZagolovki.Cells.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter; // вертикальное выравнивание по центру
 
             /*==============================================================================================================*/
 
@@ -1472,23 +1497,23 @@ namespace RankReminderWinForms
             {
                 if (listVisibleColumns[col] is CalendarColumn) // Центрируем столбцы с датами в Excel
                 {
-                    Excel.Range range_col_with_date = xlWorkSheet.get_Range(xlWorkSheet.Cells[2, col + 1], xlWorkSheet.Cells[listVisibleRows.Count + 1, col + 1]); // диапазон столбца, где обнаружена дата (без заголовка)
-                    range_col_with_date.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
+                    Excel.Range rngColWithDate = xlWorkSheet.get_Range(xlWorkSheet.Cells[2, col + 1], xlWorkSheet.Cells[listVisibleRows.Count + 1, col + 1]); // диапазон столбца, где обнаружена дата (без заголовка)
+                    rngColWithDate.Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // горизонтальное выравнивание по центру
                 }
                 for (int row = 0; row < listVisibleRows.Count; row++)
                 {
-                    ExcelApp.Cells[row + 2, col + 1] = dataGridView1.Rows[listVisibleRows[row].Index].Cells[listVisibleColumns[col].Index].Value.ToString(); // Наполняем лист Excel видимыми ячейками, начиная с первой строки после заголовка
+                    ExcelApp.Cells[row + 2, col + 1] = dgvMainList.Rows[listVisibleRows[row].Index].Cells[listVisibleColumns[col].Index].Value.ToString(); // Наполняем лист Excel видимыми ячейками, начиная с первой строки после заголовка
                 }
             }
 
             //Украшаем все, кроме заголовка
-            Excel.Range range_all_cells_without_headers = xlWorkSheet.get_Range(xlWorkSheet.Cells[2, 1], xlWorkSheet.Cells[listVisibleRows.Count + 1, listVisibleColumns.Count]); // диапазон всех ячеек, кроме заголовка
-            range_all_cells_without_headers.Cells.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter; // вертикальное выравнивание по центру
-            range_all_cells_without_headers.Borders[Excel.XlBordersIndex.xlInsideVertical].Color = Color.LightGray; //внутренние вертикальные границы области с данными
-            range_all_cells_without_headers.Borders[Excel.XlBordersIndex.xlInsideHorizontal].Color = Color.Black; //внутренние горизонтальные границы области с данными
-            range_all_cells_without_headers.Borders[Excel.XlBordersIndex.xlEdgeRight].Color = Color.Black; //крайняя правая граница области с данными
-            range_all_cells_without_headers.Borders[Excel.XlBordersIndex.xlEdgeLeft].Color = Color.Black; //крайняя левая граница области с данными
-            range_all_cells_without_headers.Borders[Excel.XlBordersIndex.xlEdgeBottom].Color = Color.Black; //крайняя нижняя граница области с данными
+            Excel.Range rngAllCellsWithoutHeaders = xlWorkSheet.get_Range(xlWorkSheet.Cells[2, 1], xlWorkSheet.Cells[listVisibleRows.Count + 1, listVisibleColumns.Count]); // диапазон всех ячеек, кроме заголовка
+            rngAllCellsWithoutHeaders.Cells.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter; // вертикальное выравнивание по центру
+            rngAllCellsWithoutHeaders.Borders[Excel.XlBordersIndex.xlInsideVertical].Color = Color.LightGray; //внутренние вертикальные границы области с данными
+            rngAllCellsWithoutHeaders.Borders[Excel.XlBordersIndex.xlInsideHorizontal].Color = Color.Black; //внутренние горизонтальные границы области с данными
+            rngAllCellsWithoutHeaders.Borders[Excel.XlBordersIndex.xlEdgeRight].Color = Color.Black; //крайняя правая граница области с данными
+            rngAllCellsWithoutHeaders.Borders[Excel.XlBordersIndex.xlEdgeLeft].Color = Color.Black; //крайняя левая граница области с данными
+            rngAllCellsWithoutHeaders.Borders[Excel.XlBordersIndex.xlEdgeBottom].Color = Color.Black; //крайняя нижняя граница области с данными
 
             Excel.Range range_Cnum = xlWorkSheet.get_Range(xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[listVisibleRows.Count + 1, 1]); // Диапазон ячеек с порядковым номером
             range_Cnum.ColumnWidth = 5; // уменьшаем ширину
@@ -1515,54 +1540,54 @@ namespace RankReminderWinForms
         }
 
         // ###############  ДЕЙСТВИЯ ПРИ СРАБАТЫВАНИИ СОБЫТИЯ СОРТИРОВКИ  ###############
-        private void dataGridView1_Sorted(object sender, EventArgs e) //отработка события изменения сортировки
+        private void DataGridView1_Sorted(object sender, EventArgs e) //отработка события изменения сортировки
         {
-            this.PereschetCnum();
+            PereschetCnum();
         }
 
-        // ###############  ДЕЙСТВИЯ, ЕСЛИ БЫЛИ КАКИЕ-ЛИБО ИЗМЕНЕНИЯ В dataGridView1  ###############
+        // ###############  ДЕЙСТВИЯ, ЕСЛИ БЫЛИ КАКИЕ-ЛИБО ИЗМЕНЕНИЯ В dgvMainList  ###############
         public void DataGridWasChanged()
         {
             // MessageBox.Show("grid изменен");  // позже будет закомментировано 
-            this.PereschetZvanie(); // пересчитываем звание
-            this.PereschetKlassnost(); // пересчитываем классность
-            this.AcceptAndWriteChanges(); // сохраняем изменения в XML
-            this.RefreshDataGridView1(); // обновляем DataGridView1
+            PereschetZvanie(); // пересчитываем звание
+            PereschetKlassnost(); // пересчитываем классность
+            AcceptAndWriteChanges(); // сохраняем изменения в XML
+            RefreshDgvMainList(); // обновляем DataGridView1
         }
 
-        // ###############  ОБНОВЛЕНИЕ dataGridView1  ###############
-        public void RefreshDataGridView1()
+        // ###############  ОБНОВЛЕНИЕ dgvMainList  ###############
+        public void RefreshDgvMainList()
         {
-            dataSet1.Clear(); // очищаем dataSet1
-            dataGridView1.DataSource = null; // очищаем DataSource
-            dataSet1.ReadXml(XMLDB.Path); // считываем XML
-            dataGridView1.DataSource = dataSet1.Tables[CurrentDataTableName]; // присваиваем DataSource
+            dsMain.Clear(); // очищаем dsMain
+            dgvMainList.DataSource = null; // очищаем DataSource
+            dsMain.ReadXml(XMLDB.Path); // считываем XML
+            dgvMainList.DataSource = dsMain.Tables[CurrentDataTableName]; // присваиваем DataSource
         }
 
         // ###############  ПРИМЕНИТЬ ВСЕ ИЗМЕНЕНИЯ И СОХРАНИТЬ XML  ###############
         public void AcceptAndWriteChanges()
         {
             // MessageBox.Show("Произошло сохранение базы данных"); // позже будет закомментировано 
-            dataSet1.AcceptChanges(); // применяем изменения в dataSet1
-            dataSet1.WriteXml(XMLDB.Path); // сохраняем изменения в XML          
+            dsMain.AcceptChanges(); // применяем изменения в dsMain
+            dsMain.WriteXml(XMLDB.Path); // сохраняем изменения в XML          
         }
 
 
         // ###############  НАЧАЛО РЕДАКТИРОВАНИЯ ЯЧЕЙКИ  ###############
-        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            CellValueToCompare = dataGridView1.CurrentCell.Value.ToString(); // присваиваем переменной CellValueToCompare текущее значение ячейки до редактирования
-            LastEditedCellRow = dataGridView1.CurrentCell.RowIndex;
-            LastEditedCellCol = dataGridView1.CurrentCell.ColumnIndex;
+            CellValueToCompare = dgvMainList.CurrentCell.Value.ToString(); // присваиваем переменной CellValueToCompare текущее значение ячейки до редактирования
+            LastEditedCellRow = dgvMainList.CurrentCell.RowIndex;
+            LastEditedCellCol = dgvMainList.CurrentCell.ColumnIndex;
         }
 
         // ###############  ЗАВЕРШЕНИЕ РЕДАКТИРОВАНИЯ ЯЧЕЙКИ  ###############
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.CurrentCell.Value.ToString() != CellValueToCompare) // сравниваем CellValueToCompare со значением ячейки после редактирования
+            if (dgvMainList.CurrentCell.Value.ToString() != CellValueToCompare) // сравниваем CellValueToCompare со значением ячейки после редактирования
             {
                 DataGridWasChanged();
-                dataGridView1.CurrentCell = dataGridView1[LastEditedCellCol, LastEditedCellRow];
+                dgvMainList.CurrentCell = dgvMainList[LastEditedCellCol, LastEditedCellRow];
             }
         }
 
@@ -1571,14 +1596,14 @@ namespace RankReminderWinForms
         {
             if (tabControl1.SelectedTab.Text == "Общий список")
             {
-                var result = MessageBox.Show("Удалить данную запись?", "Вы уверены?",
+                DialogResult result = MessageBox.Show("Удалить данную запись?", "Вы уверены?",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
                 if (result == DialogResult.No) // если была нажать кнопка "Нет"
                 {
                     WantToDeleteRow = 0; // сбрасываем маркер удаления строки в ноль
-                    dataSet1.Tables[CurrentDataTableName].RejectChanges(); // отменяем изменения
-                    this.RefreshDataGridView1(); // обновляем DataGridView1
+                    dsMain.Tables[CurrentDataTableName].RejectChanges(); // отменяем изменения
+                    RefreshDgvMainList(); // обновляем DataGridView1
                 }
                 else
                 {
@@ -1592,17 +1617,15 @@ namespace RankReminderWinForms
         {
             if (WantToDeleteRow == 1) // если пользователь хочет удалить строку
             {
-                this.AcceptAndWriteChanges(); // сохраняем изменения
+                AcceptAndWriteChanges(); // сохраняем изменения
                 WantToDeleteRow = 0; // сбрасываем маркер удаления строки в ноль
 
-                if (dataGridView1.Rows.Count != 0) // Проверка dataGridView1 на пустоту
+                if (dgvMainList.Rows.Count != 0) // Проверка dgvMainList на пустоту
                 {
                     IndexRowLichnayaKarta = 0;
-                    this.PereschetCnum(); // пересчитываем порядковые номера 
-                    Cnum_label.Text = (IndexRowLichnayaKarta + 1).ToString() + " из " + dataGridView1.RowCount.ToString(); // Порядковый номер личной карточки
-                    CardsFIO_label.Text = dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value.ToString() + " "
-            + dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString() + " "
-            + dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Прописываем ФИО над стрелками в карточке
+                    PereschetCnum(); // пересчитываем порядковые номера 
+                    lblCnum.Text = $"{IndexRowLichnayaKarta + 1} из {dgvMainList.RowCount}"; // Порядковый номер личной карточки
+                    lblCardsFIO.Text = $"{dgvMainList[IndexSurname, IndexRowLichnayaKarta].Value} {dgvMainList[IndexName, IndexRowLichnayaKarta].Value} {dgvMainList[IndexMiddleName, IndexRowLichnayaKarta].Value}"; // Прописываем ФИО над стрелками в карточке
                 }
                 // Позже, при необходимости, описать события для ситуации, когда таблица остается пустой
 
@@ -1610,28 +1633,26 @@ namespace RankReminderWinForms
         }
 
         // ###############  СОБЫТИЕ, ПРИ СМЕНЕ АКТИВНОЙ ВКЛАДКИ ###############
-        private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
+        private void TabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (dataGridView1.Rows.Count == 0) // Проверка dataGridView1 на пустоту. Если грид пустой - не даем уйти с вкладки "Общий список"
+            if (dgvMainList.Rows.Count == 0) // Проверка dgvMainList на пустоту. Если грид пустой - не даем уйти с вкладки "Общий список"
             {
                 e.Cancel = true;
                 MessageBox.Show("Сначала добавьте хотя бы одного сотрудника!");
             }
         }
         // ###############  СОБЫТИЕ, ПОСЛЕ СМЕНЫ АКТИВНОЙ ВКЛАДКИ ###############
-        private void tabControl1_SelectedIndexChanged(Object sender, EventArgs e)
+        private void TabControl1_SelectedIndexChanged(Object sender, EventArgs e)
         {
-            if (IndexRowLichnayaKarta > dataGridView1.RowCount - 1) // Проверка на выход за пределы диапазона личных карточек.
-                                                                    // Такое может произойти, если была активной последняя карточка,
-                                                                    // после чего её удалили и снова "вышли" из "Общего списка"
+            if (IndexRowLichnayaKarta > dgvMainList.RowCount - 1) // Проверка на выход за пределы диапазона личных карточек.
+                                                                  // Такое может произойти, если была активной последняя карточка,
+                                                                  // после чего её удалили и снова "вышли" из "Общего списка"
             {
                 IndexRowLichnayaKarta = 0;
-                Cnum_label.Text = (IndexRowLichnayaKarta + 1).ToString() + " из " + dataGridView1.RowCount.ToString(); // Порядковый номер личной карточки
-                CardsFIO_label.Text = dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value.ToString() + " "
-        + dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString() + " "
-        + dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Прописываем ФИО над стрелками в карточке
+                lblCnum.Text = $"{IndexRowLichnayaKarta + 1} из {dgvMainList.RowCount}"; // Порядковый номер личной карточки
+                lblCardsFIO.Text = $"{dgvMainList[IndexSurname, IndexRowLichnayaKarta].Value} {dgvMainList[IndexName, IndexRowLichnayaKarta].Value} {dgvMainList[IndexMiddleName, IndexRowLichnayaKarta].Value}"; // Прописываем ФИО над стрелками в карточке
             }
-            this.NeedToUpdateCard();
+            NeedToUpdateCard();
         }
 
         // ###############  ОПРЕДЕЛЯЕМ, КАКУЮ ВКЛАДКУ НУЖНО ОБНОВИТЬ ###############
@@ -1647,34 +1668,34 @@ namespace RankReminderWinForms
             switch (tabControl1.SelectedTab.Text) // сверяем название активной вкладки
             {
                 case "Карточка 1-9": // 
-                    this.UpdateCard1to9();
+                    UpdateCard1to9();
                     break;
                 case "Карточка 10-11": // 
-                    this.UpdateCard10and11();
+                    UpdateCard10and11();
                     break;
                 case "Карточка 12": //
-                    this.UpdateCard12();
+                    UpdateCard12();
                     break;
                 case "Карточка 13-14": // 
-                    this.UpdateCard13and14();
+                    UpdateCard13and14();
                     break;
                 case "Карточка 15": // 
-                    this.UpdateCard15();
+                    UpdateCard15();
                     break;
                 case "Карточка 16-18": // 
-                    this.UpdateCard16to18();
+                    UpdateCard16to18();
                     break;
                 case "Карточка 19-20": // 
-                    this.UpdateCard19and20();
+                    UpdateCard19and20();
                     break;
                 case "Карточка 21-22": // 
-                    this.UpdateCard21and22();
+                    UpdateCard21and22();
                     break;
                 case "Карточка 23-25": // 
-                    this.UpdateCard23to25();
+                    UpdateCard23to25();
                     break;
                 case "Карточка 26-29": // 
-                    this.UpdateCard26to29();
+                    UpdateCard26to29();
                     break;
             }
         }
@@ -1686,41 +1707,41 @@ namespace RankReminderWinForms
         {
             Card1to9WasLoaded = 0;
 
-            if (dataGridView1[IndexImageString, IndexRowLichnayaKarta].Value.ToString() == "") // Если картинка отсутствует
+            if (dgvMainList[IndexImageString, IndexRowLichnayaKarta].Value.ToString() == "") // Если картинка отсутствует
             {
-                dataGridView1[IndexImageString, IndexRowLichnayaKarta].Value = XMLDB.DefaultImageBase64; // присваиваем pictureBox1 стандартную картинку с крестиком
-                Bitmap bmp = new Bitmap(new MemoryStream(Convert.FromBase64String(dataGridView1[IndexImageString, IndexRowLichnayaKarta].Value.ToString()))); // собираем изображение
-                pictureBox1.Image = bmp;
+                dgvMainList[IndexImageString, IndexRowLichnayaKarta].Value = XMLDB.DefaultImageBase64; // присваиваем pbMainPhoto стандартную картинку с крестиком
+                Bitmap bmp = new Bitmap(new MemoryStream(Convert.FromBase64String(dgvMainList[IndexImageString, IndexRowLichnayaKarta].Value.ToString()))); // собираем изображение
+                pbMainPhoto.Image = bmp;
             }
             else
             {
-                Bitmap bmp = new Bitmap(new MemoryStream(Convert.FromBase64String(dataGridView1[IndexImageString, IndexRowLichnayaKarta].Value.ToString()))); // собираем изображение
-                pictureBox1.Image = bmp; //присваиваем pictureBox1 собранную ячейку
+                Bitmap bmp = new Bitmap(new MemoryStream(Convert.FromBase64String(dgvMainList[IndexImageString, IndexRowLichnayaKarta].Value.ToString()))); // собираем изображение
+                pbMainPhoto.Image = bmp; //присваиваем pbMainPhoto собранную ячейку
             }
 
             // ЗАПОЛНЯЕМ textBox'ы:
-            PersonalFileNum_textBox.Text = dataGridView1[IndexPersonalFileNum, IndexRowLichnayaKarta].Value.ToString();
-            PersonalNum_textBox.Text = dataGridView1[IndexPersonalNum, IndexRowLichnayaKarta].Value.ToString();
-            Surname_textBox.Text = dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value.ToString();
-            Name_textBox.Text = dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString();
-            MiddleName_textBox.Text = dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString();
-            Gender_comboBox.Text = dataGridView1[IndexGender, IndexRowLichnayaKarta].Value.ToString();
-            DateOfBirth_dateTimePicker.Text = dataGridView1[IndexDateOfBirth, IndexRowLichnayaKarta].Value.ToString();
-            RankDate_dateTimePicker.Text = dataGridView1[IndexRankDate, IndexRowLichnayaKarta].Value.ToString();
-            PlaceOfBirth_textBox.Text = dataGridView1[IndexPlaceOfBirth, IndexRowLichnayaKarta].Value.ToString();
-            Registration_textBox.Text = dataGridView1[IndexRegistration, IndexRowLichnayaKarta].Value.ToString();
-            PlaceOfLiving_textBox.Text = dataGridView1[IndexPlaceOfLiving, IndexRowLichnayaKarta].Value.ToString();
-            PhoneRegistration_textBox.Text = dataGridView1[IndexPhoneRegistration, IndexRowLichnayaKarta].Value.ToString();
-            PhonePlaceOfLiving_textBox.Text = dataGridView1[IndexPhonePlaceOfLiving, IndexRowLichnayaKarta].Value.ToString();
-            Post_textBox.Text = dataGridView1[IndexPost, IndexRowLichnayaKarta].Value.ToString();
-            NextRankDate_textBox.Text = dataGridView1[IndexNextRankDate, IndexRowLichnayaKarta].Value.ToString();
+            tbxPersonalFileNum.Text = dgvMainList[IndexPersonalFileNum, IndexRowLichnayaKarta].Value.ToString();
+            tbxPersonalNum.Text = dgvMainList[IndexPersonalNum, IndexRowLichnayaKarta].Value.ToString();
+            tbxSurname.Text = dgvMainList[IndexSurname, IndexRowLichnayaKarta].Value.ToString();
+            tbxName.Text = dgvMainList[IndexName, IndexRowLichnayaKarta].Value.ToString();
+            tbxMiddleName.Text = dgvMainList[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString();
+            cbxGender.Text = dgvMainList[IndexGender, IndexRowLichnayaKarta].Value.ToString();
+            dtpDateOfBirth.Text = dgvMainList[IndexDateOfBirth, IndexRowLichnayaKarta].Value.ToString();
+            dtpRankDate.Text = dgvMainList[IndexRankDate, IndexRowLichnayaKarta].Value.ToString();
+            tbxPlaceOfBirth.Text = dgvMainList[IndexPlaceOfBirth, IndexRowLichnayaKarta].Value.ToString();
+            tbxRegistration.Text = dgvMainList[IndexRegistration, IndexRowLichnayaKarta].Value.ToString();
+            tbxPlaceOfLiving.Text = dgvMainList[IndexPlaceOfLiving, IndexRowLichnayaKarta].Value.ToString();
+            tbxPhoneRegistration.Text = dgvMainList[IndexPhoneRegistration, IndexRowLichnayaKarta].Value.ToString();
+            tbxPhonePlaceOfLiving.Text = dgvMainList[IndexPhonePlaceOfLiving, IndexRowLichnayaKarta].Value.ToString();
+            tbxPost.Text = dgvMainList[IndexPost, IndexRowLichnayaKarta].Value.ToString();
+            tbxNextRankDate.Text = dgvMainList[IndexNextRankDate, IndexRowLichnayaKarta].Value.ToString();
 
-            Rank_comboBox.BindingContext = new BindingContext();   //создаем новый контекст, иначе в определенный момент получаем null в одном из comboBox'ов
-            Rank_comboBox.DataSource = ZvanieList;
-            Rank_comboBox.Text = dataGridView1[IndexRank, IndexRowLichnayaKarta].Value.ToString();
-            RankLimit_comboBox.BindingContext = new BindingContext();   //создаем новый контекст, иначе в определенный момент получаем null в одном из comboBox'ов
-            RankLimit_comboBox.DataSource = ZvanieList;
-            RankLimit_comboBox.Text = dataGridView1[IndexRankLimit, IndexRowLichnayaKarta].Value.ToString();
+            cbxRank.BindingContext = new BindingContext();   //создаем новый контекст, иначе в определенный момент получаем null в одном из comboBox'ов
+            cbxRank.DataSource = ZvanieList;
+            cbxRank.Text = dgvMainList[IndexRank, IndexRowLichnayaKarta].Value.ToString();
+            cbxRankLimit.BindingContext = new BindingContext();   //создаем новый контекст, иначе в определенный момент получаем null в одном из comboBox'ов
+            cbxRankLimit.DataSource = ZvanieList;
+            cbxRankLimit.Text = dgvMainList[IndexRankLimit, IndexRowLichnayaKarta].Value.ToString();
 
             Card1to9WasLoaded = 1; // карточка прогрузилась
         }
@@ -1730,169 +1751,135 @@ namespace RankReminderWinForms
         // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В TextBox'ах НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
         // ##################################################################################
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В Surname_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void Surname_textBox_Leave(object sender, EventArgs e)
+        // Общий метод для проверки наличия изменений, после выхода из textbox'ов
+        private void Tbx_CheckForChanges(TextBox tbxName, int indexOfTBX)
         {
-            if (Surname_textBox.Text != dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value.ToString())
+            if (tbxName.Text != dgvMainList[indexOfTBX, IndexRowLichnayaKarta].Value.ToString())
             {
-                dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value = Surname_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
+                dgvMainList[indexOfTBX, IndexRowLichnayaKarta].Value = tbxName.Text;
+                AcceptAndWriteChanges(); // применить изменения
             }
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В Name_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void Name_textBox_Leave(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxSurname НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxSurname_Leave(object sender, EventArgs e)
         {
-            if (Name_textBox.Text != dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString())
-            {
-                dataGridView1[IndexName, IndexRowLichnayaKarta].Value = Name_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
+            Tbx_CheckForChanges(tbxSurname, IndexSurname);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В MiddleName_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void MiddleName_textBox_Leave(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxName НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxName_Leave(object sender, EventArgs e)
         {
-            if (MiddleName_textBox.Text != dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString())
-            {
-                dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value = MiddleName_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
+            Tbx_CheckForChanges(tbxName, IndexName);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В PlaceOfBirth_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void PlaceOfBirth_textBox_Leave(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxMiddleName НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxMiddleName_Leave(object sender, EventArgs e)
         {
-            if (PlaceOfBirth_textBox.Text != dataGridView1[IndexPlaceOfBirth, IndexRowLichnayaKarta].Value.ToString())
-            {
-                dataGridView1[IndexPlaceOfBirth, IndexRowLichnayaKarta].Value = PlaceOfBirth_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
+            Tbx_CheckForChanges(tbxMiddleName, IndexMiddleName);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В PersonalFileNum_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void PersonalFileNum_textBox_Leave(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxPlaceOfBirth НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxPlaceOfBirth_Leave(object sender, EventArgs e)
         {
-            if (PersonalFileNum_textBox.Text != dataGridView1[IndexPersonalFileNum, IndexRowLichnayaKarta].Value.ToString())
-            {
-                dataGridView1[IndexPersonalFileNum, IndexRowLichnayaKarta].Value = PersonalFileNum_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
+            Tbx_CheckForChanges(tbxPlaceOfBirth, IndexPlaceOfBirth);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В PersonalNum_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void PersonalNum_textBox_Leave(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxPersonalFileNum НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxPersonalFileNum_Leave(object sender, EventArgs e)
         {
-            if (PersonalNum_textBox.Text != dataGridView1[IndexPersonalNum, IndexRowLichnayaKarta].Value.ToString())
-            {
-                dataGridView1[IndexPersonalNum, IndexRowLichnayaKarta].Value = PersonalNum_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
+            Tbx_CheckForChanges(tbxPersonalFileNum, IndexPersonalFileNum);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В Registration_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void Registration_textBox_Leave(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxPersonalNum НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxPersonalNum_Leave(object sender, EventArgs e)
         {
-            if (Registration_textBox.Text != dataGridView1[IndexRegistration, IndexRowLichnayaKarta].Value.ToString())
-            {
-                dataGridView1[IndexRegistration, IndexRowLichnayaKarta].Value = Registration_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
+            Tbx_CheckForChanges(tbxPersonalNum, IndexPersonalNum);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В PlaceOfLiving_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void PlaceOfLiving_textBox_Leave(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxRegistration НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxRegistration_Leave(object sender, EventArgs e)
         {
-            if (PlaceOfLiving_textBox.Text != dataGridView1[IndexPlaceOfLiving, IndexRowLichnayaKarta].Value.ToString())
-            {
-                dataGridView1[IndexPlaceOfLiving, IndexRowLichnayaKarta].Value = PlaceOfLiving_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
+            Tbx_CheckForChanges(tbxRegistration, IndexRegistration);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В PhoneRegistration_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void PhoneRegistration_textBox_Leave(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxPlaceOfLiving НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxPlaceOfLiving_Leave(object sender, EventArgs e)
         {
-            if (PhoneRegistration_textBox.Text != dataGridView1[IndexPhoneRegistration, IndexRowLichnayaKarta].Value.ToString())
-            {
-                dataGridView1[IndexPhoneRegistration, IndexRowLichnayaKarta].Value = PhoneRegistration_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
+            Tbx_CheckForChanges(tbxPlaceOfLiving, IndexPlaceOfLiving);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В PhonePlaceOfLiving_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void PhonePlaceOfLiving_textBox_Leave(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxPhoneRegistration НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxPhoneRegistration_Leave(object sender, EventArgs e)
         {
-            if (PhonePlaceOfLiving_textBox.Text != dataGridView1[IndexPhonePlaceOfLiving, IndexRowLichnayaKarta].Value.ToString())
-            {
-                dataGridView1[IndexPhonePlaceOfLiving, IndexRowLichnayaKarta].Value = PhonePlaceOfLiving_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
+            Tbx_CheckForChanges(tbxPhoneRegistration, IndexPhoneRegistration);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В Post_textBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void Post_textBox_Leave(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxPhonePlaceOfLiving НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxPhonePlaceOfLiving_Leave(object sender, EventArgs e)
         {
-            if (Post_textBox.Text != dataGridView1[IndexPost, IndexRowLichnayaKarta].Value.ToString())
-            {
-                dataGridView1[IndexPost, IndexRowLichnayaKarta].Value = Post_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
-            }
+            Tbx_CheckForChanges(tbxPhonePlaceOfLiving, IndexPhonePlaceOfLiving);
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DateOfBirth__dateTimePicker НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void DateOfBirth_dateTimePicker_ValueChanged(object sender, EventArgs e) // dateTimePicker "Дата рождения"
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxPost НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void TbxPost_Leave(object sender, EventArgs e)
+        {
+            Tbx_CheckForChanges(tbxPost, IndexPost);
+        }
+
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В dtpDateOfBirth НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void DtpDateOfBirth_ValueChanged(object sender, EventArgs e) // dateTimePicker "Дата рождения"
         {
             if (Card1to9WasLoaded == 1)
             {
-                dataGridView1[IndexDateOfBirth, IndexRowLichnayaKarta].Value = DateOfBirth_dateTimePicker.Value.ToString("dd.MM.yyyy");
-                this.AcceptAndWriteChanges(); // применить изменения
+                dgvMainList[IndexDateOfBirth, IndexRowLichnayaKarta].Value = dtpDateOfBirth.Value.ToString("dd.MM.yyyy");
+                AcceptAndWriteChanges(); // применить изменения
             }
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В RankDate_dateTimePicker НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void RankDate_dateTimePicker_ValueChanged(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В dtpRankDate НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void DtpRankDate_ValueChanged(object sender, EventArgs e)
         {
             if (Card1to9WasLoaded == 1)
             {
-                dataGridView1[IndexRankDate, IndexRowLichnayaKarta].Value = RankDate_dateTimePicker.Value.ToString("dd.MM.yyyy");
-                this.PereschetZvanie();
-                this.AcceptAndWriteChanges(); // применить изменения
-                NextRankDate_textBox.Text = dataGridView1[IndexNextRankDate, IndexRowLichnayaKarta].Value.ToString();
+                dgvMainList[IndexRankDate, IndexRowLichnayaKarta].Value = dtpRankDate.Value.ToString("dd.MM.yyyy");
+                PereschetZvanie();
+                AcceptAndWriteChanges(); // применить изменения
+                tbxNextRankDate.Text = dgvMainList[IndexNextRankDate, IndexRowLichnayaKarta].Value.ToString();
             }
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В Rank_comboBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void Rank_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В cbxRank НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void CbxRank_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Card1to9WasLoaded == 1)
             {
-                dataGridView1[IndexRank, IndexRowLichnayaKarta].Value = Rank_comboBox.Text;
-                this.PereschetZvanie();
-                this.AcceptAndWriteChanges(); // применить изменения
-                NextRankDate_textBox.Text = dataGridView1[IndexNextRankDate, IndexRowLichnayaKarta].Value.ToString();
+                dgvMainList[IndexRank, IndexRowLichnayaKarta].Value = cbxRank.Text;
+                PereschetZvanie();
+                AcceptAndWriteChanges(); // применить изменения
+                tbxNextRankDate.Text = dgvMainList[IndexNextRankDate, IndexRowLichnayaKarta].Value.ToString();
             }
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В RankLimit_comboBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void RankLimit_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В cbxRankLimit НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void CbxRankLimit_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Card1to9WasLoaded == 1)
             {
-                dataGridView1[IndexRankLimit, IndexRowLichnayaKarta].Value = RankLimit_comboBox.Text;
-                this.PereschetZvanie();
-                this.AcceptAndWriteChanges(); // применить изменения
-                NextRankDate_textBox.Text = dataGridView1[IndexNextRankDate, IndexRowLichnayaKarta].Value.ToString();
+                dgvMainList[IndexRankLimit, IndexRowLichnayaKarta].Value = cbxRankLimit.Text;
+                PereschetZvanie();
+                AcceptAndWriteChanges(); // применить изменения
+                tbxNextRankDate.Text = dgvMainList[IndexNextRankDate, IndexRowLichnayaKarta].Value.ToString();
             }
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В Gender_comboBox НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
-        private void Gender_comboBox_SelectedIndexChanged(object sender, EventArgs e) // ComboBox "Пол"
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В cbxGender НА ВКЛАДКЕ "КАРТОЧКА 1-9" ##########
+        private void CbxGender_SelectedIndexChanged(object sender, EventArgs e) // ComboBox "Пол"
         {
             if (Card1to9WasLoaded == 1)
             {
-                dataGridView1[IndexGender, IndexRowLichnayaKarta].Value = Gender_comboBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
+                dgvMainList[IndexGender, IndexRowLichnayaKarta].Value = cbxGender.Text;
+                AcceptAndWriteChanges(); // применить изменения
             }
         }
 
@@ -1902,18 +1889,20 @@ namespace RankReminderWinForms
         // ######################################################
         private void ChooseImage_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog2 = new OpenFileDialog();
-            openFileDialog2.Title = "Выберите новую фотографию сотрудника";
-            openFileDialog2.InitialDirectory = "c:\\";
-            openFileDialog2.Filter = "Все изображения|*.bmp; *.jpg; *.jpeg; *.png; *.gif";
-            if (openFileDialog2.ShowDialog() == DialogResult.OK) // если пользователь выбрал файл изображения
+            OpenFileDialog photoSelector = new OpenFileDialog
             {
-                Bitmap bmp = new Bitmap(openFileDialog2.FileName); // присваиваем переменной bmp выбранный файл
+                Title = "Выберите новую фотографию сотрудника",
+                InitialDirectory = "c:\\",
+                Filter = "Все изображения|*.bmp; *.jpg; *.jpeg; *.png; *.gif"
+            };
+            if (photoSelector.ShowDialog() == DialogResult.OK) // если пользователь выбрал файл изображения
+            {
+                Bitmap bmp = new Bitmap(photoSelector.FileName); // присваиваем переменной bmp выбранный файл
                 TypeConverter converter = TypeDescriptor.GetConverter(typeof(Bitmap));
                 string ImageBase64 = Convert.ToBase64String((byte[])converter.ConvertTo(bmp, typeof(byte[]))); // конвертируем изображение в текст
-                dataGridView1[IndexImageString, IndexRowLichnayaKarta].Value = ImageBase64; // записываем результат в соответствующую ячейку
-                pictureBox1.Image = bmp; //присваиваем pictureBox1 собранную ячейку
-                this.AcceptAndWriteChanges(); // применить изменения
+                dgvMainList[IndexImageString, IndexRowLichnayaKarta].Value = ImageBase64; // записываем результат в соответствующую ячейку
+                pbMainPhoto.Image = bmp; //присваиваем pbMainPhoto собранную ячейку
+                AcceptAndWriteChanges(); // применить изменения
             }
         }
 
@@ -1923,10 +1912,10 @@ namespace RankReminderWinForms
         // ######################################################
         private void RemoveImage_Click(object sender, EventArgs e)
         {
-            dataGridView1[IndexImageString, IndexRowLichnayaKarta].Value = XMLDB.DefaultImageBase64;
-            Bitmap bmp = new Bitmap(new MemoryStream(Convert.FromBase64String(dataGridView1[IndexImageString, IndexRowLichnayaKarta].Value.ToString()))); // собираем изображение
-            pictureBox1.Image = bmp;
-            this.AcceptAndWriteChanges(); // применить изменения
+            dgvMainList[IndexImageString, IndexRowLichnayaKarta].Value = XMLDB.DefaultImageBase64;
+            Bitmap bmp = new Bitmap(new MemoryStream(Convert.FromBase64String(dgvMainList[IndexImageString, IndexRowLichnayaKarta].Value.ToString()))); // собираем изображение
+            pbMainPhoto.Image = bmp;
+            AcceptAndWriteChanges(); // применить изменения
         }
 
 
@@ -1935,10 +1924,10 @@ namespace RankReminderWinForms
         // ###############  ВКЛАДКА "КАРТОЧКА 10-11"  ############################################################
         public void UpdateCard10and11()
         {
-            dataGridView_Study.Rows.Clear();
-            dataGridView_Study.AutoGenerateColumns = false;
+            dgvStudy.Rows.Clear();
+            dgvStudy.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexStudy, dataGridView_Study); // Отрисовываем таблицу dataGridView_Study
+            Dgv_Draw(IndexStudy, dgvStudy); // Отрисовываем таблицу dgvStudy
 
             Study_FormaObucheniya.MinimumWidth = 120;
             Study_Naimenovanie.MinimumWidth = 130;
@@ -1954,11 +1943,11 @@ namespace RankReminderWinForms
 
             /*==============================================================================================================*/
 
-            dataGridView_UchStepen.Rows.Clear();
-            dataGridView_UchStepen.AutoGenerateColumns = false;
+            dgvUchStepen.Rows.Clear();
+            dgvUchStepen.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexUchStepen, dataGridView_UchStepen); // Отрисовываем таблицу dataGridView_UchStepen
-        }        
+            Dgv_Draw(IndexUchStepen, dgvUchStepen); // Отрисовываем таблицу dgvUchStepen
+        }
 
 
         // ###################################################################
@@ -1968,12 +1957,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexUchStepen, dataGridView_UchStepen);
+                Dgv_SaveChanges(IndexUchStepen, dgvUchStepen);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_UchStepen.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить ученую степень
-                this.SaveChangesToDataGridView_All(IndexUchStepen, dataGridView_UchStepen);
+                dgvUchStepen.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить ученую степень
+                Dgv_SaveChanges(IndexUchStepen, dgvUchStepen);
             }
         }
 
@@ -1985,12 +1974,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexStudy, dataGridView_Study);
+                Dgv_SaveChanges(IndexStudy, dgvStudy);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_Study.Rows.Add("Высшее (очное)", "---", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", "---"); // добавить образование
-                this.SaveChangesToDataGridView_All(IndexStudy, dataGridView_Study);
+                dgvStudy.Rows.Add("Высшее (очное)", "---", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", "---"); // добавить образование
+                Dgv_SaveChanges(IndexStudy, dgvStudy);
             }
         }
 
@@ -2000,12 +1989,12 @@ namespace RankReminderWinForms
         // ###############  ВКЛАДКА "КАРТОЧКА 12"  ############################################################
         public void UpdateCard12()
         {
-            dataGridView_PrisvZvaniy.Rows.Clear();
-            dataGridView_PrisvZvaniy.AutoGenerateColumns = false;
+            dgvPrisvZvaniy.Rows.Clear();
+            dgvPrisvZvaniy.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexPrisvZvaniy, dataGridView_PrisvZvaniy); // Отрисовываем таблицу dataGridView_PrisvZvaniy
+            Dgv_Draw(IndexPrisvZvaniy, dgvPrisvZvaniy); // Отрисовываем таблицу dgvPrisvZvaniy
         }
-        
+
 
         // ######################################################################
         // ##  КНОПКА "ДОБАВИТЬ ЗВАНИЕ, КЛАССНЫЙ ЧИН" НА ВКЛАДКЕ "КАРТОЧКА 12" ##
@@ -2014,12 +2003,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexPrisvZvaniy, dataGridView_PrisvZvaniy);
+                Dgv_SaveChanges(IndexPrisvZvaniy, dgvPrisvZvaniy);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_PrisvZvaniy.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить звание, классный чин
-                this.SaveChangesToDataGridView_All(IndexPrisvZvaniy, dataGridView_PrisvZvaniy);
+                dgvPrisvZvaniy.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить звание, классный чин
+                Dgv_SaveChanges(IndexPrisvZvaniy, dgvPrisvZvaniy);
             }
         }
 
@@ -2029,24 +2018,24 @@ namespace RankReminderWinForms
         // ###############  ВКЛАДКА "КАРТОЧКА 13-14"  ############################################################
         public void UpdateCard13and14()
         {
-            dataGridView_Married.Rows.Clear();
-            dataGridView_Married.AutoGenerateColumns = false;
+            dgvMarried.Rows.Clear();
+            dgvMarried.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexMarried, dataGridView_Married); // Отрисовываем таблицу dataGridView_Married
+            Dgv_Draw(IndexMarried, dgvMarried); // Отрисовываем таблицу dgvMarried
 
             /*==============================================================================================================*/
 
-            dataGridView_Family.Rows.Clear();
-            dataGridView_Family.AutoGenerateColumns = false;
+            dgvFamily.Rows.Clear();
+            dgvFamily.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexFamily, dataGridView_Family); // Отрисовываем таблицу dataGridView_Family
+            Dgv_Draw(IndexFamily, dgvFamily); // Отрисовываем таблицу dgvFamily
 
             Family_StepenRodstva.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Выравнивание по центру в колонке "Степень родства"
             Family_DateOfBirth.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Выравнивание по центру в колонке "Дата рождения"
             Family_DateOfBirth.MinimumWidth = 120;
         }
 
-        
+
         // ############################################################
         // ##  КНОПКА "ДОБАВИТЬ СОБЫТИЕ" НА ВКЛАДКЕ "КАРТОЧКА 13-14" ##
         // ############################################################
@@ -2054,12 +2043,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexMarried, dataGridView_Married);
+                Dgv_SaveChanges(IndexMarried, dgvMarried);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_Married.Rows.Add("Женат", DateTime.Now.ToString("yyyy")); // добавить событие (свадьба, развод)
-                this.SaveChangesToDataGridView_All(IndexMarried, dataGridView_Married);
+                dgvMarried.Rows.Add("Женат", DateTime.Now.ToString("yyyy")); // добавить событие (свадьба, развод)
+                Dgv_SaveChanges(IndexMarried, dgvMarried);
             }
         }
 
@@ -2071,12 +2060,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexFamily, dataGridView_Family);
+                Dgv_SaveChanges(IndexFamily, dgvFamily);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_Family.Rows.Add("Мать", DateTime.Now.ToString("dd.MM.yyyy"), "---"); // добавить члена семьи
-                this.SaveChangesToDataGridView_All(IndexFamily, dataGridView_Family);
+                dgvFamily.Rows.Add("Мать", DateTime.Now.ToString("dd.MM.yyyy"), "---"); // добавить члена семьи
+                Dgv_SaveChanges(IndexFamily, dgvFamily);
             }
         }
 
@@ -2086,10 +2075,10 @@ namespace RankReminderWinForms
         // ###############  ВКЛАДКА "КАРТОЧКА 15"  ############################################################
         public void UpdateCard15()
         {
-            dataGridView_TrudDeyat.Rows.Clear();
-            dataGridView_TrudDeyat.AutoGenerateColumns = false;
+            dgvTrudDeyat.Rows.Clear();
+            dgvTrudDeyat.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexTrudDeyat, dataGridView_TrudDeyat); // Отрисовываем таблицу dataGridView_TrudDeyat
+            Dgv_Draw(IndexTrudDeyat, dgvTrudDeyat); // Отрисовываем таблицу dgvTrudDeyat
 
             TrudDeyat_DataNaznach.MinimumWidth = 130;
             TrudDeyat_DataNaznach.Width = 130;
@@ -2110,12 +2099,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexTrudDeyat, dataGridView_TrudDeyat);
+                Dgv_SaveChanges(IndexTrudDeyat, dgvTrudDeyat);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_TrudDeyat.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---", "У"); // добавить место работы
-                this.SaveChangesToDataGridView_All(IndexTrudDeyat, dataGridView_TrudDeyat);
+                dgvTrudDeyat.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---", "У"); // добавить место работы
+                Dgv_SaveChanges(IndexTrudDeyat, dgvTrudDeyat);
             }
         }
 
@@ -2154,24 +2143,24 @@ namespace RankReminderWinForms
         {
             Card16to18WasLoaded = 0;
 
-            dataGridView_StazhVysluga.Rows.Clear();
-            dataGridView_StazhVysluga.AutoGenerateColumns = false;
+            dgvStazhVysluga.Rows.Clear();
+            dgvStazhVysluga.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexStazhVysluga, dataGridView_StazhVysluga); // Отрисовываем таблицу dataGridView_StazhVysluga
+            Dgv_Draw(IndexStazhVysluga, dgvStazhVysluga); // Отрисовываем таблицу dgvStazhVysluga
 
-            dataGridView_StazhVysluga.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dgvStazhVysluga.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             StazhVysluga_Resize();
 
             /*==============================================================================================================*/
 
-            DataPrisyagi_dateTimePicker.Text = dataGridView1[IndexDataPrisyagi, IndexRowLichnayaKarta].Value.ToString();
+            dtpDataPrisyagi.Text = dgvMainList[IndexDataPrisyagi, IndexRowLichnayaKarta].Value.ToString();
 
             /*==============================================================================================================*/
 
-            dataGridView_RabotaGFS.Rows.Clear();
-            dataGridView_RabotaGFS.AutoGenerateColumns = false;
+            dgvRabotaGFS.Rows.Clear();
+            dgvRabotaGFS.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexRabotaGFS, dataGridView_RabotaGFS); // Отрисовываем таблицу dataGridView_RabotaGFS
+            Dgv_Draw(IndexRabotaGFS, dgvRabotaGFS); // Отрисовываем таблицу dgvRabotaGFS
 
             RabotaGFS_DataNaznach.MinimumWidth = 120;
             RabotaGFS_DataNaznach.Width = 120;
@@ -2192,31 +2181,31 @@ namespace RankReminderWinForms
         // ##########  ПОДСТРОЙКА РАЗМЕРА СТРОК В DataGridView_StazhVysluga НА ВКЛАДКЕ "КАРТОЧКА 16-18" ##########
         public void StazhVysluga_Resize()
         {
-            dataGridView_StazhVysluga.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells; // Включаем свойство AutoSizeRowsMode, чтобы оно автоматически подстроило высоту строк в таблице
+            dgvStazhVysluga.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells; // Включаем свойство AutoSizeRowsMode, чтобы оно автоматически подстроило высоту строк в таблице
             StazhVysluga_Poyasnenie.DefaultCellStyle.WrapMode = DataGridViewTriState.True; // Перенос слов в колонке "Пояснение" 
             StazhVysluga_Poyasnenie.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             StazhVysluga_Let.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Выравнивание в колонке "Лет"
             StazhVysluga_Mesyacev.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Выравнивание в колонке "Месяцев"
             StazhVysluga_Dney.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Выравнивание в колонке "Дней"
 
-            int Stroka4 = dataGridView_StazhVysluga[0, 3].OwningRow.Height; // Записываем в переменную высоту строки, присвоенную AutoSizeRowsMode
-            int Stroka_proverka = dataGridView_StazhVysluga[0, 2].OwningRow.Height; // Записываем в переменную высоту "стандартной" строки для дальнейшего сравнения
-            int Zagolovok = dataGridView_StazhVysluga.ColumnHeadersHeight; // Записываем в переменную высоту заголовка, присвоенную AutoSizeRowsMode
-            dataGridView_StazhVysluga.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None; // Отключаем свойство AutoSizeRowsMode, чтобы далее можно было программно присвоить высоту строк в таблице
-            dataGridView_StazhVysluga.ColumnHeadersHeight = Zagolovok;
+            int Stroka4 = dgvStazhVysluga[0, 3].OwningRow.Height; // Записываем в переменную высоту строки, присвоенную AutoSizeRowsMode
+            int Stroka_proverka = dgvStazhVysluga[0, 2].OwningRow.Height; // Записываем в переменную высоту "стандартной" строки для дальнейшего сравнения
+            int Zagolovok = dgvStazhVysluga.ColumnHeadersHeight; // Записываем в переменную высоту заголовка, присвоенную AutoSizeRowsMode
+            dgvStazhVysluga.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None; // Отключаем свойство AutoSizeRowsMode, чтобы далее можно было программно присвоить высоту строк в таблице
+            dgvStazhVysluga.ColumnHeadersHeight = Zagolovok;
 
             if (Stroka4 == Stroka_proverka) // Если размер окна программы поволяет уместить текст в четвертой строке без переносов, значит ставим всем одну высоту  
-                foreach (DataGridViewRow row in dataGridView_StazhVysluga.Rows)
+                foreach (DataGridViewRow row in dgvStazhVysluga.Rows)
                 {
-                    row.Height = (dataGridView_StazhVysluga.Height - Zagolovok) / (dataGridView_StazhVysluga.Rows.Count);// Вычисляем высоту строк для заполнения всего свободного пространства
+                    row.Height = (dgvStazhVysluga.Height - Zagolovok) / (dgvStazhVysluga.Rows.Count);// Вычисляем высоту строк для заполнения всего свободного пространства
                 }
 
             else // Если размер окна программы НЕ поволяет уместить текст в четвертой строке без переносов, значит высота этой строки должна быть больше, чем у других
-                foreach (DataGridViewRow row in dataGridView_StazhVysluga.Rows)
+                foreach (DataGridViewRow row in dgvStazhVysluga.Rows)
                 {
-                    if (row != dataGridView_StazhVysluga[0, 3].OwningRow) // Для всех строк, кроме четвертой
+                    if (row != dgvStazhVysluga[0, 3].OwningRow) // Для всех строк, кроме четвертой
                     {
-                        row.Height = (dataGridView_StazhVysluga.Height - Stroka4 - Zagolovok) / (dataGridView_StazhVysluga.Rows.Count - 1); // Вычисляем высоту строк для заполнения всего свободного пространства
+                        row.Height = (dgvStazhVysluga.Height - Stroka4 - Zagolovok) / (dgvStazhVysluga.Rows.Count - 1); // Вычисляем высоту строк для заполнения всего свободного пространства
                     }
                     else row.Height = Stroka4; // Восстанавливаем высоту строки, присвоенную в самом начале свойством AutoSizeRowsMode
                 }
@@ -2227,7 +2216,7 @@ namespace RankReminderWinForms
         private void SaveChangesToDataGridView_StazhVysluga(object sender, EventArgs e)
         {
             MessageBox.Show("Stazh");
-            this.SaveChangesToDataGridView_All(IndexStazhVysluga, dataGridView_StazhVysluga);
+            Dgv_SaveChanges(IndexStazhVysluga, dgvStazhVysluga);
         }
 
 
@@ -2238,12 +2227,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexRabotaGFS, dataGridView_RabotaGFS);
+                Dgv_SaveChanges(IndexRabotaGFS, dgvRabotaGFS);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_RabotaGFS.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "1", "0"); // добавить место службы
-                this.SaveChangesToDataGridView_All(IndexRabotaGFS, dataGridView_RabotaGFS);
+                dgvRabotaGFS.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "1", "0"); // добавить место службы
+                Dgv_SaveChanges(IndexRabotaGFS, dgvRabotaGFS);
             }
         }
 
@@ -2253,10 +2242,10 @@ namespace RankReminderWinForms
         // ###############  ВКЛАДКА "КАРТОЧКА 19-20"  ############################################################
         public void UpdateCard19and20()
         {
-            dataGridView_Attestaciya.Rows.Clear();
-            dataGridView_Attestaciya.AutoGenerateColumns = false;
+            dgvAttestaciya.Rows.Clear();
+            dgvAttestaciya.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexAttestaciya, dataGridView_Attestaciya); // Отрисовываем таблицу dataGridView_Attestaciya
+            Dgv_Draw(IndexAttestaciya, dgvAttestaciya); // Отрисовываем таблицу dgvAttestaciya
 
             Attestaciya_Data.Width = 140;
             Attestaciya_Data.MinimumWidth = 140;
@@ -2265,10 +2254,10 @@ namespace RankReminderWinForms
 
             /*==============================================================================================================*/
 
-            dataGridView_ProfPodg.Rows.Clear();
-            dataGridView_ProfPodg.AutoGenerateColumns = false;
+            dgvProfPodg.Rows.Clear();
+            dgvProfPodg.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexProfPodg, dataGridView_ProfPodg); // Отрисовываем таблицу dataGridView_ProfPodg
+            Dgv_Draw(IndexProfPodg, dgvProfPodg); // Отрисовываем таблицу dgvProfPodg
 
             ProfPodg_VidObuch.Width = 270;
             ProfPodg_VidObuch.MinimumWidth = 270;
@@ -2286,12 +2275,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexAttestaciya, dataGridView_Attestaciya);
+                Dgv_SaveChanges(IndexAttestaciya, dgvAttestaciya);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_Attestaciya.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "Плановая", "Cоответствует замещаемой должности"); // добавить аттестацию
-                this.SaveChangesToDataGridView_All(IndexAttestaciya, dataGridView_Attestaciya);
+                dgvAttestaciya.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "Плановая", "Cоответствует замещаемой должности"); // добавить аттестацию
+                Dgv_SaveChanges(IndexAttestaciya, dgvAttestaciya);
             }
             Calculate_NextAttestaciyaDate(); // высчитываем дату следующей аттестации
         }
@@ -2304,12 +2293,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexProfPodg, dataGridView_ProfPodg);
+                Dgv_SaveChanges(IndexProfPodg, dgvProfPodg);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_ProfPodg.Rows.Add("Первоначальное обучение", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---"); // добавить проф. подготовку
-                this.SaveChangesToDataGridView_All(IndexProfPodg, dataGridView_ProfPodg);
+                dgvProfPodg.Rows.Add("Первоначальное обучение", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "---", "---"); // добавить проф. подготовку
+                Dgv_SaveChanges(IndexProfPodg, dgvProfPodg);
             }
         }
 
@@ -2320,24 +2309,24 @@ namespace RankReminderWinForms
         public void UpdateCard21and22()
         {
             Card21and22WasLoaded = 0;
-            Klassnost_comboBox.Text = dataGridView1[IndexKlassnost, IndexRowLichnayaKarta].Value.ToString();
-            KlassnostCheyPrikaz_textBox.Text = dataGridView1[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value.ToString();
-            KlassnostNomerPrikaza_textBox.Text = dataGridView1[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value.ToString();
-            KlassnostDate_textBox.Text = dataGridView1[IndexKlassnostDate, IndexRowLichnayaKarta].Value.ToString();
+            cbxKlassnost.Text = dgvMainList[IndexKlassnost, IndexRowLichnayaKarta].Value.ToString();
+            tbxKlassnostCheyPrikaz.Text = dgvMainList[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value.ToString();
+            tbxKlassnostNomerPrikaza.Text = dgvMainList[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value.ToString();
+            tbxKlassnostDate.Text = dgvMainList[IndexKlassnostDate, IndexRowLichnayaKarta].Value.ToString();
 
             /*==============================================================================================================*/
 
-            dataGridView_KlassnostOld.Rows.Clear();
-            dataGridView_KlassnostOld.AutoGenerateColumns = false;
+            dgvKlassnostOld.Rows.Clear();
+            dgvKlassnostOld.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexKlassnostOld, dataGridView_KlassnostOld); // Отрисовываем таблицу dataGridView_KlassnostOld
+            Dgv_Draw(IndexKlassnostOld, dgvKlassnostOld); // Отрисовываем таблицу dgvKlassnostOld
 
             /*==============================================================================================================*/
 
-            dataGridView_Nagrady.Rows.Clear();
-            dataGridView_Nagrady.AutoGenerateColumns = false;
+            dgvNagrady.Rows.Clear();
+            dgvNagrady.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexNagrady, dataGridView_Nagrady); // Отрисовываем таблицу dataGridView_Nagrady
+            Dgv_Draw(IndexNagrady, dgvNagrady); // Отрисовываем таблицу dgvNagrady
 
             Card21and22WasLoaded = 1; // карточка прогрузилась
         }
@@ -2350,12 +2339,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexKlassnostOld, dataGridView_KlassnostOld);
+                Dgv_SaveChanges(IndexKlassnostOld, dgvKlassnostOld);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_KlassnostOld.Rows.Add("Специалист 3 класса", "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить предыдущую классность
-                this.SaveChangesToDataGridView_All(IndexKlassnostOld, dataGridView_KlassnostOld);
+                dgvKlassnostOld.Rows.Add("Специалист 3 класса", "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить предыдущую классность
+                Dgv_SaveChanges(IndexKlassnostOld, dgvKlassnostOld);
             }
         }
 
@@ -2367,53 +2356,53 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexNagrady, dataGridView_Nagrady);
+                Dgv_SaveChanges(IndexNagrady, dgvNagrady);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_Nagrady.Rows.Add("---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить награды / поощрения
-                this.SaveChangesToDataGridView_All(IndexNagrady, dataGridView_Nagrady);
+                dgvNagrady.Rows.Add("---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить награды / поощрения
+                Dgv_SaveChanges(IndexNagrady, dgvNagrady);
             }
         }
 
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В Klassnost_comboBox НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В cbxKlassnost НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
         private void Klassnost_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Card21and22WasLoaded == 1)
             {
-                dataGridView1[IndexKlassnost, IndexRowLichnayaKarta].Value = Klassnost_comboBox.Text; // заполняем combobox значением текущей классности
-                switch (Klassnost_comboBox.Text) // проверяем, какую классность выбрал пользователь
+                dgvMainList[IndexKlassnost, IndexRowLichnayaKarta].Value = cbxKlassnost.Text; // заполняем combobox значением текущей классности
+                switch (cbxKlassnost.Text) // проверяем, какую классность выбрал пользователь
                 {
                     case "Отсутствует":
-                        dataGridView1[IndexKlassnostDate, IndexRowLichnayaKarta].Value = "--.--.----"; // "Обнуляем" дату текущей классности
-                        dataGridView1[IndexNextKlassnostDate, IndexRowLichnayaKarta].Value = "--.--.----"; // "Обнуляем" дату следующей классности
-                        dataGridView1[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value = "---"; // "Обнуляем" чей приказ о присвоении классности
-                        dataGridView1[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value = "---"; // "Обнуляем" номер приказа о присвоении классности
-                        KlassnostCheyPrikaz_textBox.Text = dataGridView1[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value.ToString(); // Обновляем textbox "Чей приказ" 
-                        KlassnostNomerPrikaza_textBox.Text = dataGridView1[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value.ToString(); // Обновляем textbox "Номер приказа" 
-                        KlassnostCheyPrikaz_textBox.ReadOnly = true; // Если классность отсутствует, окно для ввода должно быть неактивным 
-                        KlassnostNomerPrikaza_textBox.ReadOnly = true; // Если классность отсутствует, окно для ввода должно быть неактивным
+                        dgvMainList[IndexKlassnostDate, IndexRowLichnayaKarta].Value = "--.--.----"; // "Обнуляем" дату текущей классности
+                        dgvMainList[IndexNextKlassnostDate, IndexRowLichnayaKarta].Value = "--.--.----"; // "Обнуляем" дату следующей классности
+                        dgvMainList[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value = "---"; // "Обнуляем" чей приказ о присвоении классности
+                        dgvMainList[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value = "---"; // "Обнуляем" номер приказа о присвоении классности
+                        tbxKlassnostCheyPrikaz.Text = dgvMainList[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value.ToString(); // Обновляем textbox "Чей приказ" 
+                        tbxKlassnostNomerPrikaza.Text = dgvMainList[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value.ToString(); // Обновляем textbox "Номер приказа" 
+                        tbxKlassnostCheyPrikaz.ReadOnly = true; // Если классность отсутствует, окно для ввода должно быть неактивным 
+                        tbxKlassnostNomerPrikaza.ReadOnly = true; // Если классность отсутствует, окно для ввода должно быть неактивным
                         break;
 
                     case "Специалист 3 класса":
                     case "Специалист 2 класса":
                     case "Специалист 1 класса":
-                        KlassnostCheyPrikaz_textBox.ReadOnly = false;
-                        KlassnostNomerPrikaza_textBox.ReadOnly = false;
-                        dataGridView1[IndexKlassnostDate, IndexRowLichnayaKarta].Value = DateTime.Now.ToString("dd.MM.yyyy"); // выводим дату присвоения классности 
-                        dataGridView1[IndexNextKlassnostDate, IndexRowLichnayaKarta].Value = DateTime.Now.AddYears(3).ToString("dd.MM.yyyy"); // дата присвоения, плюс 3 года
+                        tbxKlassnostCheyPrikaz.ReadOnly = false;
+                        tbxKlassnostNomerPrikaza.ReadOnly = false;
+                        dgvMainList[IndexKlassnostDate, IndexRowLichnayaKarta].Value = DateTime.Now.ToString("dd.MM.yyyy"); // выводим дату присвоения классности 
+                        dgvMainList[IndexNextKlassnostDate, IndexRowLichnayaKarta].Value = DateTime.Now.AddYears(3).ToString("dd.MM.yyyy"); // дата присвоения, плюс 3 года
                         break;
 
                     case "Мастер":
-                        KlassnostCheyPrikaz_textBox.ReadOnly = false;
-                        KlassnostNomerPrikaza_textBox.ReadOnly = false;
-                        dataGridView1[IndexKlassnostDate, IndexRowLichnayaKarta].Value = DateTime.Now.ToString("dd.MM.yyyy"); // выводим дату присвоения классности 
-                        dataGridView1[IndexNextKlassnostDate, IndexRowLichnayaKarta].Value = "высшее звание"; // высшая классность
+                        tbxKlassnostCheyPrikaz.ReadOnly = false;
+                        tbxKlassnostNomerPrikaza.ReadOnly = false;
+                        dgvMainList[IndexKlassnostDate, IndexRowLichnayaKarta].Value = DateTime.Now.ToString("dd.MM.yyyy"); // выводим дату присвоения классности 
+                        dgvMainList[IndexNextKlassnostDate, IndexRowLichnayaKarta].Value = "высшее звание"; // высшая классность
                         break;
                 }
-                this.AcceptAndWriteChanges(); // применить изменения
-                KlassnostDate_textBox.Text = dataGridView1[IndexKlassnostDate, IndexRowLichnayaKarta].Value.ToString(); //обновить окошко даты присвоения классности
+                AcceptAndWriteChanges(); // применить изменения
+                tbxKlassnostDate.Text = dgvMainList[IndexKlassnostDate, IndexRowLichnayaKarta].Value.ToString(); //обновить окошко даты присвоения классности
             }
         }
 
@@ -2424,33 +2413,33 @@ namespace RankReminderWinForms
         public void UpdateCard23to25()
         {
             Card23to25WasLoaded = 0;
-            dataGridView_Prodlenie.Rows.Clear();
-            dataGridView_Prodlenie.AutoGenerateColumns = false;
+            dgvProdlenie.Rows.Clear();
+            dgvProdlenie.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexProdlenie, dataGridView_Prodlenie); // Отрисовываем таблицу dataGridView_Prodlenie
+            Dgv_Draw(IndexProdlenie, dgvProdlenie); // Отрисовываем таблицу dgvProdlenie
 
-            if (dataGridView_Prodlenie.Rows.Count != 0) //проверка на существование данных в таблице
+            if (dgvProdlenie.Rows.Count != 0) //проверка на существование данных в таблице
             {
-                Prodlenie_checkBox.CheckState = CheckState.Checked;
+                chbxProdlenie.CheckState = CheckState.Checked;
             }
             else
             {
-                Prodlenie_checkBox.CheckState = CheckState.Unchecked;
+                chbxProdlenie.CheckState = CheckState.Unchecked;
             }
 
             /*==============================================================================================================*/
 
-            dataGridView_Boevye.Rows.Clear();
-            dataGridView_Boevye.AutoGenerateColumns = false;
+            dgvBoevye.Rows.Clear();
+            dgvBoevye.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexBoevye, dataGridView_Boevye); // Отрисовываем таблицу dataGridView_Boevye
+            Dgv_Draw(IndexBoevye, dgvBoevye); // Отрисовываем таблицу dgvBoevye
 
             /*==============================================================================================================*/
 
-            dataGridView_Rezerv.Rows.Clear();
-            dataGridView_Rezerv.AutoGenerateColumns = false;
+            dgvRezerv.Rows.Clear();
+            dgvRezerv.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexRezerv, dataGridView_Rezerv); // Отрисовываем таблицу dataGridView_Rezerv
+            Dgv_Draw(IndexRezerv, dgvRezerv); // Отрисовываем таблицу dgvRezerv
 
             Card23to25WasLoaded = 1; // карточка прогрузилась
         }
@@ -2463,12 +2452,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexBoevye, dataGridView_Boevye);
+                Dgv_SaveChanges(IndexBoevye, dgvBoevye);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_Boevye.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---"); // добавить участие в боевых действиях
-                this.SaveChangesToDataGridView_All(IndexBoevye, dataGridView_Boevye);
+                dgvBoevye.Rows.Add("---", DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("dd.MM.yyyy"), "1", "---"); // добавить участие в боевых действиях
+                Dgv_SaveChanges(IndexBoevye, dgvBoevye);
             }
         }
 
@@ -2479,40 +2468,40 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexRezerv, dataGridView_Rezerv);
+                Dgv_SaveChanges(IndexRezerv, dgvRezerv);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_Rezerv.Rows.Add("---", DateTime.Now.ToString("yyyy"), "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить состояние в резерве
-                this.SaveChangesToDataGridView_All(IndexRezerv, dataGridView_Rezerv);
+                dgvRezerv.Rows.Add("---", DateTime.Now.ToString("yyyy"), "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить состояние в резерве
+                Dgv_SaveChanges(IndexRezerv, dgvRezerv);
             }
         }
 
 
-        // ##########  ИЗМЕНЕНИЕ СОСТОЯНИЯ Prodlenie_checkBox НА ВКЛАДКЕ "КАРТОЧКА 23-25" ##########
+        // ##########  ИЗМЕНЕНИЕ СОСТОЯНИЯ chbxProdlenie НА ВКЛАДКЕ "КАРТОЧКА 23-25" ##########
         private void Prodlenie_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             if (Card23to25WasLoaded == 1)
             {
-                if (Prodlenie_checkBox.CheckState == CheckState.Checked)
+                if (chbxProdlenie.CheckState == CheckState.Checked)
                 {
                     if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
                     {
-                        this.SaveChangesToDataGridView_All(IndexProdlenie, dataGridView_Prodlenie);
+                        Dgv_SaveChanges(IndexProdlenie, dgvProdlenie);
                     }
                     else //Если метод вызван нажатием кнопки
                     {
-                        dataGridView_Prodlenie.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "1"); // добавить продление службы
-                        this.SaveChangesToDataGridView_All(IndexProdlenie, dataGridView_Prodlenie);
+                        dgvProdlenie.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "1"); // добавить продление службы
+                        Dgv_SaveChanges(IndexProdlenie, dgvProdlenie);
                     }
                 }
-                else if (Prodlenie_checkBox.CheckState == CheckState.Unchecked)
+                else if (chbxProdlenie.CheckState == CheckState.Unchecked)
                 {
-                    dataGridView_Prodlenie.Rows.Clear();
-                    dataGridView1[IndexProdlenie, IndexRowLichnayaKarta].Value = "";
-                    this.AcceptAndWriteChanges(); // Применить изменения
+                    dgvProdlenie.Rows.Clear();
+                    dgvMainList[IndexProdlenie, IndexRowLichnayaKarta].Value = "";
+                    AcceptAndWriteChanges(); // Применить изменения
                 }
-                else if (Prodlenie_checkBox.CheckState == CheckState.Indeterminate)
+                else if (chbxProdlenie.CheckState == CheckState.Indeterminate)
                 {
                     MessageBox.Show("Неизвестная ошибка. Проверьте еще раз отметку о продлении выслуги.");
                 }
@@ -2532,25 +2521,25 @@ namespace RankReminderWinForms
             }
             else SendToAnotherDataTable.Text = "Восстановить из архива";
 
-            dataGridView_Vzyskaniya.Rows.Clear();
-            dataGridView_Vzyskaniya.AutoGenerateColumns = false;
+            dgvVzyskaniya.Rows.Clear();
+            dgvVzyskaniya.AutoGenerateColumns = false;
 
-            this.Draw_dataGridView_All(IndexVzyskaniya, dataGridView_Vzyskaniya); // Отрисовываем таблицу dataGridView_Vzyskaniya
-
-            /*==============================================================================================================*/
-
-            dataGridView_Uvolnenie.Rows.Clear();
-            dataGridView_Uvolnenie.AutoGenerateColumns = false;
-
-            this.Draw_dataGridView_All(IndexUvolnenie, dataGridView_Uvolnenie); // Отрисовываем таблицу dataGridView_Uvolnenie
+            Dgv_Draw(IndexVzyskaniya, dgvVzyskaniya); // Отрисовываем таблицу dgvVzyskaniya
 
             /*==============================================================================================================*/
 
-            Zapolnil_textBox.Text = dataGridView1[IndexZapolnil, IndexRowLichnayaKarta].Value.ToString();
+            dgvUvolnenie.Rows.Clear();
+            dgvUvolnenie.AutoGenerateColumns = false;
+
+            Dgv_Draw(IndexUvolnenie, dgvUvolnenie); // Отрисовываем таблицу dgvUvolnenie
 
             /*==============================================================================================================*/
 
-            DataZapolneniya_dateTimePicker.Text = dataGridView1[IndexDataZapolneniya, IndexRowLichnayaKarta].Value.ToString();
+            tbxZapolnil.Text = dgvMainList[IndexZapolnil, IndexRowLichnayaKarta].Value.ToString();
+
+            /*==============================================================================================================*/
+
+            dtpDataZapolneniya.Text = dgvMainList[IndexDataZapolneniya, IndexRowLichnayaKarta].Value.ToString();
 
             Card26to29WasLoaded = 1; // карточка прогрузилась
         }
@@ -2564,12 +2553,12 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexVzyskaniya, dataGridView_Vzyskaniya);
+                Dgv_SaveChanges(IndexVzyskaniya, dgvVzyskaniya);
             }
             else //Если метод вызван нажатием кнопки
             {
-                dataGridView_Vzyskaniya.Rows.Add("---", "---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить взыскание
-                this.SaveChangesToDataGridView_All(IndexVzyskaniya, dataGridView_Vzyskaniya);
+                dgvVzyskaniya.Rows.Add("---", "---", "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy")); // добавить взыскание
+                Dgv_SaveChanges(IndexVzyskaniya, dgvVzyskaniya);
             }
         }
 
@@ -2580,20 +2569,19 @@ namespace RankReminderWinForms
         {
             if (e is DataGridViewCellEventArgs) //Если метод вызван событием редактирования ячейки таблицы
             {
-                this.SaveChangesToDataGridView_All(IndexUvolnenie, dataGridView_Uvolnenie);
+                Dgv_SaveChanges(IndexUvolnenie, dgvUvolnenie);
             }
             else //Если метод вызван нажатием кнопки
             {
-                string UvolnenieProverka = dataGridView1[IndexUvolnenie, IndexRowLichnayaKarta].Value.ToString();
-                if (UvolnenieProverka == "") //Если информация об увольнении отсутствует
-                {
-                    dataGridView_Uvolnenie.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "---"); // добавить увольнение
-                    this.SaveChangesToDataGridView_All(IndexUvolnenie, dataGridView_Uvolnenie);                
-                }
-                else
+                string UvolnenieProverka = dgvMainList[IndexUvolnenie, IndexRowLichnayaKarta].Value.ToString();
+                if (UvolnenieProverka != "") //Если информация об увольнении отсутствует
                 {
                     MessageBox.Show("Информация об увольнении уже существует!");
+                    return;
                 }
+
+                dgvUvolnenie.Rows.Add(DateTime.Now.ToString("dd.MM.yyyy"), "---", "---", DateTime.Now.ToString("dd.MM.yyyy"), "---"); // добавить увольнение
+                Dgv_SaveChanges(IndexUvolnenie, dgvUvolnenie);
             }
         }
 
@@ -2601,9 +2589,9 @@ namespace RankReminderWinForms
         // ###########################################################################
         // ##########  ОБЩИЙ МЕТОД ОТРИСОВКИ dataGridView НА ВСЕХ ВКЛАДКАХ  ##########
         // ###########################################################################
-        private void Draw_dataGridView_All(int Index, DataGridView dataGridView_Name)
+        private void Dgv_Draw(int index, DataGridView dgvName)
         {
-            string StringDataGrid = dataGridView1[Index, IndexRowLichnayaKarta].Value.ToString();
+            string StringDataGrid = dgvMainList[index, IndexRowLichnayaKarta].Value.ToString();
             if (StringDataGrid != "") //проверка на существование данных в таблице
             {
                 string[] string_array = StringDataGrid.Split('$');
@@ -2611,7 +2599,7 @@ namespace RankReminderWinForms
                 foreach (string s in string_array)
                 {
                     string[] Row = s.Split('^');
-                    dataGridView_Name.Rows.Add(Row);
+                    dgvName.Rows.Add(Row);
                 }
             }
         }
@@ -2619,18 +2607,18 @@ namespace RankReminderWinForms
         // #######################################################################################
         // ##########  ОБЩИЙ МЕТОД СОХРАНЕНИЯ ИЗМЕНЕНИЙ В DataGridView НА ВСЕХ ВКЛАДКАХ ##########
         // #######################################################################################
-        private void SaveChangesToDataGridView_All(int Index, DataGridView dataGridView_Name)
+        private void Dgv_SaveChanges(int index, DataGridView dgvName)
         {
             StringBuilder sb = new StringBuilder(); // создаем строку для построения
-            foreach (DataGridViewRow row in dataGridView_Name.Rows)
+            foreach (DataGridViewRow row in dgvName.Rows)
             {
                 foreach (DataGridViewCell cell in row.Cells)
                 {
                     // Если обрабатываемая ячейка из колонки типа CalendarColumn, то обрабатываем неверный формат даты.
                     if (cell.OwningColumn is CalendarColumn)
                     {
-                        DateTime wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
-                        cell.Value = wrongdatetoconvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
+                        DateTime wrongDateToConvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
+                        cell.Value = wrongDateToConvert.ToString("dd.MM.yyyy"); // и конвертируем в нужный формат
                     }
                     sb.Append(cell.Value); // добавляем значение ячейки
                     sb.Append("^"); // ставим разделитель ячеек 
@@ -2640,82 +2628,82 @@ namespace RankReminderWinForms
             }
             sb.Remove(sb.Length - 1, 1); // Убираем последний разделитель строки
 
-            dataGridView1[Index, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
-            this.AcceptAndWriteChanges(); // Применить изменения
+            dgvMainList[index, IndexRowLichnayaKarta].Value = sb.ToString(); // Заполняем ячейку результирующей строкой
+            AcceptAndWriteChanges(); // Применить изменения
         }
 
 
         // ##########  ВЫСЧИТЫВАНИЕ ДАТЫ СЛЕДУЮЩЕЙ АТТЕСТАЦИИ ##########
         private void Calculate_NextAttestaciyaDate()
         {
-            foreach (DataGridViewRow row in dataGridView_Attestaciya.Rows)
+            foreach (DataGridViewRow row in dgvAttestaciya.Rows)
             {
-                if (row.Index + 1 == dataGridView_Attestaciya.Rows.Count) //Находим последнюю строку в dataGridView_Attestaciya
+                if (row.Index + 1 == dgvAttestaciya.Rows.Count) //Находим последнюю строку в dgvAttestaciya
                 {
                     foreach (DataGridViewCell cell in row.Cells) //Пробегаем по ячейкам в найденной строке
                     {
                         // Обработка неверного формата даты и высчитывание даты следующей аттестации
                         if (cell.OwningColumn is CalendarColumn)
                         {
-                            DateTime wrongdatetoconvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
+                            DateTime wrongDateToConvert = DateTime.Parse(cell.Value.ToString()); // парсим её в формат DateTime
                             // Заполняем ячейку "Дата следующей аттестации", прибавив 4 года к последней аттестации
-                            dataGridView1[IndexNextAttestaciyaDate, IndexRowLichnayaKarta].Value = wrongdatetoconvert.AddYears(4).ToString("dd.MM.yyyy");
+                            dgvMainList[IndexNextAttestaciyaDate, IndexRowLichnayaKarta].Value = wrongDateToConvert.AddYears(4).ToString("dd.MM.yyyy");
                         }
                     }
-                }             
+                }
             }
-            this.AcceptAndWriteChanges(); // Применить изменения
+            AcceptAndWriteChanges(); // Применить изменения
         }
 
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataPrisyagi_dateTimePicker НА ВКЛАДКЕ "КАРТОЧКА 16-18" ##########
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В dtpDataPrisyagi НА ВКЛАДКЕ "КАРТОЧКА 16-18" ##########
         private void DataPrisyagi_dateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             if (Card16to18WasLoaded == 1)
             {
-                dataGridView1[IndexDataPrisyagi, IndexRowLichnayaKarta].Value = DataPrisyagi_dateTimePicker.Value.ToString("dd.MM.yyyy");
-                this.AcceptAndWriteChanges(); // применить изменения
+                dgvMainList[IndexDataPrisyagi, IndexRowLichnayaKarta].Value = dtpDataPrisyagi.Value.ToString("dd.MM.yyyy");
+                AcceptAndWriteChanges(); // применить изменения
             }
         }
 
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В KlassnostCheyPrikaz_textBox НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxKlassnostCheyPrikaz НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
         private void KlassnostCheyPrikaz_textBox_TextChanged(object sender, EventArgs e)
         {
             if (Card21and22WasLoaded == 1)
             {
-                dataGridView1[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value = KlassnostCheyPrikaz_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
+                dgvMainList[IndexKlassnostCheyPrikaz, IndexRowLichnayaKarta].Value = tbxKlassnostCheyPrikaz.Text;
+                AcceptAndWriteChanges(); // применить изменения
             }
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В KlassnostNomerPrikaza_textBox НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxKlassnostNomerPrikaza НА ВКЛАДКЕ "КАРТОЧКА 21-22" ##########
         private void KlassnostNomerPrikaza_textBox_TextChanged(object sender, EventArgs e)
         {
             if (Card21and22WasLoaded == 1)
             {
-                dataGridView1[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value = KlassnostNomerPrikaza_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
+                dgvMainList[IndexKlassnostNomerPrikaza, IndexRowLichnayaKarta].Value = tbxKlassnostNomerPrikaza.Text;
+                AcceptAndWriteChanges(); // применить изменения
             }
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В Zapolnil_textBox НА ВКЛАДКЕ "КАРТОЧКА 26-29" ##########
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В tbxZapolnil НА ВКЛАДКЕ "КАРТОЧКА 26-29" ##########
         private void Zapolnil_textBox_TextChanged(object sender, EventArgs e)
         {
             if (Card26to29WasLoaded == 1)
             {
-                dataGridView1[IndexZapolnil, IndexRowLichnayaKarta].Value = Zapolnil_textBox.Text;
-                this.AcceptAndWriteChanges(); // применить изменения
+                dgvMainList[IndexZapolnil, IndexRowLichnayaKarta].Value = tbxZapolnil.Text;
+                AcceptAndWriteChanges(); // применить изменения
             }
         }
 
-        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В DataZapolneniya_dateTimePicker НА ВКЛАДКЕ "КАРТОЧКА 26-29" ##########
+        // ##########  СОХРАНЕНИЕ ИЗМЕНЕНИЙ В dtpDataZapolneniya НА ВКЛАДКЕ "КАРТОЧКА 26-29" ##########
         private void DataZapolneniya_dateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             if (Card26to29WasLoaded == 1)
             {
-                dataGridView1[IndexDataZapolneniya, IndexRowLichnayaKarta].Value = DataZapolneniya_dateTimePicker.Value.ToString("dd.MM.yyyy");
-                this.AcceptAndWriteChanges(); // применить изменения
+                dgvMainList[IndexDataZapolneniya, IndexRowLichnayaKarta].Value = dtpDataZapolneniya.Value.ToString("dd.MM.yyyy");
+                AcceptAndWriteChanges(); // применить изменения
             }
         }
 
@@ -2725,7 +2713,7 @@ namespace RankReminderWinForms
         // ###################################################
         private void PrevCard_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count == 1)
+            if (dgvMainList.Rows.Count == 1)
             {
                 MessageBox.Show("Это единственная личная карточка");
             }
@@ -2735,13 +2723,11 @@ namespace RankReminderWinForms
             }
             else
             {
-                IndexRowLichnayaKarta = IndexRowLichnayaKarta - 1;
-                this.NeedToUpdateCard(); // обновляем все поля личной карточки
+                IndexRowLichnayaKarta--;
+                NeedToUpdateCard(); // обновляем все поля личной карточки
             }
-            Cnum_label.Text = (IndexRowLichnayaKarta + 1).ToString() + " из " + dataGridView1.RowCount.ToString(); // Порядковый номер личной карточки
-            CardsFIO_label.Text = dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value.ToString() + " "
-    + dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString() + " "
-    + dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Прописываем ФИО над стрелками в карточке
+            lblCnum.Text = $"{IndexRowLichnayaKarta + 1} из {dgvMainList.RowCount}"; // Порядковый номер личной карточки
+            lblCardsFIO.Text = $"{dgvMainList[IndexSurname, IndexRowLichnayaKarta].Value} {dgvMainList[IndexName, IndexRowLichnayaKarta].Value} {dgvMainList[IndexMiddleName, IndexRowLichnayaKarta].Value}"; // Прописываем ФИО над стрелками в карточке
         }
 
 
@@ -2751,23 +2737,21 @@ namespace RankReminderWinForms
         // ###################################################
         private void NextCard_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count == 1)
+            if (dgvMainList.Rows.Count == 1)
             {
                 MessageBox.Show("Это единственная личная карточка");
             }
-            else if (IndexRowLichnayaKarta == dataGridView1.RowCount - 1)
+            else if (IndexRowLichnayaKarta == dgvMainList.RowCount - 1)
             {
                 MessageBox.Show("Это последняя личная карточка");
             }
             else
             {
-                IndexRowLichnayaKarta = IndexRowLichnayaKarta + 1;
-                this.NeedToUpdateCard(); // обновляем все поля личной карточки
+                IndexRowLichnayaKarta++;
+                NeedToUpdateCard(); // обновляем все поля личной карточки
             }
-            Cnum_label.Text = (IndexRowLichnayaKarta + 1).ToString() + " из " + dataGridView1.RowCount.ToString(); // Порядковый номер личной карточки
-            CardsFIO_label.Text = dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value.ToString() + " "
-    + dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString() + " "
-    + dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Прописываем ФИО над стрелками в карточке
+            lblCnum.Text = $"{IndexRowLichnayaKarta + 1} из {dgvMainList.RowCount}"; // Порядковый номер личной карточки
+            lblCardsFIO.Text = $"{dgvMainList[IndexSurname, IndexRowLichnayaKarta].Value} {dgvMainList[IndexName, IndexRowLichnayaKarta].Value} {dgvMainList[IndexMiddleName, IndexRowLichnayaKarta].Value}"; // Прописываем ФИО над стрелками в карточке
         }
 
 
@@ -2785,43 +2769,48 @@ namespace RankReminderWinForms
         // #######################################################################################
         private void SendToAnotherDataTable_Click(object sender, EventArgs e)
         {
-            Required_PersonalFileNum = dataGridView1[IndexPersonalFileNum, IndexRowLichnayaKarta].Value.ToString(); // Искомый № личного дела
-            Required_PersonalNum = dataGridView1[IndexPersonalNum, IndexRowLichnayaKarta].Value.ToString(); // Искомый личный номер
-            Required_Surname = dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value.ToString(); // Искомая фамилия
-            Required_Name = dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString(); // Искомое имя
-            Required_MiddleName = dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Искомое отчество
-            Required_DateOfBirth = dataGridView1[IndexDateOfBirth, IndexRowLichnayaKarta].Value.ToString(); // Искомая дата рождения
+            Required_PersonalFileNum = dgvMainList[IndexPersonalFileNum, IndexRowLichnayaKarta].Value.ToString(); // Искомый № личного дела
+            Required_PersonalNum = dgvMainList[IndexPersonalNum, IndexRowLichnayaKarta].Value.ToString(); // Искомый личный номер
+            Required_Surname = dgvMainList[IndexSurname, IndexRowLichnayaKarta].Value.ToString(); // Искомая фамилия
+            Required_Name = dgvMainList[IndexName, IndexRowLichnayaKarta].Value.ToString(); // Искомое имя
+            Required_MiddleName = dgvMainList[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Искомое отчество
+            Required_DateOfBirth = dgvMainList[IndexDateOfBirth, IndexRowLichnayaKarta].Value.ToString(); // Искомая дата рождения
             int NumOfFinds = 0; // Сбрасываем количество найденных записей в ноль
 
-            foreach (DataRow row in dataSet1.Tables[CurrentDataTableName].Rows) // Проходим по всем строкам активной DataTable
+            foreach (DataRow row in dsMain.Tables[CurrentDataTableName].Rows) // Проходим по всем строкам активной DataTable
             {
-                if ((row["PersonalFileNum"].ToString() == Required_PersonalFileNum) && (row["PersonalNum"].ToString() == Required_PersonalNum) && (row["Surname"].ToString() == Required_Surname)
-                    && (row["Name"].ToString() == Required_Name) && (row["MiddleName"].ToString() == Required_MiddleName) && (row["DateOfBirth"].ToString() == Required_DateOfBirth))
+                if ((row["PersonalFileNum"].ToString() == Required_PersonalFileNum) &&
+                    (row["PersonalNum"].ToString() == Required_PersonalNum) &&
+                    (row["Surname"].ToString() == Required_Surname) &&
+                    (row["Name"].ToString() == Required_Name) &&
+                    (row["MiddleName"].ToString() == Required_MiddleName) &&
+                    (row["DateOfBirth"].ToString() == Required_DateOfBirth))
                 {
-                    IndexOfRowToExport = dataSet1.Tables[CurrentDataTableName].Rows.IndexOf(row); // Записываем индекс искомой в Datatable строки
+                    IndexOfRowToExport = dsMain.Tables[CurrentDataTableName].Rows.IndexOf(row); // Записываем индекс искомой в Datatable строки
                     NumOfFinds++; // Увеличиваем количество найденных записей на единицу
                 }
             }
             if (NumOfFinds == 0) MessageBox.Show("Похоже на ошибку в БД. Карточка не была перемещена в архив.");
             if (NumOfFinds == 1) // Если строка найдена и отсутствуют дубли
             {
-                dataSet1.Tables[OtherDataTableName].ImportRow(dataSet1.Tables[CurrentDataTableName].Rows[IndexOfRowToExport]); // Импортируем найденную запись в другой DataTable
-                dataSet1.Tables[CurrentDataTableName].Rows.RemoveAt(IndexOfRowToExport); // Удаляем найденную запись из текущего DataTable                
+                dsMain.Tables[OtherDataTableName].ImportRow(dsMain.Tables[CurrentDataTableName].Rows[IndexOfRowToExport]); // Импортируем найденную запись в другой DataTable
+                dsMain.Tables[CurrentDataTableName].Rows.RemoveAt(IndexOfRowToExport); // Удаляем найденную запись из текущего DataTable                
                 AcceptAndWriteChanges(); // применяем изменения после перемещения строки из одного DataTable в другой
-                if (CurrentDataTableName == "Kadry") MessageBox.Show("Карточка успешно перемещена в архив");
+                if (CurrentDataTableName == "Kadry")
+                {
+                    MessageBox.Show("Карточка успешно перемещена в архив");
+                }
                 else MessageBox.Show("Карточка успешно восстановлена из архива");
 
-                this.RefreshDataGridView1(); // обновляем DataGridView1
+                RefreshDgvMainList(); // обновляем DataGridView1
 
-                if (dataGridView1.Rows.Count != 0) // Проверка dataGridView1 на пустоту
+                if (dgvMainList.Rows.Count != 0) // Проверка dgvMainList на пустоту
                 {
                     IndexRowLichnayaKarta = 0; // Делаем активной первую запись, дабы избежать проблемы с несуществующими индексами
-                    this.PereschetCnum(); // пересчитываем порядковые номера
-                    this.AcceptAndWriteChanges(); // сохраняем изменения
-                    Cnum_label.Text = (IndexRowLichnayaKarta + 1).ToString() + " из " + dataGridView1.RowCount.ToString(); // Порядковый номер личной карточки
-                    CardsFIO_label.Text = dataGridView1[IndexSurname, IndexRowLichnayaKarta].Value.ToString() + " "
-            + dataGridView1[IndexName, IndexRowLichnayaKarta].Value.ToString() + " "
-            + dataGridView1[IndexMiddleName, IndexRowLichnayaKarta].Value.ToString(); // Прописываем ФИО над стрелками в карточке
+                    PereschetCnum(); // пересчитываем порядковые номера
+                    AcceptAndWriteChanges(); // сохраняем изменения
+                    lblCnum.Text = $"{IndexRowLichnayaKarta + 1} из {dgvMainList.RowCount}"; // Порядковый номер личной карточки
+                    lblCardsFIO.Text = $"{dgvMainList[IndexSurname, IndexRowLichnayaKarta].Value} {dgvMainList[IndexName, IndexRowLichnayaKarta].Value} {dgvMainList[IndexMiddleName, IndexRowLichnayaKarta].Value}"; // Прописываем ФИО над стрелками в карточке
                 }
                 else Archive_Click(sender, e); // если грид пустой - переходим в другую базу
                 tabControl1.SelectedTab = tabPage1; // Переходим на первую вкладку "Общий список"
@@ -2851,8 +2840,7 @@ namespace RankReminderWinForms
         {
             if (e.Control.GetType() == typeof(DataGridViewComboBoxEditingControl))
             {
-                ComboBox cb = e.Control as ComboBox;
-                if (cb != null)
+                if (e.Control is ComboBox cb)
                 {
                     cb.DrawMode = DrawMode.OwnerDrawFixed;
                     cb.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -2866,8 +2854,7 @@ namespace RankReminderWinForms
         public static void ComboBox_DrawItem_Centered(object sender, DrawItemEventArgs e)
         {
             // By using Sender, one method could handle multiple ComboBoxes
-            ComboBox cbx = sender as ComboBox;
-            if (cbx != null)
+            if (sender is ComboBox cbx)
             {
                 // Всегда рисуем задний фон
                 e.DrawBackground();
@@ -2876,9 +2863,11 @@ namespace RankReminderWinForms
                 if (e.Index >= 0)
                 {
                     // Установка положения строки (alignment). Допустимы значения Center, Near и Far
-                    StringFormat sf = new StringFormat();
-                    sf.LineAlignment = StringAlignment.Center;
-                    sf.Alignment = StringAlignment.Center;
+                    StringFormat sf = new StringFormat
+                    {
+                        LineAlignment = StringAlignment.Center,
+                        Alignment = StringAlignment.Center
+                    };
 
                     // Set the Brush to ComboBox ForeColor to maintain any ComboBox color settings
                     // Assumes Brush is solid
@@ -2939,13 +2928,13 @@ namespace RankReminderWinForms
         {
 
             // Есть ли курсор мыши над ячейкой?
-            Rectangle rect = new Rectangle(this.DataGridView.PointToScreen(cellBounds.Location), cellBounds.Size);
-            Point mousePos = Cursor.Position;
-            bool isHot = rect.Contains(mousePos);
+            //Rectangle rect = new Rectangle(DataGridView.PointToScreen(cellBounds.Location), cellBounds.Size);
+            //Point mousePos = Cursor.Position;
+            //bool isHot = rect.Contains(mousePos);
 
             // Ширина раскрывающейся кнопки и ее положение
             int buttonWidth = SystemInformation.VerticalScrollBarWidth + 3; // Этого должно хватить, чтобы скрыть исходную кнопку
-            Rectangle border = this.BorderWidths(advancedBorderStyle);
+            Rectangle border = BorderWidths(advancedBorderStyle);
             Rectangle buttonRect = new Rectangle(cellBounds.Right - buttonWidth, cellBounds.Top + border.Top, buttonWidth, cellBounds.Height - border.Top - border.Bottom);
 
             // Расстановка элементов
@@ -2955,17 +2944,17 @@ namespace RankReminderWinForms
             Brush textBrush = Brushes.Black;
             try
             {
-                ali = this.InheritedStyle.Alignment;
+                ali = InheritedStyle.Alignment;
 
-                if (this.Selected)
+                if (Selected)
                 {
-                    background = new SolidBrush(this.InheritedStyle.SelectionBackColor);
-                    textBrush = new SolidBrush(this.InheritedStyle.SelectionForeColor);
+                    background = new SolidBrush(InheritedStyle.SelectionBackColor);
+                    textBrush = new SolidBrush(InheritedStyle.SelectionForeColor);
                 }
                 else
                 {
-                    background = new SolidBrush(this.InheritedStyle.BackColor);
-                    textBrush = new SolidBrush(this.InheritedStyle.ForeColor);
+                    background = new SolidBrush(InheritedStyle.BackColor);
+                    textBrush = new SolidBrush(InheritedStyle.ForeColor);
                 }
             }
             catch
@@ -3023,12 +3012,12 @@ namespace RankReminderWinForms
             //Различные методы рисования в зависимости от темы окна
             if (ComboBoxRenderer.IsSupported)
             {
-                ComboBoxState state = isHot ? ComboBoxState.Hot : ComboBoxState.Normal;
-                var render = new VisualStyleRenderer("COMBOBOX", (int)COMBOBOXPARTS.CP_READONLY, (int)state);
+                //ComboBoxState state = isHot ? ComboBoxState.Hot : ComboBoxState.Normal;
+                //VisualStyleRenderer render = new VisualStyleRenderer("COMBOBOX", (int)COMBOBOXPARTS.CP_READONLY, (int)state);
                 //render.DrawBackground(graphics, cellBounds); //отвечает за отрисовку объемного заднего фона ячейки
                 //ComboBoxRenderer.DrawDropDownButton(graphics, buttonRect, state); // в оригинале не закомментировано, но при плоской кнопке не нужно
                 ControlPaint.DrawComboButton(graphics, buttonRect, ButtonState.Flat); // свойство Flat отвечает за вид кнопки
-                textBrush = new SolidBrush(this.InheritedStyle.ForeColor);
+                textBrush = new SolidBrush(InheritedStyle.ForeColor);
             }
             else
             {
@@ -3040,7 +3029,7 @@ namespace RankReminderWinForms
 
             graphics.DrawString
                 (formattedValue.ToString()
-                , this.InheritedStyle.Font
+                , InheritedStyle.Font
                 , textBrush
                 , new RectangleF(cellBounds.Left, cellBounds.Top, cellBounds.Width - buttonWidth, cellBounds.Height)
                 , sf);
@@ -3048,22 +3037,22 @@ namespace RankReminderWinForms
 
         protected override void OnMouseDown(DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex < 0 || e.RowIndex < 0 || this.OwningColumn.ReadOnly
-                || this.DataGridView.CurrentCell != this)
+            if (e.ColumnIndex < 0 || e.RowIndex < 0 || OwningColumn.ReadOnly
+                || DataGridView.CurrentCell != this)
             {
                 return;
             }
 
             // Щелчок по ячейке
-            var rect = this.DataGridView.GetCellDisplayRectangle(this.ColumnIndex, this.RowIndex, false);
-            if (!this.IsInEditMode)
+            //Rectangle rect = DataGridView.GetCellDisplayRectangle(ColumnIndex, RowIndex, false);
+            if (!IsInEditMode)
             {
                 // Перевести в состояние редактирования, если еще не в нем
-                this.DataGridView.BeginEdit(true);
+                DataGridView.BeginEdit(true);
 
-                if (this.IsInEditMode)
+                if (IsInEditMode)
                 {// Находясь в состоянии редактирования, вынимаем элемент управления редактированием (Combobox) и регистрируем обработку событий и т.д.
-                    SetEditingComboBox((ComboBox)this.DataGridView.EditingControl);
+                    SetEditingComboBox((ComboBox)DataGridView.EditingControl);
 
                 }
             }
@@ -3097,12 +3086,12 @@ namespace RankReminderWinForms
                 _EditingComboBox.DrawMode = DrawMode.OwnerDrawVariable;
                 _EditingComboBox.MeasureItem += _EditingComboBox_MeasureItem;
                 _EditingComboBox.DrawItem += _EditingComboBox_DrawItem;
-                this.DataGridView.Scroll += UpdatePanel;
-                this.DataGridView.RowHeightChanged += UpdatePanel;
-                this.DataGridView.ColumnWidthChanged += UpdatePanel;
-                this.DataGridView.Controls.Add(_Panel);
+                DataGridView.Scroll += UpdatePanel;
+                DataGridView.RowHeightChanged += UpdatePanel;
+                DataGridView.ColumnWidthChanged += UpdatePanel;
+                DataGridView.Controls.Add(_Panel);
 
-                this.DataGridView.CellEndEdit += DataGridView_CellEndEdit;
+                DataGridView.CellEndEdit += DataGridView_CellEndEdit;
                 UpdatePanel();
             }
             _EditingComboBox.DroppedDown = true;
@@ -3111,8 +3100,8 @@ namespace RankReminderWinForms
         /// <summary>Размер элемента DropDown</summary>
         void _EditingComboBox_MeasureItem(object sender, MeasureItemEventArgs e)
         {
-            //e.ItemHeight = this.OwningRow.Height;
-            e.ItemWidth = this.OwningColumn.Width;
+            //e.ItemHeight = OwningRow.Height;
+            e.ItemWidth = OwningColumn.Width;
         }
         void _EditingComboBox_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -3124,11 +3113,11 @@ namespace RankReminderWinForms
             if ((e.State & DrawItemState.Selected) != DrawItemState.None)
             {
                 e.DrawFocusRectangle();
-                brush = new SolidBrush(this.InheritedStyle.SelectionForeColor);
+                brush = new SolidBrush(InheritedStyle.SelectionForeColor);
             }
             else
             {
-                brush = new SolidBrush(this.InheritedStyle.ForeColor);
+                brush = new SolidBrush(InheritedStyle.ForeColor);
             }
 
             string text;
@@ -3140,15 +3129,17 @@ namespace RankReminderWinForms
             {
                 text = combo.Text;
             }
-            //int w = this.OwningColumn.Width; // в оригинале не закомментировано, но нигде не используется
-            //int h = this.OwningRow.Height; // в оригинале не закомментировано, но нигде не используется
-            StringFormat sf = new StringFormat();
-            sf.LineAlignment = StringAlignment.Center;
-            sf.Alignment = StringAlignment.Center; // задает положение текста в выпадающем списке в режиме редактирования ComboBox'а
-                                                   //e.Graphics.DrawString(combo.Items[e.Index].ToString(), this.InheritedStyle.Font, Brushes.Black, new RectangleF(0, 0, w, h), sf);
+            //int w = OwningColumn.Width; // в оригинале не закомментировано, но нигде не используется
+            //int h = OwningRow.Height; // в оригинале не закомментировано, но нигде не используется
+            StringFormat sf = new StringFormat
+            {
+                LineAlignment = StringAlignment.Center,
+                Alignment = StringAlignment.Center // задает положение текста в выпадающем списке в режиме редактирования ComboBox'а
+            };
+            //e.Graphics.DrawString(combo.Items[e.index].ToString(), InheritedStyle.Font, Brushes.Black, new RectangleF(0, 0, w, h), sf);
             e.Graphics.DrawString
                 (text
-                , this.InheritedStyle.Font
+                , InheritedStyle.Font
                 , brush
                 , e.Bounds, sf);
         }
@@ -3168,7 +3159,7 @@ namespace RankReminderWinForms
         {
             if (_Panel != null)
             {
-                var rect = this.DataGridView.GetCellDisplayRectangle(this.ColumnIndex, this.RowIndex, false);
+                Rectangle rect = DataGridView.GetCellDisplayRectangle(ColumnIndex, RowIndex, false);
 
                 _Panel.Location = rect.Location;
                 _Panel.Size = rect.Size;
@@ -3185,20 +3176,20 @@ namespace RankReminderWinForms
         {
             if (_EditingComboBox != null)
             {
-                var gs = e.Graphics.Save();
-                var rect = this.DataGridView.GetCellDisplayRectangle(this.ColumnIndex, this.RowIndex, false);
+                System.Drawing.Drawing2D.GraphicsState gs = e.Graphics.Save();
+                //Rectangle rect = DataGridView.GetCellDisplayRectangle(ColumnIndex, RowIndex, false);
 
                 Rectangle bounds = e.ClipRectangle;
-                this.Paint
+                Paint
                     (e.Graphics
                     , bounds
                     , bounds
-                    , this.RowIndex
+                    , RowIndex
                     , DataGridViewElementStates.Selected
                     , _EditingComboBox.Text
                     , _EditingComboBox.Text
                     , string.Empty
-                    , this.InheritedStyle
+                    , InheritedStyle
                     , new DataGridViewAdvancedBorderStyle() { All = DataGridViewAdvancedCellBorderStyle.Single }
                     , DataGridViewPaintParts.All);
 
@@ -3209,7 +3200,7 @@ namespace RankReminderWinForms
         // Отписываемся от событий
         void DataGridView_CellEndEdit(object sender, EventArgs e)
         {
-            this.DataGridView.CellEndEdit -= DataGridView_CellEndEdit;
+            DataGridView.CellEndEdit -= DataGridView_CellEndEdit;
 
             _EditingComboBox.Resize -= UpdatePanel;
             _EditingComboBox.LocationChanged -= UpdatePanel;
@@ -3225,11 +3216,11 @@ namespace RankReminderWinForms
             _Panel.Click -= _Panel_Click;
             _Panel = null;
 
-            this.DataGridView.CellEndEdit -= DataGridView_CellEndEdit;
-            this.DataGridView.Scroll -= UpdatePanel;
-            this.DataGridView.RowHeightChanged -= UpdatePanel;
-            this.DataGridView.ColumnWidthChanged -= UpdatePanel;
-            this.DataGridView.InvalidateCell(this);
+            DataGridView.CellEndEdit -= DataGridView_CellEndEdit;
+            DataGridView.Scroll -= UpdatePanel;
+            DataGridView.RowHeightChanged -= UpdatePanel;
+            DataGridView.ColumnWidthChanged -= UpdatePanel;
+            DataGridView.InvalidateCell(this);
         }
     }
 
@@ -3256,7 +3247,7 @@ namespace RankReminderWinForms
             // Handle the ENTER key as if it were a RIGHT ARROW key. 
             if (key == Keys.Enter)
             {
-                return this.ProcessRightKey(keyData);
+                return ProcessRightKey(keyData);
             }
             return base.ProcessDialogKey(keyData);
         }
